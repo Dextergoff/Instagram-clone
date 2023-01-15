@@ -1,0 +1,24 @@
+{% include "base.html" %}
+{% block content %}
+{% include "navbar.html" %}
+
+<form action="{% url 'feed:createpost' %}" id="form" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="form-group" id="form-group">
+        <div id="filediv">
+            <input type="file" name="image" id="image" required>        
+            <input type="file" name="image" id="image" >        
+            <input type="file" name="image" id="image" >        
+            <input type="file" name="image" id="image" >        
+            <input type="file" name="image" id="image" >        
+            <input type="file" name="image" id="image" >        
+        </div>
+        describe your post:
+        <input type="text" name="desc" id="desc" required>
+        price:
+        <input  type="number" id="price" name="price" step="0.01" min="0" name="price" id="price" required>
+        <button type="submit">submit</button>
+    </div>
+</form>
+
+{% endblock content %}

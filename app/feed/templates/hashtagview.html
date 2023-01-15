@@ -1,0 +1,35 @@
+{% include "base.html" %}
+{% block content %}
+{% include "navbar.html" %}
+<div class="container">
+{% for post in posts %}
+<div class="post-group">
+    <ul class="list-group">
+        {% for i in post.images.all %}
+        <li class="list-group-item">{{ i.image }}</li>
+        {% endfor %}
+        <li class="list-group-item">{{ post.title }} ${{ post.price }}</li>
+        <li class="list-group-item">{{ post.desc }} {% for i in post.hashtags.all %}
+            <a href="{% url 'feed:hashtags' hashtag=i.title %}">#{{i.title}}</a>
+            {% endfor %}</li>
+       
+
+        
+    </ul>
+    <form action="{% url 'cart:additem' pk=post.pk %}" method="POST">
+         {% csrf_token %}
+        <button class="btn bg-info text-light" type="submit">add to cart</button>
+    </form>
+</div>
+{% endfor %}
+</div>
+
+{% endblock content %}
+<style>
+    .post-group{
+        padding-top: 50px;
+    }
+    .container{
+        padding-bottom: 100px;
+    }
+</style>

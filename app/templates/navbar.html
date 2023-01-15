@@ -1,0 +1,48 @@
+<style>
+  .navbar {
+    transition: all 0.5s ease; /* Add a transition for the animation */
+  }
+  .hide-navbar {
+    transform: translateY(100%); /* Move the navbar off the screen */
+  }
+  .navbar-brand{
+    padding-bottom: 20px;
+  }
+</style>
+<nav id="navbar" class="navbar bg-light d-flex justify-content-center fixed-bottom">
+      <a class="navbar-brand" href="#">
+        <a class="nav-item nav-link" href=""><i class="fa-solid text-dark fa-lg fa-house"></i></a>
+      </a>
+      <a class="navbar-brand" href="#">
+        <a class="nav-item nav-link" href="{% url 'feed:feed' %}"><i class="fa-solid text-dark fa-lg fa-bolt"></i></i></a>
+      </a>
+      <a class="navbar-brand" href="#">
+        <a class="nav-item nav-link" href="{% url 'feed:createpost' %}"><i class="fa-solid text-dark fa-2xl fa-circle-plus"></i></a>
+      </a>
+      <a class="navbar-brand" href="#">
+        <a class="nav-item nav-link" href="{% url 'cart:cart' %}"><i class="fa-solid text-dark fa-lg fa-cart-shopping"></i></a>
+      </a>
+      <a class="navbar-brand" href="#">
+        <a class="nav-item nav-link" href="{% url 'profile:profile' %}"><i class="fa-solid text-dark fa-lg fa-user"></i></a>
+      </a>
+      <a class="navbar-brand">
+      </a>
+      <a class="navbar-brand" href="#">
+        </a>
+</nav>
+
+
+<script>
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos < currentScrollPos) {
+      document.getElementById("navbar").classList.add("hide-navbar");
+    } else {
+      document.getElementById("navbar").classList.remove("hide-navbar");
+    }
+    prevScrollpos = currentScrollPos;
+  }
+</script>
+
+
