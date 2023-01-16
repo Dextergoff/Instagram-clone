@@ -22,8 +22,8 @@
     left: 50%; 
     transform: translate(-50%, -50%); 
     margin: 0 auto; 
-    width: 35%; 
-    height: 35%;
+    width: 20%; 
+    height: 20%;
     }
     #price{
         height: 25px;
@@ -52,7 +52,6 @@
         padding-right: 5px;
         padding-left: 5px;
     }
-   
 .like-button {
   position: relative;
   background: transparent;
@@ -68,13 +67,34 @@
 }
 @keyframes grow-shrink {
   0% {
-    transform: scale(1);
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.9);
+  }
+  30% {
+    transform: scaleY(0.8);
+  }
+  40% {
+    transform: scaleY(0.7);
   }
   50% {
-    transform: scale(2);
+    transform: scaleY(0.8);
+  }
+  60% {
+    transform: scaleY(0.9);
+  }
+  70% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleX(1.2);
+  }
+  90% {
+    transform: scaleX(1.1);
   }
   100% {
-    transform: scale(1);
+    transform: scaleX(1);
   }
 }
     </style>
@@ -107,13 +127,18 @@
             </div>
             <div id="like-{{ post.pk }}">
                 <div class="reloaded-divs-{{ post.pk }}">
-            <div id="buttons" class="d-flex justify-content-start">
+            <div id="buttons" class="d-flex justify-content-start"> 
                 <a href="{% url 'cart:additem' pk=post.pk %}"><i class="text-dark hover:text-warning fa-solid fa-xl fa-shopping-cart"></i></a>
                 <a href="{% url 'cart:additem' pk=post.pk %}"><i class="text-muted fa-regular fa-xl fa-bookmark"></i></a>
                 {% if user in post.likes.all %}
-                <div onclick="unlike(classname='unlike-button-',pk='{{post.pk}}')" class="unlike-button-{{post.pk}}"><i class="fa-regular text-danger fa-xl fa-heart"></i></div>
+                <div onclick="unlike(classname='unlike-button-',pk='{{post.pk}}')" class="unlike-button-{{post.pk}}">
+                    <i class="fa-solid fa-xl text-danger fa-heart"></i>1
+                </div>
                 {% else %}
-                <div onclick="like(classname='like-button-',pk='{{post.pk}}')" class="like-button-{{post.pk}}"><i class="fa-regular fa-xl fa-heart"></i></div>
+                <div onclick="like(classname='like-button-',pk='{{post.pk}}')" class="like-button-{{post.pk}}">
+                    <i class="fa-regular fa-xl fa-heart"></i>
+                    {{ post.likes.count }}
+                </div>
                 {%endif%}
              
                 <div style="cursor: pointer;" onclick="show(pk='{{ post.pk }}')" id="toggle-comments"><i class="text-muted fa-solid fa-regular fa-xl fa-comment-dots"></i></div>
@@ -139,11 +164,10 @@
 function like(classname,pk){
 const button = document.querySelector(`.${classname}${pk}`);
     button.style.animation = "none";
-    setTimeout(() => {
-        button.style.animation = "grow-shrink .5s ease";
-        button.style.color = "#df4759";
-    }, 10);
+    button.style.animation = "grow-shrink .4s ease";
+    button.style.color = "#df4759";
     var csrf_token = getCookie("csrftoken");
+    setTimeout(() => {
     $.ajax({
         url: '/addlike/' + pk,
         type: "POST",
@@ -155,19 +179,16 @@ const button = document.querySelector(`.${classname}${pk}`);
             if (response.status === "success") {
                 console.log("Item added successfully!");
                 $("#like-"+pk).load("#refreshDivID-"+pk+" .reloaded-divs-"+pk+" > *");
+                
 
             }}
     })
-  
+}, 300)
 }
 
 function unlike(classname,pk){
 const button = document.querySelector(`.${classname}${pk}`);
-    button.style.animation = "none";
-    setTimeout(() => {
-        button.style.animation = "grow-shrink .5s ease";
-        button.style.color = "#000";
-    }, 10);
+   
     var csrf_token = getCookie("csrftoken");
     $.ajax({
         url: '/unlike/' + pk,
@@ -181,7 +202,8 @@ const button = document.querySelector(`.${classname}${pk}`);
                 console.log("Item removed successfully!");
                 $("#like-"+pk).load("#refreshDivID-"+pk+" .reloaded-divs-"+pk+" > *");
 
-
+                button.style.animation = "none";
+                 button.style.color = "#000";
             }}
     })
    
