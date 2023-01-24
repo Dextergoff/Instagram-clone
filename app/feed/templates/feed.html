@@ -4,54 +4,39 @@
 <head>
 
 <style>
-    .d-flex{
-        padding-top: 20px;
-        gap: 40px;
-    }
 
-    #img {
+#img {
     max-height: 100%;
     max-width: 100%;
 
 }
-/* sizing is fucked */
- 
-    .post{
-    position: absolute;
-    top: 30%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    margin: 0 auto; 
-    width: 20%; 
-    height: 20%;
-    }
-    #price{
-        height: 25px;
-        padding-top: 5px;
-        width: auto;
-        padding-left: 10px;
-        padding-right: 10px;
+.post{
+position: absolute;
+top: 30%; 
+left: 50%; 
+transform: translate(-50%, -50%); 
+margin: 0 auto; 
+width: 30vw; 
+height: 30vw;
+}
+.user{
+padding-right: 5px;
+padding-left: 5px;
+}
+.price{
+padding-right: 5px;
+color:#4FD146;
 
-    }
-    .user{
-        padding-right: 5px;
-        padding-left: 5px;
+}
+#hashtag{
+padding-left: 5px;
+padding-right: 5px;
 
-    }
-    .price{
-        padding-right: 5px;
-        color:#4FD146;
-
-    }
-    #hashtag{
-        padding-left: 5px;
-        padding-right: 5px;
-
-    }
-    #buttons{
-        padding-right: 5px;
-        padding-left: 5px;
-    }
+}
+#buttons{
+padding-right: 5px;
+padding-left: 5px;
+}
 .like-button {
   position: relative;
   background: transparent;
@@ -67,40 +52,28 @@
 }
 @keyframes grow-shrink {
   0% {
-    transform: scaleY(1);
+    transform: scale(0.9);
   }
   20% {
-    transform: scaleY(0.9);
-  }
-  30% {
-    transform: scaleY(0.8);
-  }
-  40% {
-    transform: scaleY(0.7);
-  }
-  50% {
-    transform: scaleY(0.8);
-  }
-  60% {
-    transform: scaleY(0.9);
-  }
-  70% {
-    transform: scaleY(1);
-  }
-  80% {
-    transform: scaleX(1.2);
+    transform: scale(0.8);
   }
   90% {
-    transform: scaleX(1.1);
+    transform: scale(0.9);
   }
   100% {
-    transform: scaleX(1);
+    transform: scale(1.0);
   }
 }
-    </style>
+.buttons{
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+}
+</style>
 </head>
+
 <div class="post">
-    {% for post in posts %}
+{% for post in posts %}
     <div id="card" class=" border-bottom shadow rounded mb-5">
         <div class="mb-3">
         {% for i in post.images.all %}
@@ -123,53 +96,47 @@
                    </a>
                    {% endfor %}
                 </div>
-          
             </div>
-            <div id="like-{{ post.pk }}">
+            <div id="refreshdivs-{{ post.pk }}">
                 <div class="reloaded-divs-{{ post.pk }}">
-            <div id="buttons" class="d-flex justify-content-start"> 
-                <a href="{% url 'cart:additem' pk=post.pk %}"><i class="text-dark hover:text-warning fa-solid fa-xl fa-shopping-cart"></i></a>
-                <a href="{% url 'cart:additem' pk=post.pk %}"><i class="text-muted fa-regular fa-xl fa-bookmark"></i></a>
-                {% if user in post.likes.all %}
-                <div onclick="unlike(classname='unlike-button-',pk='{{post.pk}}')" class="unlike-button-{{post.pk}}">
-                    <i class="fa-solid fa-xl text-danger fa-heart"></i>1
+                    <div id="buttons" class="buttons"> 
+                        <div class="cart-{{ post.pk }}" onclick="addtocart(classname='cart-',pk='{{post.pk}}')">
+                            <i class="fa-solid fa-xl fa-shopping-cart"></i>
+                        </div>
+                        {% if user in post.likes.all %}
+                        <!-- same thing as favorites just for likes -->
+                        <div onclick="unlike(classname='unlike-button-',pk='{{post.pk}}')" class="unlike-button-{{post.pk}}">
+                            <i class="fa-solid fa-xl text-danger fa-heart"></i>
+                        </div>
+                        {% else %}
+                        <div onclick="like(classname='like-button-',pk='{{post.pk}}')" class="like-button-{{post.pk}}">
+                            <i class="fa-solid fa-xl fa-heart"></i>
+                        </div>
+                        {%endif%}
+                        <div style="cursor: pointer;" onclick="show(pk='{{ post.pk }}')" id="toggle-comments"><i class="text-dark fa-solid fa-regular fa-xl fa-comment-dots"></i></div>
+                    </div>
                 </div>
-                {% else %}
-                <div onclick="like(classname='like-button-',pk='{{post.pk}}')" class="like-button-{{post.pk}}">
-                    <i class="fa-regular fa-xl fa-heart"></i>
-                    {{ post.likes.count }}
-                </div>
-                {%endif%}
-             
-                <div style="cursor: pointer;" onclick="show(pk='{{ post.pk }}')" id="toggle-comments"><i class="text-muted fa-solid fa-regular fa-xl fa-comment-dots"></i></div>
-                <!-- comments will be a scrollable sidebar that pops out of right side of post when presses -->
             </div>
         </div>
     </div>
-        </div>
-    </div>
-    
     {% endfor %}
-</div>
-</div>
 
 {% endblock content %}
 
 <script>
-    function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-    }
+function getCookie(name) {
+var value = "; " + document.cookie;
+var parts = value.split("; " + name + "=");
+if (parts.length == 2) return parts.pop().split(";").shift();
+}
 function like(classname,pk){
 const button = document.querySelector(`.${classname}${pk}`);
     button.style.animation = "none";
-    button.style.animation = "grow-shrink .4s ease";
+    button.style.animation = "grow-shrink .1s ease";
     button.style.color = "#df4759";
     var csrf_token = getCookie("csrftoken");
-    setTimeout(() => {
     $.ajax({
-        url: '/addlike/' + pk,
+        url: '/like/' + pk,
         type: "POST",
         data: {
             "pk":pk,
@@ -178,14 +145,13 @@ const button = document.querySelector(`.${classname}${pk}`);
         success: function(response) {
             if (response.status === "success") {
                 console.log("Item added successfully!");
-                $("#like-"+pk).load("#refreshDivID-"+pk+" .reloaded-divs-"+pk+" > *");
+                $("#refreshdivs-"+pk).load("#refreshdivs-"+pk+" .reloaded-divs-"+pk+" > *");
                 
 
             }}
     })
-}, 300)
-}
 
+}
 function unlike(classname,pk){
 const button = document.querySelector(`.${classname}${pk}`);
    
@@ -200,7 +166,7 @@ const button = document.querySelector(`.${classname}${pk}`);
         success: function(response) {
             if (response.status === "success") {
                 console.log("Item removed successfully!");
-                $("#like-"+pk).load("#refreshDivID-"+pk+" .reloaded-divs-"+pk+" > *");
+                $("#refreshdivs-"+pk).load("#refreshdivs-"+pk+" .reloaded-divs-"+pk+" > *");
 
                 button.style.animation = "none";
                  button.style.color = "#000";
@@ -208,6 +174,24 @@ const button = document.querySelector(`.${classname}${pk}`);
     })
    
 }
-    
+function addtocart(classname,pk){
+    button = document.querySelector(`.${classname}${pk}`)
+    button.style.animation = "none";
+    button.style.animation = "grow-shrink .1s ease";
+    var csrf_token = getCookie("csrftoken")
+    // gets csfrtoken from cookies
+    $.ajax({
+        url: "/cart/additem/" + pk,
+        method: "POST",
+        data:{
+            csrfmiddlewaretoken: csrf_token
+        },
+        success: function(response){
+            $("#refresh-nav").load("#refresh-nav"+" .reloaded-nav> *");
 
+            
+        }
+    })
+    // ajax call to add user to favorites many to many field
+}
 </script>

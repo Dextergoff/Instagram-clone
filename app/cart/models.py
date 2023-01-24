@@ -1,6 +1,6 @@
 from django.db import models
 from feed.models import Post
-from django.contrib.auth.models import User
+from center.user.models import User
 from crum import get_current_user
 
 class CartManager(models.Manager):
@@ -19,8 +19,8 @@ class Item(models.Model):
     paid = models.BooleanField(default=False)
     date = models.DateField(blank=True, null=True)
     def __str__(self):
-        return self.post.title
-    
+        return self.post.desc
+
 class Cart(models.Model):
     items = models.ManyToManyField(Item)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,13 +28,12 @@ class Cart(models.Model):
     paid = models.BooleanField(default=False)
     date = models.DateField(blank=True, null=True)
     objects = CartManager()
-    def cartotal(self):
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         sum = 0
         for i in self.items.all():
             sum += i.post.price * i.qty
         Cart.objects.update(total = sum)
-        return sum
-    #adds together manytomany field and returns total on request
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

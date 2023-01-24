@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from center.user.models import User
 class Image(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField()
+    
 class Hashtag(models.Model):
     title = models.CharField(max_length=99)
     def __str__(self):
@@ -16,14 +17,10 @@ class Post(models.Model):
     title = models.CharField(max_length=40)
     price = models.DecimalField(max_digits=99, decimal_places=2)
     desc = models.CharField(max_length=200)
-    images = models.ManyToManyField(Image)
-    hashtags = models.ManyToManyField(Hashtag)
-    favorites = models.ManyToManyField(User, related_name="favorites")
-    likes = models.ManyToManyField(User, related_name="likes")
-    comments = models.ManyToManyField(CommentObj)
-    @property
-    def finalprice(self):
-        if str(self.price).endswith('.00'):
-            return int(self.price)
-        else:
-            return self.price
+    images = models.ManyToManyField(Image,blank=True)
+    image = models.ImageField(blank=True,null=True)
+    hashtags = models.ManyToManyField(Hashtag,blank=True)
+    favorites = models.ManyToManyField(User, related_name="favorites",blank=True)
+    likes = models.ManyToManyField(User, related_name="likes",blank=True)
+    comments = models.ManyToManyField(CommentObj, blank=True)
+  

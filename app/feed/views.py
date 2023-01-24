@@ -6,22 +6,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cart.models import Cart
 from django.http import JsonResponse
+from rest_framework.response import Response
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
 
-def ajaxaddlike(request,pk):
+def ajaxlike(request,pk):
     post = Post.objects.get(pk = pk)
     like = request.POST.get("item")
     post.likes.add(request.user)
     post.save()
     return JsonResponse({"status": "success"})
-
+    
 def ajaxunlike(request,pk):
     post = Post.objects.get(pk = pk)
     like = request.POST.get("item")
     post.likes.remove(request.user)
     post.save()
     return JsonResponse({"status": "success"})
-
-
 
 class HashtagView(View):
     def get(self, request, hashtag):
@@ -45,18 +46,18 @@ class UploadView(View):
                 user=request.user, 
                 price = price,
                 )
-            for word in desc.split():
-                if word[0] == '#':
-                #check first chacacter of word
-                    try:
-                        hashtag = Hashtag.objects.get(title = word[1:])
-                        post.hashtags.add(hashtag)
+            # for word in desc.split():
+            #     if word[0] == '#':
+            #     #check first chacacter of word
+            #         try:
+            #             hashtag = Hashtag.objects.get(title = word[1:])
+            #             post.hashtags.add(hashtag)
 
-                    except:
-                        hashtag = Hashtag.objects.create(title = word[1:])
-                        post.hashtags.add(hashtag)
-                    desc = desc.replace(word, "")
-                    print(desc)
+            #         except:
+            #             hashtag = Hashtag.objects.create(title = word[1:])
+            #             post.hashtags.add(hashtag)
+            #         desc = desc.replace(word, "")
+            #         print(desc)
             images = request.FILES.getlist('image')
             for i in images:
                 image = Image.objects.create(user = request.user, image=i)
@@ -71,7 +72,12 @@ class PostListView(LoginRequiredMixin ,ListView):
     template_name = "feed.html"
     def get(self, request):
         posts = Post.objects.all()
+        cart = Cart.objects.get_or_create(user=request.user, paid=False)
+        cart = Cart.objects.get(user=request.user, paid=False)
+       
+        # print out the vocabulary of our bag-of-words:
         context = {
+            'cart':cart,
             'posts':posts,
         }
         return render(request, "feed.html", context)

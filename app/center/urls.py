@@ -6,6 +6,7 @@ from django.contrib.auth.views import LogoutView, LoginView
 from cart.views import StripeIntentView
 from django.conf.urls.static import static
 from django.conf import settings
+
 app_name = "center"
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -16,7 +17,9 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("signup/", SignupView.as_view(), name="signup"),
-    path('create-payment-intent/', StripeIntentView.as_view(), name="create=payment-intent")
+    path('create-payment-intent/', StripeIntentView.as_view(), name="create=payment-intent"),
+    path('api/', include('api.urls', namespace='api')),
+    path('api/', include(('center.routers', 'center'), namespace='center-api')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

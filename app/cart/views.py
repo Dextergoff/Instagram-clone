@@ -14,6 +14,7 @@ from datetime import date
 from django.contrib import messages
 from center.decorators import cart_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.decorators import api_view
 stripe.api_key = 'sk_test_51MHX5JJCVLOPsfZQaE7TfdhvWmppBC0KrPY9awBwQNpF1IFxvuh40lpzngQZj6RjhBYIR20w3bMJphk3txedRtmk00umjPFUf3'
 
 @login_required(login_url="/landing/")
@@ -261,3 +262,4 @@ class Stripesuccess(View):
             "items":items
         }
         return render(request, "Cartcomplete.html", context)
+

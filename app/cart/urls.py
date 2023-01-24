@@ -4,7 +4,7 @@ from cart.views import add_to_cart,cart_view,RemoveFromCart,ChangeQty,checkout_v
 app_name = "cart"
 urlpatterns = [
     path('', cart_view, name="cart"),
-    path('additem/<pk>/', add_to_cart, name="additem"),
+    path('additem/<pk>', add_to_cart, name="additem"),
     path('removeitem/<pk>/', RemoveFromCart.as_view(), name="removeitem"),
     path('modqty/<pk>', ChangeQty.as_view(), name="modqty"),
     path('checkout/', checkout_view, name="checkout"),

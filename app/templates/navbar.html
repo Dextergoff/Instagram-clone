@@ -1,3 +1,5 @@
+{% include "base.html" %}
+{% block content %}
 <style>
   .navbar {
     transition: all 0.5s ease; /* Add a transition for the animation */
@@ -9,27 +11,40 @@
     padding-bottom: 20px;
   }
 </style>
-<nav id="navbar" class="navbar bg-light d-flex justify-content-center fixed-bottom">
+<div id="refresh-nav">
+  <div class="reloaded-nav">
+    <nav id="navbar" class="navbar bg-light d-flex justify-content-center fixed-bottom">
+  
+      <div class="notification-bell">
+        <i class="fa fa-bell"></i>
+        <span class="notification-count">1</span>
+      </div>
       <a class="navbar-brand" href="#">
-        <a class="nav-item nav-link" href=""><i class="fa-solid text-dark fa-lg fa-house"></i></a>
+        <a class="nav-item nav-link" href="{% url 'cart:cart' %}"><i class="fa-solid text-dark fa-xl fa-house"></i></a>
       </a>
       <a class="navbar-brand" href="#">
-        <a class="nav-item nav-link" href="{% url 'feed:feed' %}"><i class="fa-solid text-dark fa-lg fa-bolt"></i></i></a>
+        <a class="nav-item nav-link" href="{% url 'feed:createpost' %}"><i class="fa-solid text-dark fa-xl fa-circle-plus"></i></a>
       </a>
+      
+      <div class="cart">
+        <i class="fa fa-cart-shopping"></i>
+        {% if cart.items.count > 0 %}
+        <span class="cart-count">
+        {{ cart.items.count }}
+        </span>
+        {%endif%}
+      </div>
       <a class="navbar-brand" href="#">
-        <a class="nav-item nav-link" href="{% url 'feed:createpost' %}"><i class="fa-solid text-dark fa-2xl fa-circle-plus"></i></a>
-      </a>
-      <a class="navbar-brand" href="#">
-        <a class="nav-item nav-link" href="{% url 'cart:cart' %}"><i class="fa-solid text-dark fa-lg fa-cart-shopping"></i></a>
-      </a>
-      <a class="navbar-brand" href="#">
-        <a class="nav-item nav-link" href="{% url 'profile:profile' %}"><i class="fa-solid text-dark fa-lg fa-user"></i></a>
+        <a class="nav-item nav-link" href="{% url 'profile:profile' %}"><i class="fa-solid text-dark fa-xl fa-user"></i></a>
       </a>
       <a class="navbar-brand">
       </a>
       <a class="navbar-brand" href="#">
         </a>
+        
 </nav>
+</div>
+</div>
 
 
 <script>
@@ -46,3 +61,48 @@
 </script>
 
 
+<style>
+  .notification-bell {
+  position: relative;
+  padding-left: 10px;
+}
+
+.notification-bell i {
+  font-size: 25px;
+  color: #000;
+}
+
+.notification-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 100%;
+  padding: 1px 5px;
+  font-size: 10px;
+}
+
+.cart {
+  position: relative;
+  padding-left: 10px;
+}
+
+.cart i {
+  font-size: 25px;
+  color: #000;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 100%;
+  padding: 1px 5px;
+  font-size: 10px;
+}
+
+</style>
+{% endblock content %}
