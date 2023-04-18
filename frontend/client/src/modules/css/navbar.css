@@ -1,0 +1,6 @@
+.navbar {
+    transition: all 0.5s ease; /* Add a transition for the animation */
+  }
+#hidenavbar {
+    transform: translateY(100%); /* Move the navbar off the screen */
+}

@@ -1,0 +1,42 @@
+.custom-modal {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    padding: 0;
+  }
+  
+  .modal-body {
+    padding: 0;
+    border: none;
+    color: transparent;
+  }
+  
+.comments-container{
+  word-wrap: break-word;
+
+    width: 25vw;
+}
+.comment-section-container{
+  bottom:0px;
+    width: 25vw;
+}
+  .img-container {
+    width: 55vh;
+    height: 90vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  a:hover{
+    cursor: pointer;
+  }
+  
+  .img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }

@@ -9,13 +9,25 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from django.conf import settings
 from pathlib import Path
-
+from datetime import timedelta
 import os 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+PAGEIFY = {
+    'QUERYSET_KEY': 'page',
+    'EOP_KEY': 'end_of_data',
+    'PC_KEY': 'post_count',
+}
+
+QUERYING = {
+    'ND_KEY': 'nested_data',
+    'DATA_KEY': 'data',
+    'PAGE_KEY': 'page',
+    'PARENT_KEY':'parent'
+}  
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -46,48 +58,32 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "fontawesomefree",
-    "home",
-    "cart",
-    "feed",
-    "uprofile",
+    "posts",
+    "comments",
+    "users",
+    "profiles",
+    "hashtags",
     'django_countries',
     "localflavor",
     "crum",
     "rest_framework",
-    'corsheaders',
-    'center.user',
+    'rest_framework.authtoken'
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:8000"
-]
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://127.0.0.1:8000"
-]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'crum.CurrentRequestUserMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-}
 ROOT_URLCONF = "center.urls"
 
 TEMPLATES = [
@@ -107,6 +103,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "center.wsgi.application"
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:5000',
+
+]
 
 
 # Database
@@ -176,4 +179,22 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-AUTH_USER_MODEL = 'center_user.User'
+AUTH_USER_MODEL = 'users.UserAccount'
+SECRET_KEY=settings.SECRET_KEY
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dextergoff571@gmail.com'
+EMAIL_HOST_PASSWORD = 'sqixvnvbepnqrxlh'
+# store these values in an env
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),  
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+}
