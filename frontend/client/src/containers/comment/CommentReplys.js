@@ -16,7 +16,7 @@ const CommentReplys = (props) => {
   const useCachedData = splitApi.endpoints.getComments.useQueryState({skip});
 
   const  comment = useCachedData.data?.data.find(
-    (item) => item.pk === Number(props.comment.pk)
+    (item) => item.pk === Number(props.replysfor.pk)
   );
 
 
@@ -52,16 +52,13 @@ const CommentReplys = (props) => {
             <></>
           }
           <CommentInteractionBar
-            data={reply}
-            parent={comment.pk}
-            page={page}
-            isreply={true}
-            isnestedreply={true}
+            data={{comment, replyingto:comment.username, page}}
+// comment here is the parent of reply
           />
         </div>
       ))}
       {comment.replycount > 0 && !(data.end_of_data) ?
-        <div onClick={() => loadReplys(props.comment.pk)} className="text-muted mb-2">view replys</div>
+        <div onClick={() => loadReplys(props.replysfor.pk)} className="text-muted mb-2">view replys</div>
         : <></>
       }
       {/* ADD PAGINATION */}

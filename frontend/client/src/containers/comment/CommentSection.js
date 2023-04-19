@@ -8,19 +8,21 @@ import CommentInteractionBar from "./CommentInteractionBar";
 import CommentReplys from "./CommentReplys";
 import getQueryLength from "containers/modules/jobs/getQueryLength";
 const CommentSection = (prop) => {
+  
   const [commentState, setCommentState] = useState({
     page: 1,
   });
-  const {page } = commentState;
-  const parent = prop
-  const pk = parent.pk;
+  const { page } = commentState;
+
+  const pk = prop.pk;
   const { data = [] } = useGetCommentsQuery({ pk, page });
-  
+
   const loadMoreComments = () => {
     setCommentState({ ...commentState, page: page + 1 });
   };
 
-  if (getQueryLength(data) > 0 )
+  if (getQueryLength(data) > 0)
+  // return if data is not empty
     return (
       <div className="comments-container ">
         {data?.data.map((comment) => (
@@ -34,12 +36,9 @@ const CommentSection = (prop) => {
               </div>
             </div>
             <CommentInteractionBar
-              data={comment}
-              parent={comment.pk}
-              page={page}
-              isreply = {true}
+              data={{comment, page}}
             />
-            <CommentReplys comment={comment} />
+            <CommentReplys replysfor={comment} />
           </div>
         ))}
         {!data.end_of_data ? (

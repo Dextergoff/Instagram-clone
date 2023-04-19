@@ -31,7 +31,7 @@ class LikePost(viewsets.ViewSet):
             serializer = PostSerializer(post)
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-        
+        # likes are slow on windows machine ??
 
 class PostsView(viewsets.ViewSet):
     serializer = PostSerializer

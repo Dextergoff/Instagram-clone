@@ -46,7 +46,7 @@ class PostSerializer(serializers.ModelSerializer):
 class LikePostSerializer(serializers.Serializer):
     requser = serializers.CharField()
     pk = serializers.CharField()
-
+    likecount = serializers.IntegerField( required=False)
     def count_likes(self, post):
         post.likecount = post.likes.count()
 
@@ -64,6 +64,7 @@ class LikePostSerializer(serializers.Serializer):
         post = Post.objects.get(pk=data['pk'])
         self.proccess_like(post=post, user=user)
         post.save()
+        return post
 
 class CreatePostSerializer(serializers.Serializer):
 

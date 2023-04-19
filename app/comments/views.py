@@ -58,15 +58,12 @@ class CreateComment(viewsets.ViewSet):
         return Response(data)
         
 class CommentsView(viewsets.ViewSet):
-    
-    def get_objs(self, pk):
-        queryset = Comment.objects.filter(parent=pk).order_by("-date").filter()
-        return queryset
-
+  
     def comments(self, request,*args, **kwargs):
         page = kwargs['page']
-        pk = kwargs['page']
-        queryset = self.get_objs(pk)
+        pk = kwargs['pk']
+        queryset = Comment.objects.filter(parent=pk).order_by("-date").filter()
+
         queryset = pageify(queryset=queryset, page=page, items_per_page=50)
         serializer = CommentSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {

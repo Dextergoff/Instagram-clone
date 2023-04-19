@@ -11,11 +11,7 @@ const UpdateComments = ({ parent, dispatch, result, page }) => {
                 queryName,
                 args,
                 (data) => {
-                    if(isreply){
                         data.data.unshift(result.data.comment);
-                    }else{
-                        data.data.unshift(result.data.comment);
-                    }
                 }
             )
         )
