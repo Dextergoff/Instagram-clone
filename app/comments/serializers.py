@@ -44,6 +44,7 @@ class LikeCommentSerializer(serializers.ModelSerializer):
             'pk',
             'likes',
             'likecount',
+            'isreply',
         ]
 
 class CreateCommentSerializer(serializers.Serializer):
