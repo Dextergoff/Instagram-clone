@@ -62,7 +62,7 @@ const PostModal = () => {
                 addArgument={addArgument}
                 post={data}
               />
-              <CreateComment data={{post:data}} />
+              <CreateComment post={data} />
               <CommentSection pk={data.pk} />
             </div>
           </Modal.Body>
