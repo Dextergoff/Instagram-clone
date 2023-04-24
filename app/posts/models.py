@@ -20,6 +20,3 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name="likes",blank=True)
     date = models.DateTimeField(default = now )
     likecount = models.IntegerField(default=0)
-    @staticmethod
-    def like_added(sender, instance, created, **kwargs):
-        print('recieved')
