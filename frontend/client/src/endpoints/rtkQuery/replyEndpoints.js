@@ -10,7 +10,9 @@ splitApi.injectEndpoints({
         url: `${callto}/replys/${pk}/${page}`,
         method: "get",
       }),
-      
+      serializeQueryArgs: ({ getReplys }) => {
+        return getReplys;
+      },
     }),
 
     createReply: builder.mutation({

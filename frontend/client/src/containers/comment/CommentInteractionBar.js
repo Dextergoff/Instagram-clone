@@ -20,30 +20,25 @@ const CommentInteractionBar = (props) => {
   const [likeComment, result] = useLikeCommentMutation();
   
   const dispatch = useDispatch();
-  const replyingto = props.data.replyingto ? props.data.replyingto : null
-  const page = props.data.page;
-  const comment = props.data.comment;
+  // const replyingto = props.data.replyingto ? props.data.replyingto : null
+  const page = props.page;
+  const comment = props.comment;
   const pk = comment.pk;
 
   const user = userobj?.pk;
 
 
-  const openReplyForm = () => {
-    setInteractionSate({ ...interactionState, display: display ? false : true })
-  }
 
   useEffect(() => {
     result.status === "fulfilled" &&
      updateLikes({ dispatch, result,pk,page})
+     console.log(result)
   }, [ result,pk,page,dispatch,]);
-// updates likes if everything goes well
   return (
+
     <>
       <div className="d-flex gap-2">
-        <div onClick={() => openReplyForm()}>
-          <FontAwesomeIcon size="sm" className="text-light" icon={faReply} />
-        </div>
-
+    
         <div
           onClick={() => likeComment({ pk, user })}
           name="like"
@@ -56,16 +51,11 @@ const CommentInteractionBar = (props) => {
         >
           <FontAwesomeIcon size="sm" icon={faHeart} />
         </div>
-        <div className="text-light">{comment.likecount}</div>
-
       </div>
-      <div className={`replyform ${display ? '' : 'd-none'}`}>
-        <CreateComment data={{comment, page, replyingto}} />
-      </div>
+      
     </>
   );
 
 };
 
 export default CommentInteractionBar;
-// SIMPLIFY THE Frontend comments code

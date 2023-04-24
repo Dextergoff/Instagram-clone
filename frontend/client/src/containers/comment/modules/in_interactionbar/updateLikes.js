@@ -7,16 +7,15 @@ return(
         splitApi.util.updateQueryData(
           queryName,
           { pk, page },
-          (data) => {
-            let comment = data.data.find(
+          (response) => {
+            let comment = response.data.find(
               (item) => item.pk === result.data.pk
             );
             comment.likes = result.data.likes;
             comment.likecount = result.data.likecount;
           }
         )
-    //   TODO REPLY LIKES NOT UPDATING 
-)
+  )
 )
 }
 

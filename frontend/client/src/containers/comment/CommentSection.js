@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import CommentInteractionBar from "./CommentInteractionBar";
 import CommentReplys from "./CommentReplys";
 import getQueryLength from "containers/modules/jobs/getQueryLength";
+import CreateComment from "./CreateComment";
 const CommentSection = (prop) => {
   
   const [commentState, setCommentState] = useState({
@@ -35,9 +36,12 @@ const CommentSection = (prop) => {
                 {comment.body}
               </div>
             </div>
-            <CommentInteractionBar
-              data={{comment, page}}
+            <div className="d-flex gap-2">
+              <CommentInteractionBar
+              comment ={comment} page = {page}
             />
+            <CreateComment comment = {comment} page = {page} hideform={true} />
+            </div>
             <CommentReplys replysfor={comment} />
           </div>
         ))}

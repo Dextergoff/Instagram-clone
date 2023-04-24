@@ -2,6 +2,7 @@ import { useGetReplysQuery } from "endpoints/rtkQuery/replyEndpoints";
 import CommentInteractionBar from "./CommentInteractionBar";
 import React, { useState } from "react";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
+import CreateComment from "./CreateComment";
 const CommentReplys = (props) => {
 
   const [replyState, setReplySate] = useState({
@@ -40,7 +41,7 @@ const CommentReplys = (props) => {
 
                 </div>
                 : <></>}
-              <div className=" mr-auto fw-bold text-light">
+              <div className=" mr-auto fw-bold text-muted">
                 {reply.replyingto}
               </div>
 
@@ -51,10 +52,12 @@ const CommentReplys = (props) => {
             :
             <></>
           }
-          <CommentInteractionBar
-            data={{comment, replyingto:comment.username, page}}
-// comment here is the parent of reply
-          />
+           <div className="d-flex gap-2">
+            <CommentInteractionBar
+              comment = {reply} page = {page}
+            />
+            <CreateComment comment = {comment} replyingto={reply.username} page = {page} hideform={true} />
+            </div>
         </div>
       ))}
       {comment.replycount > 0 && !(data.end_of_data) ?

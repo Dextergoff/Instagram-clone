@@ -18,8 +18,9 @@ splitApi.injectEndpoints({
       serializeQueryArgs: ({ getComments }) => {
         return getComments;
       },
+
       merge: (currentCache, newItems) => {
-        handleNewComments({...currentCache, ...newItems})
+        handleNewComments({currentCache, newItems})
       },
 
       forceRefetch({ currentArg, previousArg }) {
