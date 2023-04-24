@@ -37,25 +37,14 @@ class CommentSerializer(serializers.ModelSerializer):
         ] 
 
  
-class LikeCommentSerializer(serializers.Serializer):
-    
-    def count_likes(self,comment):
-        comment.likecount = comment.likes.count()
-
-    def proccess_like(self, *args, **kwargs):
-        user = kwargs['user']
-        comment = kwargs['comment']
-        if user in comment.likes.all():
-            comment.likes.remove(user)
-        else:
-            comment.likes.add(user)
-        self.count_likes(comment=comment)
-
-    def add_like(self, data):
-        user = User.objects.get(pk=data['user'])
-        comment = Comment.objects.get(pk=data['pk'])
-        self.proccess_like(comment=comment, user=user)
-        comment.save()
+class LikeCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'pk',
+            'likes',
+            'likecount',
+        ]
 
 class CreateCommentSerializer(serializers.Serializer):
 

@@ -18,16 +18,16 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import update_last_login
 from django.shortcuts import get_object_or_404
 from posts.models import Post
-from posts.serializers import *
+from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 class ProfilePosts(viewsets.ViewSet):
-    serializer = PostSerializer
+    serializer = GalleryPostSerializer
 
     def main(self, request, pk, page):
-        queryset = Post.objects.filter(user=pk).order_by("-date")
+        queryset = Post.objects.filter(user=pk).order_by("-date").prefetch_related('likes').select_related('user')
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = PostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        serializer = GalleryPostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],

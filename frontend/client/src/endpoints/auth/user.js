@@ -234,7 +234,6 @@ export const checkAuth = createAsyncThunk("users/verify",
       const { dispatch } = thunkAPI;
       if (res.status === 200) {
         dispatch(getUser());
-        return data;
       } else if (res.status === 400) {
         dispatch(refresh());
       } else {

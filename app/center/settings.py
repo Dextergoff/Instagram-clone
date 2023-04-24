@@ -64,21 +64,20 @@ INSTALLED_APPS = [
     "hashtags",
     "rest_framework",
     'rest_framework.authtoken',
-    "corsheaders"
+    "corsheaders",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'crum.CurrentRequestUserMiddleware',
-    'django.middleware.common.CommonMiddleware',
-
 ]
 
 ROOT_URLCONF = "center.urls"
@@ -101,25 +100,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "center.wsgi.application"
 
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://localhost:5000',
-
-]
-
-
+CORS_ALLOW_ALL_ORIGINS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": 'django.db.backends.postgresql_psycopg2',
+        "NAME": "backend",
+        "USER": 'postgres',
+        "PASSWORD": 'boderlands',
+        "HOST": "localhost",
+        "PORT": '',
     }
 }
 
@@ -142,6 +134,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -168,10 +165,8 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "login"
-STRIPE_PUBLIC_KEY = "pk_test_51MHX5JJCVLOPsfZQgO1lGdRH0yBdkIECqMinClzBhCLcuhWgAQx2ekz0hTIIK977AnfuesBaeTv7OwsQyROWM98b00k6hacgNE"
-STRIPE_SECRET_KEY = "sk_test_51MHX5JJCVLOPsfZQaE7TfdhvWmppBC0KrPY9awBwQNpF1IFxvuh40lpzngQZj6RjhBYIR20w3bMJphk3txedRtmk00umjPFUf3"
 STRIPE_WEBHOOK_SECRET = ""
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), ) 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/' 

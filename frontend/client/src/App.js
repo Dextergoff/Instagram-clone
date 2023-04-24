@@ -32,8 +32,6 @@ const App = () => {
     <Fragment>
       <Routes location={background || location}>
         <Route path="/" element={<ProtectedRoute><PostsPage /></ProtectedRoute>} />
-    
-
         <Route path="/create" element={<ProtectedRoute><CreatePostPage/></ProtectedRoute>} />
         <Route path="/h/:hashtag" element={<ProtectedRoute><HashtagPosts/></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage/></ProtectedRoute>}/>

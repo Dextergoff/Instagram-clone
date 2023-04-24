@@ -23,8 +23,9 @@ from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 class ReplyView(viewsets.ViewSet):
+    
     def replys(self,request,pk,page):
-            queryset = Comment.objects.filter(parent=pk, isreply=True).order_by("replyingto").filter()
+            queryset = Comment.objects.filter(parent=pk, isreply = True).order_by("replyingto").prefetch_related('likes').select_related('user')
             queryset = pageify(queryset=queryset, page=page, items_per_page=50)
             serializer = CommentSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
             response = {
@@ -38,13 +39,23 @@ class ReplyView(viewsets.ViewSet):
            
 class LikeComment(viewsets.ViewSet):
 
+    def proccess_like(self, comment ,user):
+        if user in comment.likes.all():
+            comment.likes.remove(user)
+            comment.likecount -= 1
+        else:
+            comment.likes.add(user)
+            comment.likecount += 1
+        comment.save(update_fields=['likecount'])
+        
+
     def like(self, request):
-        serializer = LikeCommentSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-        serializer.add_like(data=request.data)
-        queryset = Comment.objects.get(pk=request.data['pk'])
-        serializer = CommentSerializer(queryset)
+        print(request.data)
+        data = request.data
+        user = User.objects.select_related().get(pk=data['user'])
+        comment = Comment.objects.select_related().prefetch_related("likes").get(pk=data['pk'])
+        self.proccess_like(comment,user)
+        serializer = LikeCommentSerializer(comment)
         return Response(serializer.data)
 
          
@@ -62,8 +73,7 @@ class CommentsView(viewsets.ViewSet):
     def comments(self, request,*args, **kwargs):
         page = kwargs['page']
         pk = kwargs['pk']
-        queryset = Comment.objects.filter(parent=pk).order_by("-date").filter()
-
+        queryset = Comment.objects.filter(parent=pk).order_by("-date").prefetch_related('likes').select_related('user')
         queryset = pageify(queryset=queryset, page=page, items_per_page=50)
         serializer = CommentSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {

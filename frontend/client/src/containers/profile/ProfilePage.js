@@ -90,6 +90,7 @@ const ProfilePage = () => {
               <button className="btn" onClick={() => loadMorePosts()}>
                 {" "}
                 <FontAwesomeIcon size="xl" icon={faPlusCircle} />{" "}
+                {/* NOT WORKING */}
               </button>
             </div>
           ) : (

@@ -22,49 +22,29 @@ User = get_user_model()
 
 class PostSerializer(serializers.ModelSerializer):
     hashtags = serializers.StringRelatedField(many=True, read_only=True,)
-    images = serializers.StringRelatedField(many=True, read_only=True)
-
     class Meta:
         model = Post
         fields = [
             'pk',
             'user',
-            'desc',
             'image',
-            'images',
             'hashtags',
             'likes',
             'username',
             'title',
             'date',
             'likecount',
-            'commentcount',
-            'page',
         ]
 
 
-class LikePostSerializer(serializers.Serializer):
-    requser = serializers.CharField()
-    pk = serializers.CharField()
-    likecount = serializers.IntegerField( required=False)
-    def count_likes(self, post):
-        post.likecount = post.likes.count()
-
-    def proccess_like(self, *args, **kwargs):
-        user = kwargs['user']
-        post = kwargs['post']
-        if user in post.likes.all():
-            post.likes.remove(user)
-        else:
-            post.likes.add(user)
-        self.count_likes(post=post)
-
-    def add_like(self, data):
-        user = User.objects.get(pk=data['requser'])
-        post = Post.objects.get(pk=data['pk'])
-        self.proccess_like(post=post, user=user)
-        post.save()
-        return post
+class LikePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = [
+            'pk',
+            'likes',
+            'likecount',
+        ]
 
 class CreatePostSerializer(serializers.Serializer):
 

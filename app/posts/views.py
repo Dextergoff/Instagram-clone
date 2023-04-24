@@ -22,16 +22,26 @@ from .models import Post
 from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
+from django.db.models import Prefetch
 class LikePost(viewsets.ViewSet):
+
+    def proccess_like(self, post ,user):
+        if user in post.likes.all():
+            post.likes.remove(user)
+            post.likecount -= 1
+        else:
+            post.likes.add(user)
+            post.likecount += 1
+        post.save(update_fields=['likecount'])
+        
+
     def like(self, request):
-        serializer = LikePostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.add_like(data=request.data)
-            post = Post.objects.get(pk=request.data['pk'])
-            serializer = PostSerializer(post)
-            return Response(serializer.data)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-        # likes are slow on windows machine ??
+        data = request.data
+        user = User.objects.select_related().get(pk=data['requser'])
+        post = Post.objects.select_related().prefetch_related("likes").get(pk=data['pk'])
+        self.proccess_like(post,user)
+        serializer = LikePostSerializer(post)
+        return Response(serializer.data)
 
 class PostsView(viewsets.ViewSet):
     serializer = PostSerializer
@@ -45,7 +55,10 @@ class PageView(viewsets.ViewSet):
     serializer = PostSerializer
 
     def main(self, request, page):
-        queryset = Post.objects.all().order_by("-date").filter()
+        queryset = Post.objects.all().order_by("-date").prefetch_related(
+        Prefetch('likes'),
+        Prefetch('hashtags'))
+
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = PostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {

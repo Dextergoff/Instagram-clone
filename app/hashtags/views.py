@@ -20,15 +20,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .models import *
 from posts.models import *
-from posts.serializers import *
+from profiles.serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 class HashtagView(viewsets.ViewSet):
     def main(self, request, hashtag, page):
         hashtag = Hashtag.objects.get(title=hashtag)
-        queryset = Post.objects.filter(hashtags=hashtag).order_by("-date")
+        queryset = Post.objects.filter(hashtags=hashtag).order_by("-date").prefetch_related('hashtags')
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = PostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        serializer = GalleryPostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],

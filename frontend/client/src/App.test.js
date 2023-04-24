@@ -6,9 +6,7 @@ import { BrowserRouter} from "react-router-dom";
 test('renders learn react link', () => {
   render(
   <BrowserRouter> 
-    <ReduxTestProvider>
       <App/>
-    </ReduxTestProvider>
   </BrowserRouter>
   );
 });

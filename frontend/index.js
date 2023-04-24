@@ -30,13 +30,6 @@ app.use(resetPasswordSendMail)
 app.use(resetPassword)
 app.use(resetPasswordVerify)
 
-
-
-
-
-
-
-
 app.use(express.static('client/build'));
 
 app.get('*',(req,res)=>{
