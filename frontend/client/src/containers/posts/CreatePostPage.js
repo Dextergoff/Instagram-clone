@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import PostHeading from "./modules/shared/PostHeading";
 import BootstrapSpinner from "containers/modules/components/BootstrapSpinner";
 import ImagePreview from "./modules/in_createpost/ImagePreview";
+import ImageInput from "./modules/in_createpost/ImageInput";
+import { useEffect } from "react";
+import UserExists from "containers/modules/jobs/verification/UserExists";
+import TitleInput from "./modules/in_createpost/TitleInput";
 const CreatePostPage = () => {
   const navigate = useNavigate();
   const { userobj, loading } = useSelector((state) => state.user);
@@ -39,24 +43,16 @@ const CreatePostPage = () => {
         navigate("/u");
       })
       .then((error) => {
-        console.log(error);
       });
   };
 
-  const handleFormChange = (e) => {
-    e.preventDefault();
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-      user: userobj.pk,
-    });
-  };
 
-  const handleImageChange = (e) => {
-    e.preventDefault();
-    setFormData({ ...formData, image: e.target.files[0] });
-    setFile(URL.createObjectURL(e.target.files[0]));
-  };
+  useEffect(() => {
+    if (UserExists({ userobj, loading })) {
+      setFormData(({ ...formData, user: userobj.pk}));
+    }
+  }, [loading, userobj]);
+ 
 
   return (
     <Layout>
@@ -65,28 +61,9 @@ const CreatePostPage = () => {
           <form encType="multipart/form-data" onSubmit={onSubmit}>
             <div className="d-flex mb-5 justify-content-center">
               <div className="">
-                <PostHeading username={userobj.username} />
                 <ImagePreview file={file}/>
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  onChange={handleImageChange}
-                  className="d-none"
-                />
-
-                <div className="d-flex gap-2 mx-auto align-items-center mt-3">
-                  <div className="text-light fw-bold" htmlFor="title">
-                    {userobj.username}
-                  </div>
-                  <input
-                    value={title}
-                    name="title"
-                    placeholder="Describe your post with text and #"
-                    className=" form-control form-control-sm bg-black border-dark text-light shadow-none "
-                    onChange={handleFormChange}
-                  />
-                </div>
+                <ImageInput states={{formData, setFormData, file, setFile}} />
+                <TitleInput states={{formData, setFormData}}/>
 
                 <div className="d-flex justify-content-center">
                   <button
@@ -99,6 +76,7 @@ const CreatePostPage = () => {
                   >
                     Post now!
                   </button>
+                  {/* seperate this bubtton into a component */}
                 </div>
               </div>
             </div>
