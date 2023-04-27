@@ -51,6 +51,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         error_messages={"unique":"This email has already been registered."}
     )
     username = models.CharField(max_length=225, unique=True)
+    description = models.CharField(max_length=225, blank=True, null=True)
+    pfp = models.ImageField(default='c0c216b3743c6cb9fd67ab7df6b2c330.jpg')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     resetkey = models.CharField(max_length=255, blank=True, null=True)
