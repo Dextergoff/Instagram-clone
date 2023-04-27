@@ -20,9 +20,7 @@ splitApi.injectEndpoints({
         url: `${callto}/createreply/`,
         method: "post",
         body: body,
-        headers: {
-          "Content-type": "application/json",
-        },
+       
       })
     }),
 
