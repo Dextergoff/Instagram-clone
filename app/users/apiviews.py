@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import generics
 from .serializers import UserCreateSerializer, UserSerializer, SendMailSerializer,ResetPasswordSerializer, VerifyResetSerializer
 from .models import UserAccount
+from rest_framework import viewsets
+
 class RegisterView(APIView):
     def post(self,request):
         data = request.data
@@ -53,4 +55,5 @@ class ResetPassword(APIView):
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
         data = serializer.update(serializer.validated_data)
         return Response(data, status=status.HTTP_200_OK)
+
 

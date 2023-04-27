@@ -1,5 +1,5 @@
 from django.urls import path
-from .apiviews import RegisterView, RetriveUserView, ResetPasswordSendMail, ResetPassword, ResetPasswordVerify
+from .apiviews import *
 app_name="user"
 urlpatterns = [
     path('register', RegisterView.as_view()),
@@ -7,6 +7,5 @@ urlpatterns = [
     path('resetpasswordsendmail', ResetPasswordSendMail.as_view()),
     path('resetpassword', ResetPassword.as_view()),
     path('resetpasswordverify', ResetPasswordVerify.as_view()),
-
-
+    
 ]
