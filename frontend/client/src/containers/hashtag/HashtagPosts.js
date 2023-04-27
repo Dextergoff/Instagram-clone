@@ -52,7 +52,7 @@ const HashtagPosts = () => {
               </div>
             ))}
           </div>
-          { !data.end_of_posts? <div className="d-flex justify-content-center">
+          { !data.end_of_data? <div className="d-flex justify-content-center">
             <button className="btn" onClick={() => loadMorePosts()} > <FontAwesomeIcon  size="xl" icon={faPlusCircle} /> </button>
             </div> : <></>}
         </>
