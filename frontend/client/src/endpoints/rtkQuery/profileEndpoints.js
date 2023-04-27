@@ -36,9 +36,16 @@ splitApi.injectEndpoints({
 
     }),
 
+    editProfile: builder.mutation({
+      query: (body) => ({
+        url: `${callto}/editprofile`,
+        method: "post",
+        body: body,
+      }),
+    }),
   })
 })
 
 export const {
-  useGetProfilePageQuery,
+  useGetProfilePageQuery, useEditProfileMutation
 } = splitApi;

@@ -21,16 +21,72 @@ from posts.models import Post
 from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
+from django.http import HttpResponse
+
+User = get_user_model()
+
+
 class ProfilePosts(viewsets.ViewSet):
     serializer = GalleryPostSerializer
 
     def main(self, request, pk, page):
-        queryset = Post.objects.filter(user=pk).order_by("-date").prefetch_related('likes').select_related('user')
+        queryset = Post.objects.filter(user=pk).order_by(
+            "-date").prefetch_related('likes').select_related('user')
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = GalleryPostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        serializer = GalleryPostSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
             PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
         }
+        return Response(response)
+
+
+class EditProfile(viewsets.ViewSet):
+
+    def check_username(self, username, user):
+        try:
+            User.objects.get(username=username)
+            return {"response": "username is taken"}
+        except:
+            return {"response": "username is available"}
+
+    def edit_username(self, username, user):
+        try:
+            user.username = username
+            return {"newusername": username}
+
+        except Exception:
+            return {"status": "HTTP_400_BAD_REQUEST"}
+
+    def edit_description(self, description, user):
+        try:
+            user.description = description
+            return {"newdescription": description}
+        except:
+            return {"status": "HTTP_400_BAD_REQUEST"}
+
+    def main(self, request):
+        data = request.data
+        user = User.objects.select_related().get(pk=data['user'])
+        save = data['save']
+        usernamekey = 'newusername'
+        descriptionkey = 'newdescription'
+        response = {"newusername": user.username, "newdescription": user.description}
+        if usernamekey in data:
+            username = data.get(usernamekey)
+            if len(username) > 0 :
+                if save:
+                    dictitem = self.edit_username(username, user)
+                else:
+                    dictitem = self.check_username(username, user)
+                response.update(dictitem)
+
+        if descriptionkey in data:
+            description = data.get(descriptionkey)
+            if len(description) > 0 :
+                dictitem = self.edit_description(description, user)
+                response.update(dictitem)
+        user.save()
         return Response(response)
