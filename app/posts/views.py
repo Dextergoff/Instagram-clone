@@ -23,6 +23,7 @@ from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
+
 class LikePost(viewsets.ViewSet):
 
     def proccess_like(self, post ,user):
@@ -58,7 +59,6 @@ class PageView(viewsets.ViewSet):
         queryset = Post.objects.all().order_by("-date").prefetch_related(
         Prefetch('likes'),
         Prefetch('hashtags'))
-
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = PostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {

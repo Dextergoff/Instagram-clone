@@ -1,17 +1,15 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import CreateComment from "../comment/CreateComment";
-import InteractionBar from "../modules/components/InteractionBar";
+import CreateComment from "containers/comment/CreateComment";
+import InteractionBar from "components/interactionbar/InteractionBar";
 import { useGetPageQuery } from "endpoints/rtkQuery/postEndpoints";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PostImage from "containers/modules/components/PostImage";
-import PostHeading from "./modules/shared/PostHeading";
-import getQueryLength from "containers/modules/jobs/getQueryLength";
-// ADD LIKES CART AND SHARE
-//MAKE PFP WORK
-// ADD VIRTUALZATION / PAGINATION TO QUERYS BOTH COMMENTS AND POSTS
+import PostImage from "components/Image/PostImage";
+import PostHeading from "components/posts/PostHeading";
+import getQueryLength from "components/jobs/getQueryLength";
+
 const PostsPage = () => {
   const [stateData, setStateData] = useState({
     Page: 1,
@@ -21,7 +19,6 @@ const PostsPage = () => {
   const handleLoadPosts = () => {
     setStateData({ ...stateData, Page: Page + 1 });
   };
-  // BATCH LIKE REUQESTS SO ONE NESTED REQUEST IS SENT TO SERVER ON PAGECHAGE INSTEAD OF EVERY CLICK
   if(getQueryLength(data) > 0)
   
     return (

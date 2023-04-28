@@ -1,6 +1,6 @@
 import { splitApi } from "./splitApi";
-import setResponse from "./modules/setResponse";
-import mergeNewItems from "./modules/mergeNewItems";
+import setResponse from "components/rtkQuery/setResponse";
+import mergeNewItems from "components/rtkQuery/mergeNewItems";
 const callto="hashtags"
 
 splitApi.injectEndpoints({

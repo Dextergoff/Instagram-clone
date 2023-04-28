@@ -1,8 +1,8 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetpasswordsendmail } from "endpoints/auth/user";
-import handleErrors from "./components/errors/handleErrors";
+import handleErrors from "../../components/errors/handleErrors";
 const ResetPassword = ({handleSubmit}) => {
   const [formData, setFormData] = useState({ email: "" });
   const { email } = formData;

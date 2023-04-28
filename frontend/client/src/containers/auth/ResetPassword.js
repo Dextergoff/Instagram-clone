@@ -1,11 +1,11 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetpassword } from "endpoints/auth/user";
 import { useSearchParams } from "react-router-dom";
 import { resetpasswordverify } from "endpoints/auth/user";
 import { useEffect } from "react";
-import handleErrors from "./components/errors/handleErrors";
+import handleErrors from "../../components/errors/handleErrors";
 const ResetPassword = () => {
   
   const [formData, setFormData] = useState({ newpassword: "", error:"" });

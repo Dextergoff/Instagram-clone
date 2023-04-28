@@ -1,21 +1,17 @@
 import { useSelector } from "react-redux";
 import {
   useGetProfilePageQuery,
-  useEditProfileMutation,
 } from "endpoints/rtkQuery/profileEndpoints";
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { useState } from "react";
 import "./css/ProfilePage.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GalleryPostImage from "containers/modules/components/GalleryPostImage";
-import BootstrapSpinner from "containers/modules/components/BootstrapSpinner";
-import getQueryLength from "containers/modules/jobs/getQueryLength";
-import UserExists from "containers/modules/jobs/verification/UserExists";
-import ProfileHeader from "./ProfileHeader";
-import PostGallery from "./PostGallery";
+import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
+import getQueryLength from "components/jobs/getQueryLength";
+import UserExists from "components/jobs/verification/UserExists";
+import ProfileHeader from "components/profile/ProfileHeader";
+import PostGallery from "components/profile/PostGallery";
+import './css/imagelabel.css'
 const ProfilePage = () => {
 
   const { userobj, loading } = useSelector((state) => state.user);

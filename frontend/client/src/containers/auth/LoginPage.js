@@ -1,10 +1,10 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetRegistered, login } from "endpoints/auth/user";
 import { useEffect } from "react";
-import BootstrapSpinner from "containers/modules/components/BootstrapSpinner";
-import handleErrors from "./components/errors/handleErrors";
+import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
+import handleErrors from "../../components/errors/handleErrors";
 const LoginPage = ({handleSubmit,Redirect}) => {
   const [formData, setFormData] = useState({
     password: "",

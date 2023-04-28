@@ -6,11 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
-import "../css/Modal.css";
 import { useLikePostMutation } from "endpoints/rtkQuery/postEndpoints";
-import TitleAndHashtags from "./TitleAndHashtags";
+import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import { Link, useLocation } from "react-router-dom";
-import UpdateLikes from "./interactionbar_modules/UpdateLikes";
+import UpdateLikes from "components/update_cache/UpdateLikes";
 const InteractionBar = ({
   addArgument,
   updateCacheArgument,

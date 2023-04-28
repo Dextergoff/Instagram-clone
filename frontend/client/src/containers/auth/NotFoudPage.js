@@ -1,4 +1,4 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 
 const NotFoudPage = () => {
     return(

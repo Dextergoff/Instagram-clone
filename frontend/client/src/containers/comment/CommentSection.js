@@ -4,9 +4,9 @@ import {
   faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
-import CommentInteractionBar from "./CommentInteractionBar";
+import CommentInteractionBar from "../../components/comments/CommentInteractionBar";
 import CommentReplys from "./CommentReplys";
-import getQueryLength from "containers/modules/jobs/getQueryLength";
+import getQueryLength from "components/jobs/getQueryLength";
 import CreateComment from "./CreateComment";
 const CommentSection = (prop) => {
   

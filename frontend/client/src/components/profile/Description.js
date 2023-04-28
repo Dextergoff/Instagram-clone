@@ -8,7 +8,6 @@ const Description = ({states, formData, userobj}) => {
         states.setFormData({
           ...states.formData,
           [e.target.name]: e.target.value,
-          user: userobj.pk,
         });
       };
 return(

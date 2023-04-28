@@ -7,8 +7,7 @@ import {
   faReply,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLikeCommentMutation } from "endpoints/rtkQuery/commentEndpoints";
-import CreateComment from "./CreateComment";
-import updateLikes from "./modules/in_interactionbar/updateLikes";
+import updateLikes from "../../containers/comment/in_interactionbar/updateLikes";
 const CommentInteractionBar = (props) => {
   const [interactionState, setInteractionSate] = useState({
     display: false

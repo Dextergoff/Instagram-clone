@@ -1,6 +1,6 @@
 import { splitApi } from "./splitApi";
-import mergeNewItems from "./modules/mergeNewItems";
-import setResponse from "./modules/setResponse";
+import mergeNewItems from "components/rtkQuery/mergeNewItems";
+import setResponse from "components/rtkQuery/setResponse";
 
 const callto = "profiles"
 

@@ -1,5 +1,5 @@
 import { useGetReplysQuery } from "endpoints/rtkQuery/replyEndpoints";
-import CommentInteractionBar from "./CommentInteractionBar";
+import CommentInteractionBar from "../../components/comments/CommentInteractionBar";
 import React, { useState } from "react";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
 import CreateComment from "./CreateComment";

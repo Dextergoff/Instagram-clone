@@ -22,7 +22,7 @@ from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 from django.http import HttpResponse
-
+from users.serializers import UserSerializer
 User = get_user_model()
 
 
@@ -67,26 +67,40 @@ class EditProfile(viewsets.ViewSet):
         except:
             return {"status": "HTTP_400_BAD_REQUEST"}
 
+    def edit_pfp(self, request, user):
+        try:
+            user.pfp = request.FILES['image']
+            return {"newpfp": request.FILES['image']}
+        except:
+            return {"status": "HTTP_400_BAD_REQUEST"}
+
     def main(self, request):
         data = request.data
+        print(data)
         user = User.objects.select_related().get(pk=data['user'])
         save = data['save']
         usernamekey = 'newusername'
         descriptionkey = 'newdescription'
-        response = {"newusername": user.username, "newdescription": user.description}
+        imagekey = 'image'
+        response = {"newusername": user.username,
+                    "newdescription": user.description, }
         if usernamekey in data:
             username = data.get(usernamekey)
-            if len(username) > 0 :
+            if len(username) > 0:
                 if save:
-                    dictitem = self.edit_username(username, user)
+                    item = self.edit_username(username, user)
                 else:
-                    dictitem = self.check_username(username, user)
-                response.update(dictitem)
+                    item = self.check_username(username, user)
+                response.update(item)
 
+        if imagekey in data:
+            image = request.FILES['image']
+            if len(image) > 0:
+                user.pfp = request.FILES['image']
         if descriptionkey in data:
             description = data.get(descriptionkey)
-            if len(description) > 0 :
-                dictitem = self.edit_description(description, user)
-                response.update(dictitem)
+            if len(description) > 0:
+                item = self.edit_description(description, user)
+                response.update(item)
         user.save()
         return Response(response)

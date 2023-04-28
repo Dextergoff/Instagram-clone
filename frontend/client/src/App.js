@@ -14,9 +14,9 @@ import PostsPage from "containers/posts/PostsPage"
 import CreatePostPage from "containers/posts/CreatePostPage"
 import ProfilePage from "containers/profile/ProfilePage";
 import HashtagPosts from "containers/hashtag/HashtagPosts";
-import PostModal from "containers/modules/components/PostModal";
-import onSubmit from "containers/auth/components/forms/onSubmit";
-import Redirect from "containers/auth/components/forms/Redirect";
+import PostModal from "components/modal/PostModal";
+import onSubmit from "components/forms/onSubmit";
+import Redirect from "components/forms/Redirect";
 const App = () => {
   const dispatch = useDispatch();
   let location = useLocation();

@@ -1,6 +1,5 @@
 import { splitApi } from "./splitApi";
-import { handleNewComments } from "./modules/handleNewComments";
-import setResponse from "./modules/setResponse";
+import { handleNewComments } from "components/rtkQuery/handleNewComments";
 const callto = 'comments' 
 
 

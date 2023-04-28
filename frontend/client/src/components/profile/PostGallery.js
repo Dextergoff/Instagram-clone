@@ -1,21 +1,7 @@
-import { useSelector } from "react-redux";
-import {
-  useGetProfilePageQuery,
-  useEditProfileMutation,
-} from "endpoints/rtkQuery/profileEndpoints";
-import Layout from "modules/Layout";
-import { useState } from "react";
-import "./css/ProfilePage.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GalleryPostImage from "containers/modules/components/GalleryPostImage";
-import BootstrapSpinner from "containers/modules/components/BootstrapSpinner";
-import getQueryLength from "containers/modules/jobs/getQueryLength";
-import UserExists from "containers/modules/jobs/verification/UserExists";
-import ProfileHeader from "./ProfileHeader";
-
+import GalleryPostImage from "components/Image/GalleryPostImage";
 const PostGallery = ({ state, data }) => {
   const location = useLocation();
 

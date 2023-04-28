@@ -1,4 +1,4 @@
-import getDate from "containers/modules/jobs/getDate"
+import getDate from "components/jobs/getDate"
 const TitleAndHashtags = (prop) => {
     const post = prop.post
     return (

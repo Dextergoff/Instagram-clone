@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "endpoints/auth/user";
-import handleErrors from "./components/errors/handleErrors";
+import handleErrors from "../../components/errors/handleErrors";
 const RegisterPage = ({handleSubmit, Redirect}) => {
 
   const [formData, setFormData] = useState({

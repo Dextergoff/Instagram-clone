@@ -1,4 +1,4 @@
-import Navbar from 'modules/Navbar';
+import Navbar from 'Navbar/Navbar';
 import {Helmet} from 'react-helmet'
 
 const Layout = ({title, content, children}) => (

@@ -1,4 +1,4 @@
-import Layout from "modules/Layout";
+import Layout from "Layout/Layout";
 import {useSelector} from 'react-redux'
 const DashboardPage = () => {
     const {userobj, loading} = useSelector(state => state.user)

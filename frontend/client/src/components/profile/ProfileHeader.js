@@ -1,19 +1,8 @@
-import { useSelector } from "react-redux";
 import {
-  useGetProfilePageQuery,
   useEditProfileMutation,
 } from "endpoints/rtkQuery/profileEndpoints";
-import Layout from "modules/Layout";
 import { useState } from "react";
-import "./css/ProfilePage.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GalleryPostImage from "containers/modules/components/GalleryPostImage";
-import BootstrapSpinner from "containers/modules/components/BootstrapSpinner";
-import getQueryLength from "containers/modules/jobs/getQueryLength";
-import UserExists from "containers/modules/jobs/verification/UserExists";
 import InfoBar from "./InfoBar";
 import EditButton from "./EditButton";
 import Username from "./Username";
@@ -22,22 +11,21 @@ import Pfp from "./Pfp";
 const ProfileHeader = ({ data, userobj}) => {
 
   const [formData, setFormData] = useState({
-    user: null,
+    user: userobj.pk,
     newusername: '',
     newdescription: '',
-    save:false,
+    image: '',
   });
   const { user, newusername } = formData;
-
+  const [file, setFile] = useState();
   const [state, setState] = useState({
     editmode: false,
     response: "",
   });
-
   const [userState, setUserState] = useState({
     username: userobj.username,
     description: userobj.description,
-    pfp:userobj.pfp,
+    pfp:process.env.REACT_APP_API_URL + userobj.pfp,
 
   });
 
@@ -57,10 +45,10 @@ const ProfileHeader = ({ data, userobj}) => {
   return (
     <>
     <div className="d-flex justify-content-end ">
-    <EditButton states={{state, setState, formData, setFormData,userState,setUserState} } userobj = {userobj} />
+    <EditButton states={{state, setState, formData, setFormData,userState,setUserState, file, setFile} } userobj = {userobj} />
     </div>
       <div className="d-flex gap-3 justify-content-center ">
-         <Pfp states={{state, setState, formData, setFormData, userState}} userobj = {userobj} />
+         <Pfp states={{state, setState, formData, setFormData, userState, file, setFile}}/>
         <Username states={{state, setState, formData, setFormData, userState}} userobj = {userobj} />
       </div>
       

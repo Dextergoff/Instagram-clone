@@ -1,0 +1,12 @@
+#imagelabel {
+  max-width: 400px;
+  max-height: 800px;
+  width: 400px;
+  height: 400px;
+}
+#preview {
+  max-width: 400px;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
