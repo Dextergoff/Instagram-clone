@@ -23,14 +23,14 @@ router.post("/auth/token", async (req, res) => {
         cookie.serialize("access", data.access, {
           httpOnly: true,
           maxAge: 60 * 30,
-          path: "/auth/",
+          path: "/",
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",
         }),
         cookie.serialize("refresh", data.refresh, {
           httpOnly: true,
           maxAge: 60 * 60 * 24,
-          path: "/auth/",
+          path: "/",
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",
         }),
