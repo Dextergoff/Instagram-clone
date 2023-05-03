@@ -31,9 +31,6 @@ const PostsPage = () => {
             <div className="d-flex justify-content-center mb-5" key={post.pk}>
               <div className="mt-5 border-bottom border-secondary">
                 <div className="d-flex gap-3 align-items-center ">
-                  <DisplayPfp
-                    pfp={process.env.REACT_APP_API_URL + post.user.pfp}
-                  />
                   <PostHeading post={post} />
                 </div>
                 <PostImage image={post.image} />
