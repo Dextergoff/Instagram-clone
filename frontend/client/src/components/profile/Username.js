@@ -8,7 +8,6 @@ const Username = ({ states, userobj }) => {
     });
   };
 
-  const { newusername } = states.formData;
   const { username } = states.userState;
   const { editmode, response } = states.state;
   return (
@@ -18,14 +17,13 @@ const Username = ({ states, userobj }) => {
           <div>
             <input
               autoComplete="off"
-              name="newusername"
-              value={newusername}
-              placeholder={username + '...'}
-              className="form-control bg-black border-0  "
+              name="username"
+              defaultValue={username}
+              className="form-control text-light bg-black border-0  "
               onChange={onChange}
             />
             <div className="text-muted">
-              {newusername?.length > 0 ? response : ""}
+              {response}
             </div>
           </div>
         ) : (
