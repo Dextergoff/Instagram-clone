@@ -29,8 +29,8 @@ const PostsPage = () => {
         <>
           {data.nested_data?.data.map((post) => (
             <div className="d-flex justify-content-center mb-5" key={post.pk}>
-              <div className="mt-5">
-                <div className="d-flex gap-3 align-items-center">
+              <div className="mt-5 border-bottom border-secondary">
+                <div className="d-flex gap-3 align-items-center ">
                   <DisplayPfp
                     pfp={process.env.REACT_APP_API_URL + post.user.pfp}
                   />
@@ -48,7 +48,7 @@ const PostsPage = () => {
 
                 <div>
                   <div></div>
-                  <div className="mt-1">
+                  <div className="mt-1 mb-3">
                     <CreateComment post={post} />
                   </div>
                 </div>
