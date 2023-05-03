@@ -27,8 +27,14 @@ const InteractionBar = ({
 
   useEffect(() => {
     result.status === "fulfilled" &&
-      UpdateLikes({queryName, updateCacheArgument, addArgument, result, dispatch})
-  }, [result, addArgument, dispatch, queryName, updateCacheArgument ]);
+      UpdateLikes({
+        queryName,
+        updateCacheArgument,
+        addArgument,
+        result,
+        dispatch,
+      });
+  }, [result, addArgument, dispatch, queryName, updateCacheArgument]);
 
   return (
     <>
@@ -77,13 +83,13 @@ const InteractionBar = ({
           >
             <FontAwesomeIcon size="xl" icon={faHeart} />
           </div>
-          {post.likecount > 0 ? (
-            <div className="text-muted fw-bold">{post.likecount}</div>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
+      {post.likecount > 0 ? (
+        <div className="text-light fw-bold">{post.likecount} likes</div>
+      ) : (
+        <></>
+      )}
       <div className="d-flex gap-1 mb-1"></div>
     </>
   );
