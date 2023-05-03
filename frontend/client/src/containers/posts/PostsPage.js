@@ -29,9 +29,12 @@ const PostsPage = () => {
           {data.nested_data?.data.map((post) => (
             <div className="d-flex justify-content-center mb-5" key={post.pk}>
               <div className="mt-5">
-                <DisplayPfp pfp={process.env.REACT_APP_API_URL + post.user.pfp} />
-
-                <PostHeading username={post.user.username} />
+                <div className="d-flex gap-3 align-items-center">
+                  <DisplayPfp
+                    pfp={process.env.REACT_APP_API_URL + post.user.pfp}
+                  />
+                  <PostHeading post={post} />
+                </div>
                 <PostImage image={post.image} />
 
                 <InteractionBar
@@ -41,6 +44,7 @@ const PostsPage = () => {
                   displaycommentbtn={true}
                 />
                 <TitleAndHashtags post={post} />
+
                 <div>
                   <div></div>
                   <div className="mt-1">
