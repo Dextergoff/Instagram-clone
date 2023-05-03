@@ -8,6 +8,8 @@ import CommentInteractionBar from "../../components/comments/CommentInteractionB
 import CommentReplys from "./CommentReplys";
 import getQueryLength from "components/jobs/getQueryLength";
 import CreateComment from "./CreateComment";
+import CommentUsername from "components/comments/CommentUsername";
+import CommentBody from "components/comments/CommentBody";
 const CommentSection = (prop) => {
   
   const [commentState, setCommentState] = useState({
@@ -29,12 +31,8 @@ const CommentSection = (prop) => {
         {data?.data.map((comment) => (
           <div className="" key={comment.pk}>
             <div className="d-flex gap-1">
-              <div className=" mr-auto fw-bold text-light">
-                {comment.username}
-              </div>
-              <div style={{ width: "24vw" }} className="text-light">
-                {comment.body}
-              </div>
+              <CommentUsername data={comment.user} />
+              <CommentBody data={comment.body} />
             </div>
             <div className="d-flex gap-2">
               <CommentInteractionBar
