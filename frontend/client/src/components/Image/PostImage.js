@@ -9,6 +9,7 @@ const PostImage = (props) => {
           height: "auto",
         }}
         alt=""
+        className="border border-secondary rounded-3 "
         src={process.env.REACT_APP_API_URL + props.image}
       />
     </div>
