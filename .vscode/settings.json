@@ -50,4 +50,5 @@
     "workbench.panel.defaultLocation": "right",
     "workbench.settings.editor": "json",
     "workbench.sideBar.location": "left",
+    "editor.formatOnSave": true
 }
