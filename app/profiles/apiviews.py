@@ -79,12 +79,11 @@ class EditProfile(viewsets.ViewSet):
         print(data)
         user = User.objects.select_related().get(pk=data['user'])
         save = data['save']
-        usernamekey = 'newusername'
-        descriptionkey = 'newdescription'
-        imagekey = 'image'
-        response = {"newusername": user.username,
-                    "newdescription": user.description, }
-        if usernamekey in data:
+        usernamekey = 'username'
+        descriptionkey = 'description'
+        response = {descriptionkey: user.username,
+                    usernamekey: user.description, }
+        try:
             username = data.get(usernamekey)
             if len(username) > 0:
                 if save:
@@ -92,15 +91,21 @@ class EditProfile(viewsets.ViewSet):
                 else:
                     item = self.check_username(username, user)
                 response.update(item)
-
-        if imagekey in data:
+        except:
+            TypeError
+        try:
             image = request.FILES['image']
             if len(image) > 0:
                 user.pfp = request.FILES['image']
-        if descriptionkey in data:
+        except:
+            TypeError
+            
+        try:
             description = data.get(descriptionkey)
             if len(description) > 0:
                 item = self.edit_description(description, user)
                 response.update(item)
+        except:
+            TypeError
         user.save()
         return Response(response)
