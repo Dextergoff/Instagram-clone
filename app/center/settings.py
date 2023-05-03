@@ -80,6 +80,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:3000',
+)
+
 ROOT_URLCONF = "center.urls"
 
 TEMPLATES = [
@@ -100,7 +106,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "center.wsgi.application"
 
-CORS_ALLOW_ALL_ORIGINS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -188,5 +193,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+ 
 }
