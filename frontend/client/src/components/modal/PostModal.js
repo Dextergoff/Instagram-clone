@@ -12,6 +12,7 @@ import { useGetPostQuery } from "endpoints/rtkQuery/postEndpoints";
 import CommentSection from "containers/comment/CommentSection";
 import PostImage from "components/Image/PostImage";
 import QueryDecider from "../queryfuncs/QueryDecider";
+import PostHeading from "components/posts/PostHeading";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -45,28 +46,40 @@ const PostModal = () => {
   if (data)
     return (
       <>
-        <Modal
-          dialogClassName="custom-modal"
-          className="d-flex "
-          show={show}
-          onHide={handleClose}
-        >
-          <Modal.Body
-            className={"modal-body d-flex border border-secondary bg-black"}
+        <div className="">
+          <Modal
+            size="lg"
+            contentClassName="custom-modal border-0 bg-transparent"
+            show={show}
+            onHide={handleClose}
           >
-            <div className="post-container d-flex flex-column">
-              <PostImage image={data.image} />
-              <InteractionBar
-                queryName={queryName}
-                updateCacheArgument={updateCacheArgument}
-                addArgument={addArgument}
-                post={data}
-              />
-              <CreateComment post={data} />
-              <CommentSection pk={data.pk} />
-            </div>
-          </Modal.Body>
-        </Modal>
+            <Modal.Body className="d-flex justify-content-center">
+              <div className="img-wrapper">
+                <PostImage
+                  style={{ height: "100%", width: "100%" }}
+                  image={data.image}
+                />
+              </div>
+              <div className="sidebar d-flex flex-column bg-black ">
+                <div className="border-bottom  border-secondary mt-2 ">
+                  <PostHeading post={data} />
+                </div>
+                <div className="comment-section">
+                  <CommentSection pk={data.pk} />
+                </div>
+                <div className="mt-auto border-bottom border-top border-secondary ">
+                  <InteractionBar
+                    queryName={queryName}
+                    updateCacheArgument={updateCacheArgument}
+                    addArgument={addArgument}
+                    post={data}
+                  />
+                </div>
+                <CreateComment post={data} />
+              </div>
+            </Modal.Body>
+          </Modal>
+        </div>
       </>
     );
 };
