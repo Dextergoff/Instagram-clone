@@ -25,9 +25,9 @@ const App = () => {
 
  
   useEffect(() => {
-    dispatch(checkAuth());
-  }, []);
- 
+    dispatch(checkAuth())
+  });
+
   return (
     <Fragment>
       <Routes location={background || location}>
