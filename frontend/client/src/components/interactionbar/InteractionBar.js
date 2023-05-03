@@ -85,7 +85,6 @@ const InteractionBar = ({
         </div>
       </div>
       <div className="d-flex gap-1 mb-1"></div>
-      <TitleAndHashtags post={post} />
     </>
   );
 };
