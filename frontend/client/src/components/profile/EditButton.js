@@ -10,7 +10,7 @@ const EditButton = ({ states, userobj }) => {
 
   const { file, setFile } = states;
   const { editmode, response } = state;
-  const { user, newdescription, newusername, image } = formData;
+  const { user, description, username, image } = formData;
 
   const enableEdit = () => {
     setState({
@@ -19,6 +19,7 @@ const EditButton = ({ states, userobj }) => {
       response: "",
     });
     resetFormData();
+    resetFile();
   };
   const [editProfile, result] = useEditProfileMutation();
 
@@ -28,7 +29,7 @@ const EditButton = ({ states, userobj }) => {
     setFormData({
       ...formData,
       newdescription: "",
-      newusername: "",
+      username: "",
       response: "",
       image:'',
       save: false,
@@ -51,10 +52,7 @@ const EditButton = ({ states, userobj }) => {
     });
   };
   const resetFile = () => {
-    setFile({
-      ...file,
-      file:null
-    });
+    setFile();
   };
   
   const onSubmit = (e) => {
@@ -65,20 +63,21 @@ const EditButton = ({ states, userobj }) => {
     
         setUserState({
           ...userState,
-          username: fulfilled.newusername,
-          description: fulfilled.newdescription,
-          pfp: states.file,
+          username: fulfilled.username,
+          description: fulfilled.description,
+          pfp: states.file || userState.pfp,
         });
       })
+      .catch((rejected) => console.error(rejected));
+
       resetState();
       resetFormData();
-      resetFile()
-      .catch((rejected) => console.error(rejected));
+      resetFile();
   };
   return (
     <>
-      {(usernametaken && newusername?.length > 0) ||
-      (usernametaken && newdescription?.length > 0) || 
+      {(usernametaken && username?.length > 0) ||
+      (usernametaken && description?.length > 0) || 
       (usernametaken && states.file?.length > 0) ? (
         // these if statements are really bad and need to be changed
         <button
