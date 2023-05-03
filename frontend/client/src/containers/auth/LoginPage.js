@@ -5,7 +5,10 @@ import { resetRegistered, login } from "endpoints/auth/user";
 import { useEffect } from "react";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import handleErrors from "../../components/errors/handleErrors";
-const LoginPage = ({handleSubmit,Redirect}) => {
+import onSubmit from "components/forms/onSubmit";
+const LoginPage = ({Redirect}) => {
+
+  
   const [formData, setFormData] = useState({
     password: "",
     email: "",
@@ -15,7 +18,6 @@ const LoginPage = ({handleSubmit,Redirect}) => {
   const { loading, userobj, registered, response , rejected} = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (registered) dispatch(resetRegistered());
   });
@@ -24,10 +26,14 @@ const LoginPage = ({handleSubmit,Redirect}) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({email, password}));
+}
   if (userobj) Redirect({location:"/"});
   return (
     <Layout title="Login" content="Login page">
-      <form className="mt-5" onSubmit={(e)=>handleSubmit({password, email, dispatch, e, endpoint:login})}>
+      <form className="mt-5" onSubmit={onSubmit}>
         <div className="d-flex justify-content-center  ">
           <div className="form-group  w-25">
             <label className="form-label text-light" htmlFor="email">
