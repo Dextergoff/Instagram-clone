@@ -17,11 +17,13 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
 from .signals import *
+from users.serializers import *
 User = get_user_model()
 
 
 class PostSerializer(serializers.ModelSerializer):
     hashtags = serializers.StringRelatedField(many=True, read_only=True,)
+    user = UserSerializer(many=False)
     class Meta:
         model = Post
         fields = [

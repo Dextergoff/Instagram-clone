@@ -16,10 +16,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .models import *
 from posts.models import *
+from users.serializers import UserSerializer
 User=get_user_model()
 
 class CommentSerializer(serializers.ModelSerializer):
-
+    user = UserSerializer(many=False)
     class Meta:
         model = Comment
         fields = [
