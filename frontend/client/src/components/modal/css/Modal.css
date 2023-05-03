@@ -1,9 +1,19 @@
-.modal-body {
-  padding: 0;
+.modal-lg, .modal-xl {
+  --bs-modal-width: 85vw;
+
 }
-.post-container{
+.custom-modal{
+  max-height: 95vw;
   height: 95vh;
-  width: 95vw;
-
-
+}
+.sidebar{
+  max-height: 95vh;
+  width: 40vh;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.comment-section{
+  max-height: 85vh;
+  overflow: auto;
 }
