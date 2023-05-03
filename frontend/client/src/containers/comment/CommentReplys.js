@@ -3,6 +3,8 @@ import CommentInteractionBar from "../../components/comments/CommentInteractionB
 import React, { useState } from "react";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
 import CreateComment from "./CreateComment";
+import CommentUsername from "components/comments/CommentUsername";
+import CommentBody from "components/comments/CommentBody";
 const CommentReplys = (props) => {
 
   const [replyState, setReplySate] = useState({
@@ -32,9 +34,7 @@ const CommentReplys = (props) => {
         <div key={reply.pk}>
           {reply.parent === pk ?
             <div className="d-flex gap-1">
-              <div className=" mr-auto fw-bold text-light">
-                {reply.username}
-              </div>
+              <CommentUsername data={reply.user} />
               {reply.replyingto ?
                 <div>
                   <div className="text-light">{`>`}</div>
@@ -44,9 +44,9 @@ const CommentReplys = (props) => {
               <div className=" mr-auto fw-bold text-muted">
                 {reply.replyingto}
               </div>
-
+{/* replying to needs to be changed since if the person being replyed to changes there name it wont get updated as of now */}
               <div style={{ width: "24vw" }} className="text-light">
-                {reply.body}
+              <CommentBody data={reply.body} />
               </div>
             </div>
             :
