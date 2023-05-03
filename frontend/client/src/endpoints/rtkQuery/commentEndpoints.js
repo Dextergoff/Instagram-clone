@@ -1,6 +1,6 @@
 import { splitApi } from "./splitApi";
 import { handleNewComments } from "components/rtkQuery/handleNewComments";
-const callto = 'comments' 
+const callto = 'comments'
 
 
 splitApi.injectEndpoints({
@@ -13,7 +13,7 @@ splitApi.injectEndpoints({
           "Content-type": "application/json",
         },
       }),
-     
+
       serializeQueryArgs: ({ getComments }) => {
         return getComments;
       },
