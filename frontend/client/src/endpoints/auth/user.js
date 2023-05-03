@@ -9,7 +9,7 @@ const initialState = {
   verified: false,
   rejected: false,
   response: null,
-  verifydone:false,
+  verifydone: false,
 };
 
 export const login = createAsyncThunk(
@@ -86,11 +86,10 @@ export const register = createAsyncThunk(
       const { dispatch } = thunkAPI;
 
       if (res.status === 201) {
-        dispatch(login({email, password}));
+        dispatch(login({ email, password }));
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
-        
       }
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -220,7 +219,8 @@ export const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
   }
 });
 
-export const checkAuth = createAsyncThunk("users/verify",
+export const checkAuth = createAsyncThunk(
+  "users/verify",
   async (_, thunkAPI) => {
     try {
       const res = await fetch("/auth/users/verify", {
@@ -255,96 +255,78 @@ const userSlice = createSlice({
   },
   extraReducers: (builer) => {
     builer
-      .addCase(register.pending, (state) => {
-       
-      })
+      .addCase(register.pending, (state) => {})
       .addCase(register.fulfilled, (state) => {
         state.registered = true;
       })
       .addCase(register.rejected, (state, action) => {
-                state.response = action.payload;
+        state.response = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.response = action.payload;
       })
       .addCase(login.fulfilled, (state) => {
-        
         state.isAuthenticated = true;
       })
-      .addCase(login.pending, (state) => {
-       
-      })
+      .addCase(login.pending, (state) => {})
       .addCase(getUser.rejected, (state) => {
         state.isAuthenticated = false;
         state.verifydone = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-       
         state.userobj = action.payload;
         state.isAuthenticated = true;
         state.verifydone = true;
-
-        
-
       })
       .addCase(getUser.pending, (state) => {
         state.verifydone = false;
-       
       })
-      .addCase(logout.rejected, (state,action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.response = action.payload.error;
       })
       .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.userobj = null;
-        
       })
-      .addCase(logout.pending, (state) => {
-       
-      })
+      .addCase(logout.pending, (state) => {})
       .addCase(refresh.rejected, (state) => {
         state.verifydone = true;
       })
       .addCase(refresh.fulfilled, (state) => {
         state.verifydone = true;
-        
+
         state.isAuthenticated = true;
       })
       .addCase(refresh.pending, (state) => {
         state.verifydone = false;
-       
       })
-      .addCase(resetpasswordsendmail.rejected, (state,action) => {
+      .addCase(resetpasswordsendmail.rejected, (state, action) => {
         state.submited = false;
-        
-                state.response = action.payload.error;
 
-
+        state.response = action.payload.error;
       })
       .addCase(resetpasswordsendmail.fulfilled, (state) => {
         state.submited = true;
-        
       })
       .addCase(resetpasswordsendmail.pending, (state) => {
         state.submited = false;
-       
       })
-      .addCase(resetpassword.rejected, (state,action) => {
+      .addCase(resetpassword.rejected, (state, action) => {
         state.submited = false;
         state.response = action.payload.error;
       })
       .addCase(resetpassword.fulfilled, (state) => {
         state.submited = true;
-        
-        state.verified = false
+
+        state.verified = false;
         state.error = null;
       })
       .addCase(resetpassword.pending, (state) => {
         state.submited = false;
-       
+
         state.error = null;
       })
-      .addCase(resetpasswordverify.rejected, (state,action) => {
+      .addCase(resetpasswordverify.rejected, (state, action) => {
         state.response = action.payload.error;
 
         state.verified = false;
@@ -352,23 +334,21 @@ const userSlice = createSlice({
       })
       .addCase(resetpasswordverify.fulfilled, (state) => {
         state.verified = true;
-        state.error=null;
-
+        state.error = null;
       })
       .addCase(resetpasswordverify.pending, (state) => {
         state.verified = false;
-      })
-      // .addCase(checkAuth.rejected, (state) => {
-      //   
-  
-      // })
-      // .addCase(checkAuth.fulfilled, (state) => {
-      //   state.loading = true
-      // })
-      // .addCase(checkAuth.pending, (state) => {
-      //  
-      // });
-      
+      });
+    // .addCase(checkAuth.rejected, (state) => {
+    //
+
+    // })
+    // .addCase(checkAuth.fulfilled, (state) => {
+    //   state.loading = true
+    // })
+    // .addCase(checkAuth.pending, (state) => {
+    //
+    // });
   },
 });
 
