@@ -15,7 +15,7 @@ const InteractionBar = ({
   updateCacheArgument,
   queryName,
   post,
-  displaycommentbtn,
+  feed,
 }) => {
   // arguments and data passed from object in post
   const { userobj } = useSelector((state) => state.user);
@@ -48,7 +48,7 @@ const InteractionBar = ({
             />
           </div>
         </div>
-        {displaycommentbtn ? (
+        {feed ? (
           <Link
             className="comments-link text-muted fw-light text-decoration-none"
             to={`/${post.pk}`}
