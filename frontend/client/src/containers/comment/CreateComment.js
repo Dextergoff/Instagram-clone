@@ -79,7 +79,9 @@ const CreateComment = (props) => {
     <>
       {props.hideform ? (
         <div onClick={() => openReplyForm()}>
-          <FontAwesomeIcon size="sm" className="text-light" icon={faReply} />
+          <div style={{ fontSize: "0.8rem" }} className=" text-muted">
+            Reply
+          </div>
         </div>
       ) : (
         <></>
