@@ -33,7 +33,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'likes',
             'likecount',
             'username',
-            'replycount',
+            'replys',
             'reply',
             'to'
 
@@ -68,7 +68,7 @@ class CreateCommentSerializer(serializers.Serializer):
 
     def update_parent(self, parent):
         comment = Comment.objects.get(pk=parent)
-        comment.replycount += 1
+        comment.replys += 1
         comment.save()
 
     def create_reply(self, data):
