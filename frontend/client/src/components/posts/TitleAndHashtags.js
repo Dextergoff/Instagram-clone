@@ -1,7 +1,7 @@
 const TitleAndHashtags = (prop) => {
   const post = prop.post;
   return (
-    <div className="d-flex gap-2 mb-2">
+    <div className="d-flex gap-1 mb-2">
       <div className="text-center fw-bold  text-light ">
         {post.user.username}
       </div>
