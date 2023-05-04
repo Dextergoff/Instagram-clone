@@ -11,7 +11,6 @@ import PostHeading from "components/posts/PostHeading";
 import getQueryLength from "components/jobs/getQueryLength";
 import DisplayPfp from "components/Image/DisplayPfp";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
-import "./css/pfp.css";
 const PostsPage = () => {
   const { userobj } = useSelector((state) => state.user);
 
