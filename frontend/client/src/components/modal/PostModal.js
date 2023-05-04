@@ -61,21 +61,53 @@ const PostModal = () => {
                 />
               </div>
               <div className="sidebar d-flex flex-column bg-black ">
-                <div className="border-bottom  border-secondary mt-2 ">
+                <div
+                  style={{
+                    borderBottomStyle: "solid",
+                    borderWidth: "1px",
+                    paddingLeft: "1vw",
+                  }}
+                  className="mt-2 mb-2"
+                >
                   <PostHeading post={data} />
+                  {/* TODO add title to header or interaction bar */}
                 </div>
-                <div className="comment-section">
+                <div
+                  style={{
+                    paddingLeft: "1vw",
+                  }}
+                  className="comment-section"
+                >
                   <CommentSection pk={data.pk} />
                 </div>
-                <div className="mt-auto border-bottom border-top border-secondary ">
-                  <InteractionBar
-                    queryName={queryName}
-                    updateCacheArgument={updateCacheArgument}
-                    addArgument={addArgument}
-                    post={data}
-                  />
+                <div
+                  style={{
+                    paddingLeft: "1vw",
+                    borderBottomStyle: "solid",
+                    borderTopStyle: "solid",
+                    borderWidth: "1px",
+                  }}
+                  className="mt-auto"
+                >
+                  <div className="pt-1 pb-1">
+                    <InteractionBar
+                      queryName={queryName}
+                      updateCacheArgument={updateCacheArgument}
+                      addArgument={addArgument}
+                      post={data}
+                    />
+                  </div>
                 </div>
-                <CreateComment post={data} />
+                <div
+                  style={{
+                    paddingLeft: "1vw",
+                    paddingBottom: "10px",
+                    paddingTop: "10px",
+                  }}
+                >
+                  <CreateComment post={data} />
+                </div>
+                {/* TODO fix responsiveness issue  of the modal the comment section is whats causing it if comments are empty it scales in size perfectly  */}
               </div>
             </Modal.Body>
           </Modal>
