@@ -2,22 +2,18 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
-import {
-  faHeart,
-  faReply,
-} from "@fortawesome/free-solid-svg-icons";
 import { useLikeCommentMutation } from "endpoints/rtkQuery/commentEndpoints";
 import updateLikes from "../../containers/comment/in_interactionbar/updateLikes";
 const CommentInteractionBar = (props) => {
   const [interactionState, setInteractionSate] = useState({
-    display: false
-  })
+    display: false,
+  });
   const { display } = interactionState;
 
   const { userobj } = useSelector((state) => state.user);
 
   const [likeComment, result] = useLikeCommentMutation();
-  
+
   const dispatch = useDispatch();
   // const replyingto = props.data.replyingto ? props.data.replyingto : null
   const page = props.page;
@@ -26,35 +22,27 @@ const CommentInteractionBar = (props) => {
 
   const user = userobj?.pk;
 
-
-
   useEffect(() => {
     result.status === "fulfilled" &&
-     updateLikes({ dispatch, result,pk,page})
-     console.log(result)
-  }, [ result,pk,page,dispatch,]);
+      updateLikes({ dispatch, result, pk, page });
+    console.log(result);
+  }, [result, pk, page, dispatch]);
   return (
-
     <>
       <div className="d-flex gap-2">
-    
         <div
           onClick={() => likeComment({ pk, user })}
           name="like"
           id="like"
           className={
-            comment.likes.includes(userobj?.pk)
-              ? "text-danger"
-              : "text-light"
+            comment.likes.includes(userobj?.pk) ? "text-danger" : "text-light"
           }
         >
-          <FontAwesomeIcon size="sm" icon={faHeart} />
+          <FontAwesomeIcon size="sm" icon="fa-regular fa-heart" />
         </div>
       </div>
-      
     </>
   );
-
 };
 
 export default CommentInteractionBar;

@@ -42,9 +42,9 @@ const InteractionBar = ({
         <div>
           <div className="border-0 text-dark">
             <FontAwesomeIcon
-              className="text-light"
               size="xl"
-              icon={faPaperPlane}
+              className="text-light"
+              icon="fa-regular fa-paper-plane"
             />
           </div>
         </div>
@@ -61,9 +61,9 @@ const InteractionBar = ({
             }}
           >
             <FontAwesomeIcon
-              className="text-light"
               size="xl"
-              icon={faComment}
+              className="text-light"
+              icon="fa-regular fa-comment"
             />
           </Link>
         ) : (
@@ -81,7 +81,7 @@ const InteractionBar = ({
                 : "text-light"
             }
           >
-            <FontAwesomeIcon size="xl" icon={faHeart} />
+            <FontAwesomeIcon size="xl" icon="fa-regular fa-heart" />
           </div>
         </div>
       </div>
