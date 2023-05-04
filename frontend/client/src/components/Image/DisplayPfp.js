@@ -1,8 +1,8 @@
-const DisplayPfp = ({ pfp }) => {
+const DisplayPfp = (props) => {
   return (
     <div>
       <div className="h6 align-self-center text-light fw-light">
-        <img className="pfp" src={pfp} />
+        <img style={props.style} className="pfp" src={props.pfp} />
       </div>
     </div>
   );
