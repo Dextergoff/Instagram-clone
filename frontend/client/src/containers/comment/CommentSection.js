@@ -47,9 +47,14 @@ const CommentSection = (prop) => {
                 }}
                 data={comment}
               />
-              <CreateComment comment={comment} page={page} hideform={true} />
+              <CreateComment
+                reply={true}
+                comment={comment}
+                page={page}
+                hideform={true}
+              />
             </div>
-            <CommentReplys replysfor={comment} />
+            <CommentReplys for={comment} />
           </div>
         ))}
         {!data.end_of_data ? (

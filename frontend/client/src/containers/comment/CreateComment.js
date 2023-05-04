@@ -9,21 +9,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const CreateComment = (props) => {
   const { userobj } = useSelector((state) => state.user);
 
-  let replyingto = null;
-  let isreply = null;
+  let to = null;
+  let reply = props.reply;
   let parent = null;
   let page = null;
 
   if (props) {
-    replyingto = props.replyingto || null;
+    to = props.to || null;
 
-    isreply = props.comment ? true : false;
-    // if a comment is passed to props as its parent it is a reply
+    reply = props.comment ? true : false;
 
-    parent = isreply ? props.comment.pk : props.post.pk;
+    parent = reply ? props.comment.pk : props.post.pk;
 
     page = props.page || undefined;
-    // if its a reply get the comment data else get the post data for parent
   }
 
   const [interactionState, setInteractionSate] = useState({
@@ -35,8 +33,8 @@ const CreateComment = (props) => {
     body: "",
     parent: parent,
     user: null,
-    isreply: isreply,
-    replyingto: replyingto,
+    reply: reply,
+    to: to,
   });
 
   const openReplyForm = () => {
