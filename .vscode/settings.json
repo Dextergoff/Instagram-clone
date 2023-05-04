@@ -18,7 +18,6 @@
         "titleBar.inactiveBackground": "#00000099",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#000",
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line",
     "editor.fontLigatures": true, // Please don't hate me.
@@ -29,7 +28,6 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "html.format.enable": true,
-    "html.format.endWithNewline": false,
     "javascript.format.enable": true,
     "javascript.format.insertSpaceAfterConstructor": true,
     "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
@@ -41,7 +39,6 @@
     "markdown.preview.scrollEditorWithPreview": true,
     "markdown.preview.scrollPreviewWithEditor": true,
     "terminal.explorerKind": "external",
-    "terminal.external.osxExec": "iTerm.app",
     "terminal.integrated.fontFamily": "Inconsolata for Powerline", // Install Powerline fonts for this to work
     "terminal.integrated.fontSize": 12,
     "workbench.editor.enablePreview": false,
@@ -50,5 +47,4 @@
     "workbench.panel.defaultLocation": "right",
     "workbench.settings.editor": "json",
     "workbench.sideBar.location": "left",
-    "editor.formatOnSave": true
 }
