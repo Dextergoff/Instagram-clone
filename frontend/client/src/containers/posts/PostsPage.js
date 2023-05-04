@@ -29,8 +29,14 @@ const PostsPage = () => {
         <>
           {data.nested_data?.data.map((post) => (
             <div className="d-flex justify-content-center " key={post.pk}>
-              <div className="mt-5 border-bottom border-secondary">
-                <div className="d-flex gap-3 align-items-center ">
+              <div
+                style={{
+                  borderBottomStyle: "solid",
+                  borderWidth: "1px",
+                }}
+                className="mt-5"
+              >
+                <div className="d-flex align-items-center ">
                   <PostHeading post={post} />
                 </div>
                 <PostImage
@@ -38,6 +44,9 @@ const PostsPage = () => {
                   style={{
                     width: "20vw",
                     overflow: "hidden",
+                    borderStyle: "solid",
+                    borderRadius: "5px",
+                    borderWidth: "1px",
                   }}
                 />
 
@@ -45,7 +54,7 @@ const PostsPage = () => {
                   updateCacheArgument={post.page}
                   queryName="getPage"
                   post={post}
-                  displaycommentbtn={true}
+                  feed={true}
                 />
                 <TitleAndHashtags post={post} />
 
