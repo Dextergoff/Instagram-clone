@@ -5,6 +5,7 @@ import { splitApi } from "endpoints/rtkQuery/splitApi";
 import CreateComment from "./CreateComment";
 import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
+import DisplayPfp from "components/Image/DisplayPfp";
 const CommentReplys = (props) => {
 
   const [replyState, setReplySate] = useState({
@@ -34,6 +35,7 @@ const CommentReplys = (props) => {
         <div key={reply.pk}>
           {reply.parent === pk ?
             <div className="d-flex gap-1">
+              <DisplayPfp pfp={process.env.REACT_APP_API_URL + reply.user.pfp}  style={{ width: "2rem", height: "2rem", borderRadius: "100%" }}  />
               <CommentUsername data={reply.user} />
               {reply.replyingto ?
                 <div>
