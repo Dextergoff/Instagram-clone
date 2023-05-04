@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
-import {
-  useGetProfilePageQuery,
-} from "endpoints/rtkQuery/profileEndpoints";
+import { useGetProfilePageQuery } from "endpoints/rtkQuery/profileEndpoints";
 import Layout from "Layout/Layout";
 import { useState } from "react";
 import "./css/ProfilePage.css";
@@ -11,9 +9,8 @@ import getQueryLength from "components/jobs/getQueryLength";
 import UserExists from "components/jobs/verification/UserExists";
 import ProfileHeader from "components/profile/ProfileHeader";
 import PostGallery from "components/profile/PostGallery";
-import './css/imagelabel.css'
+import "./css/imagelabel.css";
 const ProfilePage = () => {
-
   const { userobj, loading } = useSelector((state) => state.user);
 
   const [state, setState] = useState({
@@ -36,7 +33,7 @@ const ProfilePage = () => {
       <Layout>
         <>
           <ProfileHeader data={data} userobj={userobj} />
-          <PostGallery data={data} state={{state, setState}}/>
+          <PostGallery data={data} state={{ state, setState }} />
         </>
       </Layout>
     );
@@ -48,5 +45,6 @@ const ProfilePage = () => {
     );
   }
 };
+// TODO make grid smaller images are too big maybe make header larger too increase spacing between images and responsiveness
 
 export default ProfilePage;
