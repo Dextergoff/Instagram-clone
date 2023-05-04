@@ -79,7 +79,7 @@ const CreateComment = (props) => {
     <>
       {props.hideform ? (
         <div onClick={() => openReplyForm()}>
-          <div style={{ fontSize: "0.8rem" }} className=" text-muted">
+          <div style={{ fontSize: "0.8rem" }} className=" text-secondary">
             Reply
           </div>
         </div>
