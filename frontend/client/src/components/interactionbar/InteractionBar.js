@@ -10,6 +10,7 @@ import { useLikePostMutation } from "endpoints/rtkQuery/postEndpoints";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import { Link, useLocation } from "react-router-dom";
 import UpdateLikes from "components/update_cache/UpdateLikes";
+import LikeCount from "components/like_count/LikeCount";
 const InteractionBar = ({
   addArgument,
   updateCacheArgument,
@@ -85,12 +86,14 @@ const InteractionBar = ({
           </div>
         </div>
       </div>
-      {post.likecount > 0 ? (
-        <div className="text-light fw-bold">{post.likecount} likes</div>
-      ) : (
-        <></>
-      )}
-      <div className="d-flex gap-1 mb-1"></div>
+      <LikeCount
+        style={{
+          fontSize: "1rem",
+          color: "#FBFBFB",
+          fontWeight: "bold",
+        }}
+        data={post}
+      />
     </>
   );
 };

@@ -9,6 +9,7 @@ import CreateComment from "./CreateComment";
 import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
+import LikeCount from "components/like_count/LikeCount";
 const CommentSection = (prop) => {
   const [commentState, setCommentState] = useState({
     page: 1,
@@ -37,7 +38,17 @@ const CommentSection = (prop) => {
               <CommentBody data={comment.body} />
               <LikeComment comment={comment} page={page} />
             </div>
-            <CreateComment comment={comment} page={page} hideform={true} />
+            <div className="d-flex gap-2 align-items-center">
+              <LikeCount
+                style={{
+                  fontSize: "0.8rem",
+                  color: "#6c757d",
+                  fontWeight: "bold",
+                }}
+                data={comment}
+              />
+              <CreateComment comment={comment} page={page} hideform={true} />
+            </div>
             <CommentReplys replysfor={comment} />
           </div>
         ))}

@@ -1,8 +1,10 @@
-const LikeCount = ({ data }) => {
+const LikeCount = ({ data, style }) => {
   return (
     <>
       {data.likecount > 0 ? (
-        <div className="text-light fw-bold">{data.likecount} likes</div>
+        <div style={style} className="">
+          {data.likecount} likes
+        </div>
       ) : (
         <></>
       )}
