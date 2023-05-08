@@ -76,7 +76,7 @@ const CommentReplys = (props) => {
           </div>
         </div>
       ))}
-      {comment.replycount > 0 && !data.end_of_data ? (
+      {comment.replys && !data.end_of_data ? (
         <div
           onClick={() => loadReplys(props.for.pk)}
           className="text-muted mb-2"
