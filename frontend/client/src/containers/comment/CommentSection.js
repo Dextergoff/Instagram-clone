@@ -16,8 +16,8 @@ const CommentSection = (prop) => {
   });
   const { page } = commentState;
 
-  const pk = prop.pk;
-  const { data = [] } = useGetCommentsQuery({ pk, page });
+  const parent = prop.parent;
+  const { data = [] } = useGetCommentsQuery({ parent, page });
 
   const loadMoreComments = () => {
     setCommentState({ ...commentState, page: page + 1 });
@@ -49,12 +49,12 @@ const CommentSection = (prop) => {
               />
               <CreateComment
                 reply={true}
-                comment={comment}
+                parent={comment}
                 page={page}
                 hideform={true}
               />
             </div>
-            <CommentReplys for={comment} />
+            <CommentReplys for={comment.pk} />
           </div>
         ))}
         {!data.end_of_data ? (

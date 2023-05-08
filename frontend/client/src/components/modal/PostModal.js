@@ -78,7 +78,7 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
-                  <CommentSection pk={data.pk} />
+                  <CommentSection parent={data.pk} />
                 </div>
                 <div
                   style={{
@@ -105,7 +105,7 @@ const PostModal = () => {
                     paddingTop: "10px",
                   }}
                 >
-                  <CreateComment reply={false} post={data} />
+                  <CreateComment reply={false} post={data} parent={data} />
                 </div>
                 {/* TODO fix responsiveness issue  of the modal the comment section is whats causing it if comments are empty it scales in size perfectly  */}
               </div>

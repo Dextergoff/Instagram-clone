@@ -60,7 +60,7 @@ const PostsPage = () => {
                 <div>
                   <div></div>
                   <div className="mt-1 mb-3">
-                    <CreateComment reply={false} post={post} />
+                    <CreateComment reply={false} post={post} parent={post} />
                   </div>
                 </div>
               </div>

@@ -77,8 +77,8 @@ class CommentsView(viewsets.ViewSet):
 
     def comments(self, request, *args, **kwargs):
         page = kwargs['page']
-        pk = kwargs['pk']
-        queryset = Comment.objects.filter(parent=pk).order_by(
+        parent = kwargs['parent']
+        queryset = Comment.objects.filter(parent=parent).order_by(
             "-date").prefetch_related('likes').select_related('user')
         queryset = pageify(queryset=queryset, page=page, items_per_page=50)
         serializer = CommentSerializer(
@@ -86,7 +86,7 @@ class CommentsView(viewsets.ViewSet):
         response = {
             QUERYING['PAGE_KEY']: page,
             QUERYING['DATA_KEY']: serializer.data,
-            QUERYING['PARENT_KEY']: int(pk),
+            QUERYING['PARENT_KEY']: int(parent),
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
         }
         return Response(response)

@@ -1,13 +1,12 @@
 import { splitApi } from "./splitApi";
 import { handleNewComments } from "components/rtkQuery/handleNewComments";
-const callto = 'comments'
-
+const endpoint = "comments";
 
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getComments: builder.query({
-      query: ({ pk, page }) => ({
-        url: `${callto}/${pk}/${page}`,
+      query: ({ parent, page }) => ({
+        url: `${endpoint}/${parent}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -19,7 +18,7 @@ splitApi.injectEndpoints({
       },
 
       merge: (currentCache, newItems) => {
-        handleNewComments({currentCache, newItems})
+        handleNewComments({ currentCache, newItems });
       },
 
       forceRefetch({ currentArg, previousArg }) {
@@ -29,16 +28,15 @@ splitApi.injectEndpoints({
 
     likeComment: builder.mutation({
       query: ({ pk, user }) => ({
-        url: `${callto}/like/`,
+        url: `${endpoint}/like/`,
         method: "post",
         body: { pk, user },
       }),
-
     }),
 
     createComment: builder.mutation({
       query: (body) => ({
-        url: `${callto}/createcomment/`,
+        url: `${endpoint}/createcomment/`,
         method: "post",
         body: body,
         headers: {
@@ -48,11 +46,12 @@ splitApi.injectEndpoints({
       transformResponse: (response, meta, arg) => {
         return response;
       },
-
     }),
-
-
   }),
 });
 
-export const { useGetCommentsQuery, useCreateCommentMutation, useLikeCommentMutation,  } = splitApi;
+export const {
+  useGetCommentsQuery,
+  useCreateCommentMutation,
+  useLikeCommentMutation,
+} = splitApi;
