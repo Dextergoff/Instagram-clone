@@ -11,14 +11,12 @@ User = get_user_model()
 class Comment(models.Model):
     date = models.DateTimeField(default=now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=200, blank=True)
     body = models.CharField(max_length=200)
     parent = models.PositiveIntegerField(default=0)
     likes = models.ManyToManyField(
         User, related_name="comment_likes", blank=True)
     likecount = models.IntegerField(default=0)
-    replys = models.BooleanField(default=False)
-    reply = models.BooleanField(default=False)
+    children = models.PositiveIntegerField(default=0)
     to = models.CharField(null=True, max_length=240)
 
 

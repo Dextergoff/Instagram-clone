@@ -32,9 +32,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'parent',
             'likes',
             'likecount',
-            'username',
-            'replys',
-            'reply',
+            'children',
             'to'
 
         ]
@@ -59,36 +57,22 @@ class CreateCommentSerializer(serializers.Serializer):
         }
         return response
 
-    def get_replying_to(self, data):
-        try:
-            to = data['to']
-        except:
-            to = None
-        return to
-
     def update_parent(self, parent):
         comment = Comment.objects.get(pk=parent)
-        comment.replys = True
+        comment.children += 1
         comment.save()
-
-    def create_reply(self, data):
-        user = User.objects.get(pk=data['user'])
-        to = self.get_replying_to(data)
-        comment = Comment.objects.create(
-            username=user.username, parent=data['parent'], user=user, body=data['body'], reply=True, to=to)
-        self.update_parent(data['parent'])
-        return self.serialize_comment(comment=comment)
 
     def create_comment(self, data):
         user = User.objects.get(pk=data['user'])
+        parent = data['parent']
         comment = Comment.objects.create(
-            username=user.username, parent=data['parent'], user=user, body=data['body'], reply=False)
+            parent=parent['pk'], user=user, body=data['body'], to=parent.get('user', {}).get('username'))
+        self.update_parent(parent['pk'])
         return self.serialize_comment(comment=comment)
 
     def handle_comment(self, data):
-        reply = data['reply']
-        if reply:
-            comment = self.create_reply(data=data)
-        else:
-            comment = self.create_comment(data=data)
+        comment = self.create_comment(data=data)
         return comment
+
+
+1
