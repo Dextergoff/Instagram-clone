@@ -7,35 +7,25 @@ import { faHeart, faReply } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateComment = (props) => {
+  const dispatch = useDispatch();
+
   const { userobj } = useSelector((state) => state.user);
 
-  let to = null;
-  let reply = props.reply;
-  let parent = null;
-  let page = null;
+  const page = props.page || undefined;
 
-  if (props) {
-    to = props.to || null;
-
-    reply = props.comment ? true : false;
-
-    parent = reply ? props.comment.pk : props.post.pk;
-
-    page = props.page || undefined;
-  }
+  const [commentState, setCommentState] = useState({
+    body: "",
+    parent: props.parent,
+    user: null,
+  });
+  const { body, parent } = commentState;
 
   const [interactionState, setInteractionSate] = useState({
     display: props.hideform ? false : true,
   });
   const { display } = interactionState;
 
-  const [commentState, setCommentState] = useState({
-    body: "",
-    parent: parent,
-    user: null,
-    reply: reply,
-    to: to,
-  });
+  const [addComment, result] = useCreateCommentMutation();
 
   const openReplyForm = () => {
     setInteractionSate({
@@ -43,12 +33,6 @@ const CreateComment = (props) => {
       display: display ? false : true,
     });
   };
-
-  const { body } = commentState;
-
-  const [addComment, result] = useCreateCommentMutation();
-
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setCommentState({
