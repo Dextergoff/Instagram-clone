@@ -68,7 +68,7 @@ class CreateCommentSerializer(serializers.Serializer):
 
     def update_parent(self, parent):
         comment = Comment.objects.get(pk=parent)
-        comment.replys += 1
+        comment.replys = True
         comment.save()
 
     def create_reply(self, data):
