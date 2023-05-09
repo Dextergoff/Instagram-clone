@@ -25,7 +25,6 @@ const LikeComment = (props) => {
   useEffect(() => {
     result.status === "fulfilled" &&
       updateLikes({ dispatch, result, pk, page });
-    console.log(result);
   }, [result, pk, page, dispatch]);
   return (
     <>
