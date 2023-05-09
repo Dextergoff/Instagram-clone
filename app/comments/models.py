@@ -13,6 +13,8 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
     parent = models.PositiveIntegerField(default=0)
+    post = models.PositiveIntegerField(default=0)
+
     likes = models.ManyToManyField(
         User, related_name="comment_likes", blank=True)
     likecount = models.IntegerField(default=0)

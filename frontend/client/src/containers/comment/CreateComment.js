@@ -17,6 +17,7 @@ const CreateComment = (props) => {
     body: "",
     parent: props.parent,
     user: null,
+    post: props.post,
   });
   const { body, parent } = commentState;
 
