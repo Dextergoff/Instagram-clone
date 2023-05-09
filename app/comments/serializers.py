@@ -68,7 +68,6 @@ class CreateCommentSerializer(serializers.Serializer):
 
     def create_comment(self, data):
         user = User.objects.get(pk=data['user'])
-        print(data)
         parent = data['parent']
         post = data['post']
         comment = Comment.objects.create(
