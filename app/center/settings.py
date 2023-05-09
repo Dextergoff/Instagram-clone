@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from django.conf import settings
 from pathlib import Path
 from datetime import timedelta
-import os 
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,8 +26,9 @@ QUERYING = {
     'ND_KEY': 'nested_data',
     'DATA_KEY': 'data',
     'PAGE_KEY': 'page',
-    'PARENT_KEY':'parent'
-}  
+    'PARENT_KEY': 'parent',
+    'POST_KEY': 'post',
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -36,7 +37,7 @@ QUERYING = {
 SECRET_KEY = 'django-insecure-s8b@i8+59#x%07b4671g*&t@fwz-=^z=g%*5ti(9=bc^x#q_c%'
 # os.environ.get("SECRET_KEY")docker
 
-# DEBUG = int(os.environ.get("DEBUG", default=0)) docker 
+# DEBUG = int(os.environ.get("DEBUG", default=0)) docker
 
 DEBUG = True
 
@@ -45,7 +46,6 @@ DEBUG = True
 
 # ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split() for docker
 ALLOWED_HOSTS = []
-
 
 
 # Application definition
@@ -83,7 +83,7 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:3000',
+    'http://localhost:3000',
 )
 
 ROOT_URLCONF = "center.urls"
@@ -161,9 +161,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 
-
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -172,12 +169,12 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "login"
 STRIPE_WEBHOOK_SECRET = ""
 STATIC_URL = 'static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), ) 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'users.UserAccount'
-SECRET_KEY=settings.SECRET_KEY
+SECRET_KEY = settings.SECRET_KEY
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -189,11 +186,11 @@ EMAIL_HOST_PASSWORD = 'sqixvnvbepnqrxlh'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),  
+    ),
 }
 
 SIMPLE_JWT = {
-  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
- 
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+
 }
