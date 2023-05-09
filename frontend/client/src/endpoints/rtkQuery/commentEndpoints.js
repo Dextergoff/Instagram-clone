@@ -17,8 +17,8 @@ splitApi.injectEndpoints({
         return getComments;
       },
 
-      merge: (currentCache, newItems) => {
-        handleNewComments({ currentCache, newItems });
+      merge: (currentCache, newItems, args) => {
+        handleNewComments({ currentCache, newItems, args });
       },
 
       forceRefetch({ currentArg, previousArg }) {
