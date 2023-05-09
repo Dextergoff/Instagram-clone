@@ -29,21 +29,21 @@ const PostModal = () => {
 
   const { pk } = params;
 
-  const shouldskipGetPage = !Boolean(queryName === "getPage");
-  const shouldskipGetPost = !Boolean(queryName === "getPost");
+  const skipPage = !Boolean(queryName === "getPage");
+  const skipPost = !Boolean(queryName === "getPost");
 
   const useCachedData = splitApi.endpoints.getPage.useQueryState({
-    skip: shouldskipGetPage,
+    skip: skipPage,
   });
-  const queryPost = useGetPostQuery(Number(pk), { skip: shouldskipGetPost });
-  const data = QueryDecider({ queryPost, useCachedData, pk });
+  const queryPost = useGetPostQuery(Number(pk), { skip: skipPost });
+  const post = QueryDecider({ queryPost, useCachedData, pk });
 
   const handleClose = () => {
     setModalState({ ...modalState, show: false, skip: true });
     navigate(-1);
   };
 
-  if (data)
+  if (post)
     return (
       <>
         <div className="">
@@ -57,7 +57,7 @@ const PostModal = () => {
               <div className="img-wrapper">
                 <PostImage
                   style={{ height: "100%", width: "100%" }}
-                  image={data.image}
+                  image={post.image}
                 />
               </div>
               <div className="sidebar d-flex flex-column bg-black ">
@@ -69,7 +69,7 @@ const PostModal = () => {
                   }}
                   className="mt-2 mb-2"
                 >
-                  <PostHeading post={data} />
+                  <PostHeading post={post} />
                   {/* TODO add title to header or interaction bar */}
                 </div>
                 <div
@@ -78,7 +78,7 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
-                  <CommentSection parent={data.pk} />
+                  <CommentSection parent={post.pk} />
                 </div>
                 <div
                   style={{
@@ -94,7 +94,7 @@ const PostModal = () => {
                       queryName={queryName}
                       updateCacheArgument={updateCacheArgument}
                       addArgument={addArgument}
-                      post={data}
+                      post={post}
                     />
                   </div>
                 </div>
@@ -105,7 +105,7 @@ const PostModal = () => {
                     paddingTop: "10px",
                   }}
                 >
-                  <CreateComment reply={false} post={data} parent={data} />
+                  <CreateComment parent={post} post={post.pk} />
                 </div>
                 {/* TODO fix responsiveness issue  of the modal the comment section is whats causing it if comments are empty it scales in size perfectly  */}
               </div>
