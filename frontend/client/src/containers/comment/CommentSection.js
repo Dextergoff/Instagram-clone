@@ -10,24 +10,35 @@ import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/like_count/LikeCount";
+import { useEffect } from "react";
 const CommentSection = (prop) => {
+  const parent = prop.parent;
+
   const [commentState, setCommentState] = useState({
     page: 1,
+    skip: false,
+    comments: null,
   });
-  const { page } = commentState;
+  const { page, skip, comments } = commentState;
 
-  const parent = prop.parent;
-  const { data = [] } = useGetCommentsQuery({ parent, page });
+  const { data = [], isSuccess } = useGetCommentsQuery(
+    { parent, page },
+    { skip: skip }
+  );
 
   const loadMoreComments = () => {
     setCommentState({ ...commentState, page: page + 1 });
   };
 
-  if (getQueryLength(data) > 0)
-    // return if data is not empty
+  useEffect(() => {
+    isSuccess === true &&
+      setCommentState({ ...commentState, comments: data, skip: true });
+  });
+
+  if (comments)
     return (
       <div className="comments-container ">
-        {data?.data.map((comment) => (
+        {comments.data.map((comment) => (
           <div key={comment.pk}>
             {comment.parent === parent ? (
               <div className="">
