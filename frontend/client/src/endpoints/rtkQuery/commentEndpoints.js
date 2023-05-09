@@ -13,17 +13,9 @@ splitApi.injectEndpoints({
         },
       }),
 
-      serializeQueryArgs: ({ getComments }) => {
-        return getComments;
-      },
-
-      merge: (currentCache, newItems, args) => {
-        handleNewComments({ currentCache, newItems, args });
-      },
-
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+      // merge: (currentCache, newItems, args) => {
+      //   handleNewComments({ currentCache, newItems, args });
+      // },
     }),
 
     likeComment: builder.mutation({
