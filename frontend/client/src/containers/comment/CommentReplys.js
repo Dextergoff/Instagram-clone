@@ -11,18 +11,12 @@ const CommentReplys = (props) => {
   const [replyState, setReplySate] = useState({
     page: 1,
     skip: true,
-    parent: null,
+    parent: props.for.pk,
     hide: false,
   });
   const { page, skip, parent, hide } = replyState;
 
   const { data = [] } = useGetCommentsQuery({ parent, page }, { skip: skip });
-
-  const useCachedData = splitApi.endpoints.getComments.useQueryState({ skip });
-
-  const comment = useCachedData.data?.data.find(
-    (item) => item.pk === Number(props.for)
-  );
 
   const loadReplys = (prop) => {
     setReplySate({ ...replyState, parent: prop, skip: false });
@@ -52,32 +46,33 @@ const CommentReplys = (props) => {
               {/* replying to needs to be changed since if the person being replyed to changes there name it wont get updated as of now */}
               <CommentBody data={reply.body} />
               <LikeComment comment={reply} page={page} />
+              <div className="d-flex gap-2 pb-3">
+                <LikeCount
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "#6c757d",
+                    fontWeight: "bold",
+                  }}
+                  data={reply}
+                />
+              </div>
+              <CreateComment
+                page={page}
+                parent={reply}
+                post={props.for.post}
+                hideform={true}
+              />
             </div>
           ) : (
             <></>
           )}
-          <div className="d-flex gap-2 pb-3">
-            <LikeCount
-              style={{
-                fontSize: "0.8rem",
-                color: "#6c757d",
-                fontWeight: "bold",
-              }}
-              data={reply}
-            />
-
-            <CreateComment
-              reply={false}
-              to={reply.username}
-              page={page}
-              parent={reply}
-              hideform={true}
-            />
-          </div>
         </div>
       ))}
-      {comment.replys && !data.end_of_data ? (
-        <div onClick={() => loadReplys(props.for)} className="text-muted mb-2">
+      {props.for.children > 0 && !data.end_of_data ? (
+        <div
+          onClick={() => loadReplys(props.for.pk)}
+          className="text-muted mb-2"
+        >
           view replys
         </div>
       ) : (
