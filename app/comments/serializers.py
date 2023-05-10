@@ -59,6 +59,7 @@ class CreateCommentSerializer(serializers.Serializer):
         return response
 
     def update_parent(self, parent):
+
         try:
             comment = Comment.objects.get(pk=parent)
             comment.children += 1
@@ -66,17 +67,18 @@ class CreateCommentSerializer(serializers.Serializer):
         except Exception:
             pass
 
-    def create_comment(self, data):
-        user = User.objects.get(pk=data['user'])
+    def create_comment(self, data, user):
         parent = data['parent']
         post = data['post']
-        comment = Comment.objects.create(
-            parent=parent['pk'], user=user, body=data['body'], post=post, to=parent.get('user', {}).get('username'))
+        to = data['to']
+        comment = Comment.objects.select_related().create(
+            parent=parent['pk'], user=user, body=data['body'], post=post, to=to)
         self.update_parent(parent['pk'])
         return self.serialize_comment(comment=comment)
 
     def handle_comment(self, data):
-        comment = self.create_comment(data=data)
+        user = User.objects.select_related().get(pk=data['user'])
+        comment = self.create_comment(data=data, user=user)
         return comment
 
 

@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import UserExists from "components/jobs/verification/UserExists";
 import TitleInput from "components/inputs/TitleInput";
 import "./css/imagelabel.css";
-const CreatePostPage = () => {
+const CreatePost = () => {
   const navigate = useNavigate();
   const { userobj, loading } = useSelector((state) => state.user);
 
@@ -84,4 +84,4 @@ const CreatePostPage = () => {
   );
 };
 
-export default CreatePostPage;
+export default CreatePost;

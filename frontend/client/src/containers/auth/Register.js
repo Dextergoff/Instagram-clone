@@ -4,8 +4,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "endpoints/auth/user";
 import handleErrors from "../../components/errors/handleErrors";
-const RegisterPage = ({handleSubmit, Redirect}) => {
-
+const Register = ({ handleSubmit, Redirect }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -25,10 +24,22 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
   return (
     <Layout title="Auth Site | Register" content="Register page">
       <h3 className="text-light text-center">Register</h3>
-      <form className="mt-5" onSubmit={(e)=>handleSubmit({username, email, password, dispatch, e, endpoint:register})}>
+      <form
+        className="mt-5"
+        onSubmit={(e) =>
+          handleSubmit({
+            username,
+            email,
+            password,
+            dispatch,
+            e,
+            endpoint: register,
+          })
+        }
+      >
         <div className="d-flex justify-content-center">
           <div className="form-group w-25">
-          <label className="form-label text-light" htmlFor="username">
+            <label className="form-label text-light" htmlFor="username">
               Username
             </label>
             <input
@@ -46,7 +57,7 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
         </div>
         <div className="d-flex justify-content-center">
           <div className="form-group w-25 mt-3">
-          <label className="form-label text-light" htmlFor="email">
+            <label className="form-label text-light" htmlFor="email">
               Email
             </label>
             <input
@@ -63,7 +74,7 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
         </div>
         <div className="d-flex justify-content-center">
           <div className="form-group w-25 mt-3">
-          <label className="form-label text-light" htmlFor="password">
+            <label className="form-label text-light" htmlFor="password">
               Password
             </label>
             <input
@@ -78,7 +89,7 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
             />
           </div>
         </div>
-        {response ? handleErrors({response}): <></>}
+        {response ? handleErrors({ response }) : <></>}
         {loading ? (
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -86,10 +97,15 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
         ) : (
           <div>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-primary rounded-0 bg-black border-secondary mt-4">Continue</button>
+              <button className="btn btn-primary rounded-0 bg-black border-secondary mt-4">
+                Continue
+              </button>
             </div>
             <div>
-              <div onClick={(e)=>Redirect({location:"/login"})} className="d-flex text-light mt-2 justify-content-center">
+              <div
+                onClick={(e) => Redirect({ location: "/login" })}
+                className="d-flex text-light mt-2 justify-content-center"
+              >
                 already have an account?
               </div>
             </div>
@@ -100,4 +116,4 @@ const RegisterPage = ({handleSubmit, Redirect}) => {
   );
 };
 
-export default RegisterPage;
+export default Register;

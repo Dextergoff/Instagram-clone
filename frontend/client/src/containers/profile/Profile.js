@@ -10,7 +10,7 @@ import UserExists from "components/jobs/verification/UserExists";
 import ProfileHeader from "components/profile/ProfileHeader";
 import PostGallery from "components/profile/PostGallery";
 import "./css/imagelabel.css";
-const ProfilePage = () => {
+const Profile = () => {
   const { userobj, loading } = useSelector((state) => state.user);
 
   const [state, setState] = useState({
@@ -47,4 +47,4 @@ const ProfilePage = () => {
 };
 // TODO make grid smaller images are too big maybe make header larger too increase spacing between images and responsiveness
 
-export default ProfilePage;
+export default Profile;

@@ -6,16 +6,16 @@ import { useEffect } from "react";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import handleErrors from "../../components/errors/handleErrors";
 import onSubmit from "components/forms/onSubmit";
-const LoginPage = ({Redirect}) => {
-
-  
+const Login = ({ Redirect }) => {
   const [formData, setFormData] = useState({
     password: "",
     email: "",
   });
   const { password, email } = formData;
 
-  const { loading, userobj, registered, response , rejected} = useSelector((state) => state.user);
+  const { loading, userobj, registered, response, rejected } = useSelector(
+    (state) => state.user
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,9 +28,9 @@ const LoginPage = ({Redirect}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({email, password}));
-}
-  if (userobj) Redirect({location:"/"});
+    dispatch(login({ email, password }));
+  };
+  if (userobj) Redirect({ location: "/" });
   return (
     <Layout title="Login" content="Login page">
       <form className="mt-5" onSubmit={onSubmit}>
@@ -49,13 +49,11 @@ const LoginPage = ({Redirect}) => {
               value={email}
               required
             />
-
           </div>
         </div>
 
         <div className="d-flex justify-content-center  ">
           <div className="form-group w-25 mt-3">
-
             <label className="form-label text-light" htmlFor="password">
               Password
             </label>
@@ -69,32 +67,38 @@ const LoginPage = ({Redirect}) => {
               value={password}
               required
             />
-
           </div>
         </div>
 
-          <div role='alertdialog' className="error-msg text-danger text-center ">{response ? handleErrors({response, rejected}):<></>} </div>
-          
-
+        <div role="alertdialog" className="error-msg text-danger text-center ">
+          {response ? handleErrors({ response, rejected }) : <></>}{" "}
+        </div>
 
         {loading ? (
-          <BootstrapSpinner/>
+          <BootstrapSpinner />
         ) : (
           <div>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-primary mt-4 rounded-0 bg-black border-secondary">Continue</button>
+              <button className="btn btn-primary mt-4 rounded-0 bg-black border-secondary">
+                Continue
+              </button>
             </div>
             <div className="d-flex justify-content-center">
               <div className="mt-4">
-                <div onClick={()=>Redirect({location:"/resetpasswordsm/"})} className="mt-4 text-light">
+                <div
+                  onClick={() => Redirect({ location: "/resetpasswordsm/" })}
+                  className="mt-4 text-light"
+                >
                   forgot password?
                 </div>
               </div>
-
             </div>
             <div className="d-flex justify-content-center">
               <div>
-                <div onClick={()=>Redirect({location:"/register/"})} className="ml-4 text-light ">
+                <div
+                  onClick={() => Redirect({ location: "/register/" })}
+                  className="ml-4 text-light "
+                >
                   new user?
                 </div>
               </div>
@@ -107,4 +111,4 @@ const LoginPage = ({Redirect}) => {
   );
 };
 
-export default LoginPage;
+export default Login;

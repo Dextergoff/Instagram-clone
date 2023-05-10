@@ -13,6 +13,8 @@ const CreateComment = (props) => {
 
   const page = props.page || undefined;
 
+  const to = props.to || "";
+
   const queryName = props.queryName || "getComments";
 
   const [commentState, setCommentState] = useState({
@@ -20,6 +22,7 @@ const CreateComment = (props) => {
     parent: props.parent,
     user: null,
     post: props.post,
+    to: to,
   });
   const { body, parent } = commentState;
 

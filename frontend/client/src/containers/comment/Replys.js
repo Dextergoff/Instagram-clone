@@ -7,7 +7,7 @@ import DisplayPfp from "components/Image/DisplayPfp";
 import LikeComment from "components/comments/LikeComment";
 import LikeCount from "components/like_count/LikeCount";
 import { useGetReplysQuery } from "endpoints/rtkQuery/commentEndpoints";
-const CommentReplys = (props) => {
+const Replys = (props) => {
   const [replyState, setReplySate] = useState({
     page: 1,
     skip: true,
@@ -38,6 +38,7 @@ const CommentReplys = (props) => {
                   }}
                 />
                 <CommentUsername data={reply.user} />
+                <div className="text-primary">@{reply.to}</div>
                 <CommentBody data={reply.body} />
                 <LikeComment
                   queryName="getReplys"
@@ -56,10 +57,8 @@ const CommentReplys = (props) => {
                 />
                 <CreateComment
                   parent={props.for}
+                  to={reply.user.username}
                   queryName="getReplys"
-                  //  TODO add this
-                  // to={reply.user.username}
-
                   post={reply.post}
                   page={page}
                   hideform={true}
@@ -87,4 +86,4 @@ const CommentReplys = (props) => {
   );
 };
 
-export default CommentReplys;
+export default Replys;

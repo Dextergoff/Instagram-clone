@@ -4,19 +4,18 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { checkAuth } from "endpoints/auth/user";
 import { ProtectedRoute } from "./endpoints/auth/authRoutes";
-import LoginPage from "containers/auth/LoginPage";
-import DashboardPage from "containers/auth/DashboardPage";
-import RegisterPage from "containers/auth/RegisterPage";
-import ResetPasswordSendMail from "containers/auth/ResetPasswordSendMail";
+import Login from "containers/auth/Login";
+import Register from "containers/auth/Register";
 import ResetPassword from "containers/auth/ResetPassword";
-import NotFoudPage from "containers/auth/NotFoudPage";
-import PostsPage from "containers/posts/PostsPage";
-import CreatePostPage from "containers/posts/CreatePostPage";
-import ProfilePage from "containers/profile/ProfilePage";
-import HashtagPosts from "containers/hashtag/HashtagPosts";
-import PostModal from "components/modal/PostModal";
-import onSubmit from "components/forms/onSubmit";
+import Posts from "containers/posts/Posts";
+import CreatePost from "containers/posts/CreatePost";
+import Profile from "containers/profile/Profile";
+import Hashtag from "containers/hashtag/Hashtag";
+import PostModal from "containers/posts/PostModal";
 import Redirect from "components/forms/Redirect";
+import onSubmit from "components/forms/onSubmit";
+import Forgot from "containers/auth/Forgot";
+import NotFoud from "containers/auth/NotFoud";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -42,7 +41,7 @@ const App = () => {
           path="/"
           element={
             <ProtectedRoute>
-              <PostsPage />
+              <Posts />
             </ProtectedRoute>
           }
         />
@@ -50,7 +49,7 @@ const App = () => {
           path="/create"
           element={
             <ProtectedRoute>
-              <CreatePostPage />
+              <CreatePost />
             </ProtectedRoute>
           }
         />
@@ -58,15 +57,7 @@ const App = () => {
           path="/h/:hashtag"
           element={
             <ProtectedRoute>
-              <HashtagPosts />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
+              <Hashtag />
             </ProtectedRoute>
           }
         />
@@ -74,24 +65,21 @@ const App = () => {
           path="/u"
           element={
             <ProtectedRoute>
-              <ProfilePage />
+              <Profile />
             </ProtectedRoute>
           }
         />
         <Route
           path="/login"
-          element={<LoginPage Redirect={Redirect} handleSubmit={onSubmit} />}
+          element={<Login Redirect={Redirect} handleSubmit={onSubmit} />}
         />
         <Route
           path="/register"
-          element={<RegisterPage Redirect={Redirect} handleSubmit={onSubmit} />}
+          element={<Register Redirect={Redirect} handleSubmit={onSubmit} />}
         />
-        <Route
-          path="/resetpasswordsm"
-          element={<ResetPasswordSendMail handleSubmit={onSubmit} />}
-        />
-        <Route path={`/resetpassword`} element={<ResetPassword />} />
-        <Route path="*" element={<NotFoudPage />} />
+        <Route path="/forgot" element={<Forgot handleSubmit={onSubmit} />} />
+        <Route path={`/reset`} element={<ResetPassword />} />
+        <Route path="*" element={<NotFoud />} />
       </Routes>
       {background && (
         <Routes>

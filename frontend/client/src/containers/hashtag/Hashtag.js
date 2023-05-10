@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GalleryPostImage from "components/Image/GalleryPostImage";
-const HashtagPosts = () => {
+const Hashtag = () => {
   const [stateData, setStateData] = useState({
     page: 1,
   });
@@ -74,4 +74,4 @@ const HashtagPosts = () => {
   );
 };
 
-export default HashtagPosts;
+export default Hashtag;

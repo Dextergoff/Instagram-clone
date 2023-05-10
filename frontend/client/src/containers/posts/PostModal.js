@@ -9,9 +9,9 @@ import { splitApi } from "endpoints/rtkQuery/splitApi";
 import CreateComment from "containers/comment/CreateComment";
 import { useLocation } from "react-router-dom";
 import { useGetPostQuery } from "endpoints/rtkQuery/postEndpoints";
-import CommentSection from "containers/comment/CommentSection";
+import CommentSection from "containers/comment/Comments";
 import PostImage from "components/Image/PostImage";
-import QueryDecider from "../queryfuncs/QueryDecider";
+import QueryDecider from "../../components/queryfuncs/QueryDecider";
 import PostHeading from "components/posts/PostHeading";
 const PostModal = () => {
   const [modalState, setModalState] = useState({

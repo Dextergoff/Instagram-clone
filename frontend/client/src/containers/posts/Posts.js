@@ -11,7 +11,7 @@ import PostHeading from "components/posts/PostHeading";
 import getQueryLength from "components/jobs/getQueryLength";
 import DisplayPfp from "components/Image/DisplayPfp";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
-const PostsPage = () => {
+const Posts = () => {
   const { userobj } = useSelector((state) => state.user);
 
   const [stateData, setStateData] = useState({
@@ -80,4 +80,4 @@ const PostsPage = () => {
     );
 };
 
-export default PostsPage;
+export default Posts;

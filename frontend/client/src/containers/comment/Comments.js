@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import LikeComment from "../../components/comments/LikeComment";
-import CommentReplys from "./CommentReplys";
+import Replys from "./Replys";
 import getQueryLength from "components/jobs/getQueryLength";
 import CreateComment from "./CreateComment";
 import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/like_count/LikeCount";
-const CommentSection = (prop) => {
+const Comments = (prop) => {
   const [commentState, setCommentState] = useState({
     page: 1,
   });
@@ -60,13 +60,14 @@ const CommentSection = (prop) => {
                   <CreateComment
                     queryName="getReplys"
                     parent={comment}
+                    to={comment.user.username}
                     post={comment.post}
                     page={page}
                     hideform={true}
                   />
                   {/* TODO show replies not being displayed when first reply is added */}
                 </div>
-                <CommentReplys for={comment} />
+                <Replys for={comment} />
               </div>
             ) : (
               <></>
@@ -88,4 +89,4 @@ const CommentSection = (prop) => {
       </div>
     );
 };
-export default CommentSection;
+export default Comments;

@@ -1,0 +1,19 @@
+.modal-lg, .modal-xl {
+  --bs-modal-width: 85vw;
+
+}
+.custom-modal{
+  max-height: 95vw;
+  height: 95vh;
+}
+.sidebar{
+  max-height: 95vh;
+  width: 40vh;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.comment-section{
+  max-height: 85vh;
+  overflow: auto;
+}
