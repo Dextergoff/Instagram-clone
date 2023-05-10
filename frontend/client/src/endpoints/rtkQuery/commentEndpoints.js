@@ -13,9 +13,38 @@ splitApi.injectEndpoints({
         },
       }),
 
-      // merge: (currentCache, newItems, args) => {
-      //   handleNewComments({ currentCache, newItems, args });
-      // },
+      serializeQueryArgs: ({ getComments }) => {
+        return getComments;
+      },
+
+      merge: (currentCache, newItems, args) => {
+        handleNewComments({ currentCache, newItems, args });
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+    }),
+    getReplys: builder.query({
+      query: ({ parent, page }) => ({
+        url: `${endpoint}/${parent}/${page}`,
+        method: "get",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+
+      serializeQueryArgs: ({ getComments }) => {
+        return getComments;
+      },
+
+      merge: (currentCache, newItems, args) => {
+        handleNewComments({ currentCache, newItems, args });
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
 
     likeComment: builder.mutation({
@@ -44,6 +73,8 @@ splitApi.injectEndpoints({
 
 export const {
   useGetCommentsQuery,
+  useGetReplysQuery,
+
   useCreateCommentMutation,
   useLikeCommentMutation,
 } = splitApi;

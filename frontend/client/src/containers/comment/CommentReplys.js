@@ -6,7 +6,7 @@ import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeComment from "components/comments/LikeComment";
 import LikeCount from "components/like_count/LikeCount";
-import { useGetCommentsQuery } from "endpoints/rtkQuery/commentEndpoints";
+import { useGetReplysQuery } from "endpoints/rtkQuery/commentEndpoints";
 const CommentReplys = (props) => {
   const [replyState, setReplySate] = useState({
     page: 1,
@@ -16,37 +16,36 @@ const CommentReplys = (props) => {
   });
   const { page, skip, parent, hide } = replyState;
 
-  const { data = [] } = useGetCommentsQuery({ parent, page }, { skip: skip });
+  const { data = [] } = useGetReplysQuery({ parent, page }, { skip: skip });
 
   const loadReplys = (prop) => {
     setReplySate({ ...replyState, parent: prop, skip: false });
   };
 
   return (
-    <div
-      style={{ marginLeft: "10px", marginBottom: "20px", marginTop: "20px" }}
-    >
+    <div style={{ marginLeft: "10px", marginBottom: "0px", marginTop: "20px" }}>
       {data.data?.map((reply) => (
         <div className={hide ? "d-none" : ""} key={reply.pk}>
           {reply.parent === parent ? (
-            <div className="d-flex gap-1 ">
-              <DisplayPfp
-                pfp={process.env.REACT_APP_API_URL + reply.user.pfp}
-                style={{ width: "2rem", height: "2rem", borderRadius: "100%" }}
-              />
-              <CommentUsername data={reply.user} />
-              {reply.to ? (
-                <div className="text-primary  mr-auto fw-light">
-                  @{reply.to}
-                </div>
-              ) : (
-                <></>
-              )}
-
-              {/* replying to needs to be changed since if the person being replyed to changes there name it wont get updated as of now */}
-              <CommentBody data={reply.body} />
-              <LikeComment comment={reply} page={page} />
-              <div className="d-flex gap-2 pb-3">
+            <div className="mb-3">
+              <div className="d-flex gap-1">
+                <DisplayPfp
+                  pfp={process.env.REACT_APP_API_URL + reply.user.pfp}
+                  style={{
+                    width: "2rem",
+                    height: "2em",
+                    borderRadius: "100%",
+                  }}
+                />
+                <CommentUsername data={reply.user} />
+                <CommentBody data={reply.body} />
+                <LikeComment
+                  queryName="getReplys"
+                  comment={reply}
+                  page={page}
+                />
+              </div>
+              <div className="d-flex gap-2 align-items-center">
                 <LikeCount
                   style={{
                     fontSize: "0.8rem",
@@ -55,13 +54,17 @@ const CommentReplys = (props) => {
                   }}
                   data={reply}
                 />
+                <CreateComment
+                  parent={props.for}
+                  queryName="getReplys"
+                  //  TODO add this
+                  // to={reply.user.username}
+
+                  post={reply.post}
+                  page={page}
+                  hideform={true}
+                />
               </div>
-              <CreateComment
-                page={page}
-                parent={reply}
-                post={props.for.post}
-                hideform={true}
-              />
             </div>
           ) : (
             <></>
