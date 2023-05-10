@@ -10,6 +10,8 @@ const LikeComment = (props) => {
   });
   const { display } = interactionState;
 
+  const queryName = props.queryName;
+
   const { userobj } = useSelector((state) => state.user);
 
   const [likeComment, result] = useLikeCommentMutation();
@@ -24,7 +26,7 @@ const LikeComment = (props) => {
 
   useEffect(() => {
     result.status === "fulfilled" &&
-      updateLikes({ dispatch, result, pk, page });
+      updateLikes({ dispatch, result, pk, page, queryName });
   }, [result, pk, page, dispatch]);
   return (
     <>

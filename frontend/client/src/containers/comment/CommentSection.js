@@ -10,35 +10,24 @@ import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/like_count/LikeCount";
-import { useEffect } from "react";
 const CommentSection = (prop) => {
-  const parent = prop.parent;
-
   const [commentState, setCommentState] = useState({
     page: 1,
-    skip: false,
-    comments: null,
   });
-  const { page, skip, comments } = commentState;
+  const { page } = commentState;
 
-  const { data = [], isSuccess } = useGetCommentsQuery(
-    { parent, page },
-    { skip: skip }
-  );
+  const parent = prop.parent;
+  const { data = [] } = useGetCommentsQuery({ parent, page });
 
   const loadMoreComments = () => {
     setCommentState({ ...commentState, page: page + 1 });
   };
 
-  useEffect(() => {
-    isSuccess === true &&
-      setCommentState({ ...commentState, comments: data, skip: true });
-  });
-
-  if (comments)
+  if (getQueryLength(data) > 0)
+    // return if data is not empty
     return (
       <div className="comments-container ">
-        {comments.data.map((comment) => (
+        {data?.data.map((comment) => (
           <div key={comment.pk}>
             {comment.parent === parent ? (
               <div className="">
@@ -53,7 +42,11 @@ const CommentSection = (prop) => {
                   />
                   <CommentUsername data={comment.user} />
                   <CommentBody data={comment.body} />
-                  <LikeComment comment={comment} page={page} />
+                  <LikeComment
+                    comment={comment}
+                    page={page}
+                    queryName="getComments"
+                  />
                 </div>
                 <div className="d-flex gap-2 align-items-center">
                   <LikeCount
@@ -65,12 +58,13 @@ const CommentSection = (prop) => {
                     data={comment}
                   />
                   <CreateComment
-                    reply={true}
+                    queryName="getReplys"
                     parent={comment}
                     post={comment.post}
                     page={page}
                     hideform={true}
                   />
+                  {/* TODO show replies not being displayed when first reply is added */}
                 </div>
                 <CommentReplys for={comment} />
               </div>

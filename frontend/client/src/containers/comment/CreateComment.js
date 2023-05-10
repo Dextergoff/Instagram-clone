@@ -13,6 +13,8 @@ const CreateComment = (props) => {
 
   const page = props.page || undefined;
 
+  const queryName = props.queryName || "getComments";
+
   const [commentState, setCommentState] = useState({
     body: "",
     parent: props.parent,
@@ -54,9 +56,9 @@ const CreateComment = (props) => {
 
   useEffect(() => {
     result.status === "fulfilled" &&
-      UpdateComments({ result, parent, page, dispatch });
+      UpdateComments({ result, parent, page, dispatch, queryName });
     // update comments when the comment has been created and rtk query gets the ok from server
-  }, [dispatch, parent, result, page]);
+  }, [dispatch, parent, result, page, queryName]);
 
   return (
     <>
