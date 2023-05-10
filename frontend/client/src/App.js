@@ -21,9 +21,23 @@ import {
   faHeart,
   faComment,
   faPaperPlane,
+  faSquarePlus,
+  faBuilding,
+  faCompass,
+  faUser,
+  faEdit,
 } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faHeart, faComment, faPaperPlane);
+library.add(
+  faHeart,
+  faComment,
+  faPaperPlane,
+  faSquarePlus,
+  faBuilding,
+  faCompass,
+  faUser,
+  faEdit
+);
 const App = () => {
   const dispatch = useDispatch();
   let location = useLocation();

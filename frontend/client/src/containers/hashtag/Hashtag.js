@@ -3,7 +3,6 @@ import { useGetHashtagPostsQuery } from "endpoints/rtkQuery/hashtagEndpoints";
 import { useState } from "react";
 import Layout from "Layout/Layout";
 import { Link, useLocation } from "react-router-dom";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GalleryPostImage from "components/Image/GalleryPostImage";
 const Hashtag = () => {
@@ -62,7 +61,10 @@ const Hashtag = () => {
             <div className="d-flex justify-content-center">
               <button className="btn" onClick={() => loadMorePosts()}>
                 {" "}
-                <FontAwesomeIcon size="xl" icon={faPlusCircle} />{" "}
+                <FontAwesomeIcon
+                  size="xl"
+                  icon="fa-regular fa-plus-square"
+                />{" "}
               </button>
             </div>
           ) : (

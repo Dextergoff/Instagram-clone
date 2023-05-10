@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useCreateCommentMutation } from "endpoints/rtkQuery/commentEndpoints";
 import UpdateComments from "components/update_cache/UpdateComments";
-import { faHeart, faReply } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateComment = (props) => {

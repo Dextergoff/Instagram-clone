@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import { useEditProfileMutation } from "endpoints/rtkQuery/profileEndpoints";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditButton = ({ states, userobj }) => {
@@ -31,7 +29,7 @@ const EditButton = ({ states, userobj }) => {
       newdescription: "",
       username: "",
       response: "",
-      image:'',
+      image: "",
       save: false,
     });
   };
@@ -54,13 +52,12 @@ const EditButton = ({ states, userobj }) => {
   const resetFile = () => {
     setFile();
   };
-  
+
   const onSubmit = (e) => {
     e.preventDefault();
     editProfile(form_data())
       .unwrap()
       .then((fulfilled) => {
-    
         setUserState({
           ...userState,
           username: fulfilled.username,
@@ -70,14 +67,14 @@ const EditButton = ({ states, userobj }) => {
       })
       .catch((rejected) => console.error(rejected));
 
-      resetState();
-      resetFormData();
-      resetFile();
+    resetState();
+    resetFormData();
+    resetFile();
   };
   return (
     <>
       {(usernametaken && username?.length > 0) ||
-      (usernametaken && description?.length > 0) || 
+      (usernametaken && description?.length > 0) ||
       (usernametaken && states.file?.length > 0) ? (
         // these if statements are really bad and need to be changed
         <button
@@ -91,7 +88,11 @@ const EditButton = ({ states, userobj }) => {
         <></>
       )}
       <button onClick={enableEdit} className="btn btn-sm btn-black text-light">
-        {states.state.editmode ? "Cancel" : <FontAwesomeIcon icon={faPencil} />}
+        {states.state.editmode ? (
+          "Cancel"
+        ) : (
+          <FontAwesomeIcon icon="fa-regular fa-edit" />
+        )}
       </button>
     </>
   );

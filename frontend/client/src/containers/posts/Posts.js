@@ -1,18 +1,15 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "Layout/Layout";
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import CreateComment from "containers/comment/CreateComment";
 import InteractionBar from "components/interactionbar/InteractionBar";
 import { useGetPageQuery } from "endpoints/rtkQuery/postEndpoints";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PostImage from "components/Image/PostImage";
 import PostHeading from "components/posts/PostHeading";
 import getQueryLength from "components/jobs/getQueryLength";
-import DisplayPfp from "components/Image/DisplayPfp";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 const Posts = () => {
-  const { userobj } = useSelector((state) => state.user);
+  // const { userobj } = useSelector((state) => state.user);
 
   const [stateData, setStateData] = useState({
     Page: 1,
@@ -67,9 +64,13 @@ const Posts = () => {
             </div>
           ))}
           {!data.end_of_data ? (
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center mt-5">
               <button className="btn" onClick={() => handleLoadPosts()}>
-                <FontAwesomeIcon size="xl" icon={faPlusCircle} />
+                <FontAwesomeIcon
+                  size="xl"
+                  className="text-light"
+                  icon="fa-regular fa-square-plus"
+                />
               </button>
             </div>
           ) : (

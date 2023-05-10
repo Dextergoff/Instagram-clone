@@ -1,6 +1,5 @@
 import { useGetCommentsQuery } from "endpoints/rtkQuery/commentEndpoints";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import LikeComment from "../../components/comments/LikeComment";
 import Replys from "./Replys";
@@ -80,7 +79,7 @@ const Comments = (prop) => {
               onClick={() => loadMoreComments()}
               className="btn text-light"
             >
-              <FontAwesomeIcon size="xl" icon={faPlusCircle} />
+              <FontAwesomeIcon size="xl" icon="fa-regular fa-plus-square" />
             </button>
           </div>
         ) : (

@@ -1,13 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  faHeart,
-  faPaperPlane,
-  faComment,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useLikePostMutation } from "endpoints/rtkQuery/postEndpoints";
-import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import { Link, useLocation } from "react-router-dom";
 import UpdateLikes from "components/update_cache/UpdateLikes";
 import LikeCount from "components/like_count/LikeCount";

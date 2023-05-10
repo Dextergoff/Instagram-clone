@@ -1,18 +1,11 @@
-
-import { useState } from "react";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ImagePreview = (props) => {
-  const file = props.file
+  const file = props.file;
   return (
     <>
       {file ? (
-        <img
-          className=""
-          id="preview"
-          src={file}
-        />
+        <img className="" id="preview" src={file} />
       ) : (
         <label
           htmlFor="image"
@@ -21,14 +14,13 @@ const ImagePreview = (props) => {
         >
           <FontAwesomeIcon
             className="text-muted"
-            icon={faPlusCircle}
+            icon="fa-regular fa-plus-square"
             size="2xl"
           />
         </label>
       )}
-
     </>
-  )
-}
+  );
+};
 
-export default ImagePreview
+export default ImagePreview;
