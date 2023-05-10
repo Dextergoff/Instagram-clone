@@ -8,8 +8,5 @@ export const splitApi = createApi({
     credentials: "same-origin",
   }),
 
-  endpoints: () => ({})
-   
+  endpoints: () => ({}),
 });
-
-
