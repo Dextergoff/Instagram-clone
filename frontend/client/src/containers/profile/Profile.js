@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useGetProfilePageQuery } from "endpoints/rtkQuery/profileEndpoints";
 import Layout from "Layout/Layout";
 import { useState } from "react";
-import "./css/ProfilePage.css";
 import { useEffect } from "react";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import getQueryLength from "components/jobs/getQueryLength";
@@ -45,6 +44,5 @@ const Profile = () => {
     );
   }
 };
-// TODO make grid smaller images are too big maybe make header larger too increase spacing between images and responsiveness
 
 export default Profile;
