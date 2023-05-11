@@ -18,7 +18,7 @@ const SetPfp = ({ states }) => {
         </div>
       ) : (
         <DisplayPfp
-          style={{ width: "4rem", height: "4rem", borderRadius: "100%" }}
+          style={{ width: "7rem  ", height: " 7rem", borderRadius: "100%" }}
           pfp={pfp}
         />
         // not working since display pfp has env url added to it the pfp shown here is under a diffrent url so it doesnt work for it to work it needs to be alone
