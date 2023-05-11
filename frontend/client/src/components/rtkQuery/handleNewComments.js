@@ -1,8 +1,6 @@
 const handleNewComments = ({ newItems, currentCache, args }) => {
   const ReplaceComments = () => {
-    for (let i in currentCache) {
-      currentCache[i] = newItems[i];
-    }
+    currentCache.data = newItems.data;
   };
 
   const PushComments = () => {
@@ -17,8 +15,6 @@ const handleNewComments = ({ newItems, currentCache, args }) => {
   if (newItems.page !== currentCache.page) {
     PushComments();
   }
-
-  // using this current logic to push replys is duplicating comments
 };
 
 export { handleNewComments };
