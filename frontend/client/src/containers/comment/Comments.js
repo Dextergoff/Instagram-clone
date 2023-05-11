@@ -66,7 +66,7 @@ const Comments = (prop) => {
                   />
                   {/* TODO show replies not being displayed when first reply is added */}
                 </div>
-                <Replys for={comment} />
+                <Replys parent={comment} />
               </div>
             ) : (
               <></>
