@@ -37,14 +37,13 @@ splitApi.injectEndpoints({
       serializeQueryArgs: ({ getComments }) => {
         return getComments;
       },
-
       merge: (currentCache, newItems, args) => {
-        handleNewComments({ currentCache, newItems, args });
+        currentCache.data.push(...newItems.data);
       },
-
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
+      keepUnusedDataFor: 0,
     }),
 
     likeComment: builder.mutation({
