@@ -7,25 +7,29 @@ import DisplayPfp from "components/Image/DisplayPfp";
 import LikeComment from "components/comments/LikeComment";
 import LikeCount from "components/like_count/LikeCount";
 import { useGetReplysQuery } from "endpoints/rtkQuery/commentEndpoints";
+import LoadBtn from "components/comments/LoadBtn";
 const Replys = (props) => {
   const [replyState, setReplySate] = useState({
     page: 1,
     skip: true,
-    parent: props.for.pk,
+    parent: null,
     hide: false,
+    open: false,
   });
-  const { page, skip, parent, hide } = replyState;
+  const { page, skip, parent, hide, open } = replyState;
 
   const { data = [] } = useGetReplysQuery({ parent, page }, { skip: skip });
 
-  const loadReplys = (prop) => {
-    setReplySate({ ...replyState, parent: prop, skip: false });
-  };
-
   return (
-    <div style={{ marginLeft: "10px", marginBottom: "0px", marginTop: "20px" }}>
+    <div style={{ marginLeft: "10px", marginTop: "20px" }}>
+      <LoadBtn
+        parent={props.parent}
+        eod={data.end_of_data}
+        replyState={replyState}
+        setReplySate={setReplySate}
+      />
       {data.data?.map((reply) => (
-        <div className={hide ? "d-none" : ""} key={reply.pk}>
+        <div className={!open ? "d-none" : ""} key={reply.pk}>
           {reply.parent === parent ? (
             <div className="mb-3">
               <div className="d-flex gap-1">
@@ -56,7 +60,7 @@ const Replys = (props) => {
                   data={reply}
                 />
                 <CreateComment
-                  parent={props.for}
+                  parent={props.parent}
                   to={reply.user.username}
                   queryName="getReplys"
                   post={reply.post}
@@ -70,17 +74,7 @@ const Replys = (props) => {
           )}
         </div>
       ))}
-      {props.for.children > 0 && !data.end_of_data ? (
-        <div
-          onClick={() => loadReplys(props.for.pk)}
-          className="text-muted mb-2"
-        >
-          view replys
-        </div>
-      ) : (
-        // TODO ADD HIDE REPLYS
-        <></>
-      )}
+
       {/* ADD PAGINATION */}
     </div>
   );
