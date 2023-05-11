@@ -4,7 +4,7 @@ import { useState } from "react";
 import Layout from "Layout/Layout";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GalleryPostImage from "components/Image/GalleryPostImage";
+import GalleryImages from "components/Image/GalleryImages";
 const Hashtag = () => {
   const [stateData, setStateData] = useState({
     page: 1,
@@ -51,7 +51,7 @@ const Hashtag = () => {
                     updateCacheArgument: post.pk,
                   }}
                 >
-                  <GalleryPostImage image={post.image} />
+                  <GalleryImages image={post.image} />
                 </Link>
                 {/* add overlay on hover */}
               </div>
