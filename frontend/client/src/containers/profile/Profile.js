@@ -14,16 +14,23 @@ const Profile = () => {
 
   const [state, setState] = useState({
     page: 1,
-    pk: null,
     skip: true,
+    filter: null,
   });
-  const { pk, page, skip } = state;
+  const { user, page, skip, filter } = state;
 
-  const { data = [] } = useGetProfilePageQuery({ pk, page }, { skip: skip });
+  const { data = [] } = useGetProfilePageQuery(
+    { filter, page },
+    { skip: skip }
+  );
 
   useEffect(() => {
     if (UserExists({ userobj, loading })) {
-      setState((state) => ({ ...state, pk: userobj.pk, skip: false }));
+      setState((state) => ({
+        ...state,
+        filter: { filter: { user: userobj.pk } },
+        skip: false,
+      }));
     }
   }, [loading, userobj]);
 

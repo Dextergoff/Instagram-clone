@@ -14,7 +14,6 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),
     path('comments/', include('comments.urls', namespace='comments')),
     path('profiles/', include('profiles.urls', namespace='profiles')),
-    path('hashtags/', include('hashtags.urls', namespace='hashtags')),
     path('auth/users/', include('users.urls')),
     path('auth/token/', TokenObtainPairView.as_view()),
     path('auth/token/refresh/', TokenRefreshView.as_view()),

@@ -24,9 +24,10 @@ from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
 
+
 class LikePost(viewsets.ViewSet):
 
-    def proccess_like(self, post ,user):
+    def proccess_like(self, post, user):
         if user in post.likes.all():
             post.likes.remove(user)
             post.likecount -= 1
@@ -34,15 +35,16 @@ class LikePost(viewsets.ViewSet):
             post.likes.add(user)
             post.likecount += 1
         post.save(update_fields=['likecount'])
-        
 
     def like(self, request):
         data = request.data
         user = User.objects.select_related().get(pk=data['requser'])
-        post = Post.objects.select_related().prefetch_related("likes").get(pk=data['pk'])
-        self.proccess_like(post,user)
+        post = Post.objects.select_related().prefetch_related(
+            "likes").get(pk=data['pk'])
+        self.proccess_like(post, user)
         serializer = LikePostSerializer(post)
         return Response(serializer.data)
+
 
 class PostsView(viewsets.ViewSet):
     serializer = PostSerializer
@@ -52,23 +54,38 @@ class PostsView(viewsets.ViewSet):
         serializer = PostSerializer(queryset)
         return Response(serializer.data)
 
+
 class PageView(viewsets.ViewSet):
     serializer = PostSerializer
 
-    def main(self, request, page):
-        queryset = Post.objects.all().order_by("-date").prefetch_related(
-        Prefetch('likes'),
-        Prefetch('hashtags'))
+    def get_filter(self, data, **kwargs,):
+        try:
+            kwargs = data['filter']
+            if (kwargs.get('hashtags')):
+                hashtag = Hashtag.objects.get(title=kwargs.get('hashtags'))
+                kwargs = {"hashtags": hashtag}
+        except:
+            kwargs = {}
+        return kwargs
+
+    def main(self, request, page, **kwargs):
+        kwargs = self.get_filter(data=request.data)
+        queryset = Post.objects.filter(**kwargs).order_by("-date").prefetch_related(
+            Prefetch('likes'),
+            Prefetch('hashtags'))
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = PostSerializer(queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        serializer = PostSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
         }
         return Response(response)
 
+
 class CreatePostView(APIView):
     parser_classes = (MultiPartParser, FormParser)
+
     def post(self, request):
         serializer = CreatePostSerializer(data=request.data)
         if serializer.is_valid():

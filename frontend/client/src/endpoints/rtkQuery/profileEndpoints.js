@@ -2,18 +2,17 @@ import { splitApi } from "./splitApi";
 import mergeNewItems from "components/rtkQuery/mergeNewItems";
 import setResponse from "components/rtkQuery/setResponse";
 
-const callto = "profiles"
-
+const endpoint = "profiles";
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getProfilePage: builder.query({
-
-      query: ({ pk, page }) => ({
-        url: `${callto}/posts/${pk}/${page}`,
-        method: "get",
+      query: ({ filter, page }) => ({
+        url: `/posts/page/${page}/`,
+        method: "post",
         headers: {
           "Content-type": "application/json",
         },
+        body: filter,
       }),
 
       serializeQueryArgs: ({ getProfilePage }) => {
@@ -21,31 +20,28 @@ splitApi.injectEndpoints({
       },
 
       transformResponse: (response, arg) => {
-        setResponse({response, arg})
+        setResponse({ response, arg });
         return response;
       },
 
       merge: (currentCache, newItems) => {
-        mergeNewItems({currentCache, newItems})
-          // pushes new items to currentCacge
+        mergeNewItems({ currentCache, newItems });
+        // pushes new items to currentCacge
       },
 
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
-
     }),
 
     editProfile: builder.mutation({
       query: (body) => ({
-        url: `${callto}/editprofile`,
+        url: `${endpoint}/editprofile`,
         method: "post",
         body: body,
       }),
     }),
-  })
-})
+  }),
+});
 
-export const {
-  useGetProfilePageQuery, useEditProfileMutation
-} = splitApi;
+export const { useGetProfilePageQuery, useEditProfileMutation } = splitApi;
