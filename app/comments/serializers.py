@@ -60,6 +60,7 @@ class CreateCommentSerializer(serializers.Serializer):
 
     def update_parent(self, parent):
 
+        # this is problematic since if the parent is not a comment but a comment ahs the same pk then it will update  it
         try:
             comment = Comment.objects.get(pk=parent)
             comment.children += 1

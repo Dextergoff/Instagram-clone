@@ -16,8 +16,6 @@ class Image(models.Model):
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=42, blank=True, null=True)
-    # TODO username not being used
     title = models.CharField(max_length=40)
     image = models.ImageField(blank=True, null=True)
     hashtags = models.ManyToManyField(Hashtag, blank=True)

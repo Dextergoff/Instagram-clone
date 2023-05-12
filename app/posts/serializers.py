@@ -24,6 +24,7 @@ User = get_user_model()
 class PostSerializer(serializers.ModelSerializer):
     hashtags = serializers.StringRelatedField(many=True, read_only=True,)
     user = UserSerializer(many=False)
+
     class Meta:
         model = Post
         fields = [
@@ -32,7 +33,6 @@ class PostSerializer(serializers.ModelSerializer):
             'image',
             'hashtags',
             'likes',
-            'username',
             'title',
             'date',
             'likecount',
@@ -48,10 +48,12 @@ class LikePostSerializer(serializers.ModelSerializer):
             'likecount',
         ]
 
+
 class CreatePostSerializer(serializers.Serializer):
 
     def create_post(self, data):
         user = User.objects.get(pk=data['user'])
-        post = Post.objects.create(user=user, image=data['image'], username=user.username, title=data['title'])
-        post_created.send(sender=__class__, post = post)
+        post = Post.objects.create(
+            user=user, image=data['image'],  title=data['title'])
+        post_created.send(sender=__class__, post=post)
         # signal recived by create hashtags reciver
