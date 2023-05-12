@@ -13,6 +13,8 @@ import CommentSection from "containers/comment/Comments";
 import PostImage from "components/Image/PostImage";
 import QueryDecider from "../../components/queryfuncs/QueryDecider";
 import PostHeading from "components/posts/PostHeading";
+import TitleAndHashtags from "components/posts/TitleAndHashtags";
+import DisplayPfp from "components/Image/DisplayPfp";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -70,7 +72,6 @@ const PostModal = () => {
                   className="mt-2 mb-2"
                 >
                   <PostHeading post={post} />
-                  {/* TODO add title to header or interaction bar */}
                 </div>
                 <div
                   style={{
@@ -78,6 +79,17 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
+                  <div className="d-flex mb-1">
+                    <DisplayPfp
+                      pfp={process.env.REACT_APP_API_URL + post.user.pfp}
+                      style={{
+                        width: "2rem",
+                        height: "2em",
+                        borderRadius: "100%",
+                      }}
+                    />
+                    <TitleAndHashtags post={post} />
+                  </div>
                   <CommentSection parent={post.pk} />
                 </div>
                 <div
