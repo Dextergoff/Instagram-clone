@@ -23,23 +23,33 @@ from .serializers import *
 from center.modules.actions.queryactions import pageify
 from center.settings import PAGEIFY, QUERYING
 
+class CommentsView(viewsets.ViewSet):
+    def get_post(self, data):
+        try:
+            return data.data[0]['post']
+        except:
+            return None
 
-class ReplyView(viewsets.ViewSet):
+    def comments(self, request, *args, **kwargs):
+        page = kwargs['page']
+        parent = kwargs['parent']
 
-    def replys(self, request, pk, page):
-        queryset = Comment.objects.filter(parent=pk, reply=True).order_by(
-            "to").prefetch_related('likes').select_related('user')
+        queryset = Comment.objects.filter(parent=parent).order_by(
+            "-date").prefetch_related('likes').select_related('user')
+
         queryset = pageify(queryset=queryset, page=page, items_per_page=50)
+
         serializer = CommentSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+
         response = {
-            QUERYING['PAGE_KEY']: QUERYING['PAGE_KEY'],
+            QUERYING['PAGE_KEY']: page,
             QUERYING['DATA_KEY']: serializer.data,
-            QUERYING['PARENT_KEY']: int(pk),
+            QUERYING['POST_KEY']: self.get_post(serializer),
+            QUERYING['PARENT_KEY']: int(parent),
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
         }
         return Response(response)
-
 
 class LikeComment(viewsets.ViewSet):
 
@@ -72,31 +82,3 @@ class CreateComment(viewsets.ViewSet):
         data = serializer.handle_comment(data=request.data)
         return Response(data)
 
-
-class CommentsView(viewsets.ViewSet):
-    def get_post(self, data):
-        try:
-            return data.data[0]['post']
-        except:
-            return None
-
-    def comments(self, request, *args, **kwargs):
-        page = kwargs['page']
-        parent = kwargs['parent']
-
-        queryset = Comment.objects.filter(parent=parent).order_by(
-            "-date").prefetch_related('likes').select_related('user')
-
-        queryset = pageify(queryset=queryset, page=page, items_per_page=50)
-
-        serializer = CommentSerializer(
-            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
-
-        response = {
-            QUERYING['PAGE_KEY']: page,
-            QUERYING['DATA_KEY']: serializer.data,
-            QUERYING['POST_KEY']: self.get_post(serializer),
-            QUERYING['PARENT_KEY']: int(parent),
-            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
-        }
-        return Response(response)
