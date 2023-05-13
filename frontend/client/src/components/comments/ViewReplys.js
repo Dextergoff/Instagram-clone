@@ -1,10 +1,10 @@
-const LoadBtn = ({ parent, eod, replyState, setReplySate }) => {
-  const { open } = replyState;
+const ViewReplys = ({ parent, eod, states }) => {
+  const { open } = states.state;
   const loadReplys = (prop) => {
-    setReplySate({ ...replyState, parent: prop, skip: false, open: true });
+    states.setState({...states.state,  parent: prop, skip: false, open: true });
   };
   const hideReplys = () => {
-    setReplySate({ ...replyState, open: false });
+    states.setState({...states.state, open: false });
   };
   return (
     <>
@@ -29,4 +29,4 @@ const LoadBtn = ({ parent, eod, replyState, setReplySate }) => {
   );
 };
 
-export default LoadBtn;
+export default ViewReplys;
