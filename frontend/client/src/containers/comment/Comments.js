@@ -10,16 +10,16 @@ import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/like_count/LikeCount";
 const Comments = (prop) => {
-  const [commentState, setCommentState] = useState({
+  const [state, setState] = useState({
     page: 1,
   });
-  const { page } = commentState;
+  const { page } = state;
 
   const parent = prop.parent;
   const { data = [] } = useGetCommentsQuery({ parent, page });
 
   const loadMoreComments = () => {
-    setCommentState({ ...commentState, page: page + 1 });
+    setState({ ...state, page: page + 1 });
   };
 
   if (getQueryLength(data) > 0)
@@ -63,6 +63,8 @@ const Comments = (prop) => {
                     post={comment.post}
                     page={page}
                     hideform={true}
+                    states={{state, setState}}
+
                   />
                   {/* TODO show replies not being displayed when first reply is added */}
                 </div>
