@@ -1,5 +1,5 @@
 
-const ImageInput = ({states}) => {
+const ImageInput = ({states, style}) => {
 
     const handleImageChange = (e) => {
         e.preventDefault();
@@ -8,6 +8,7 @@ const ImageInput = ({states}) => {
       };
       return(
         <input
+        style={style}
         type="file"
         id="image"
         name="image"

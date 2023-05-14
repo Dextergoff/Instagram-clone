@@ -13,8 +13,8 @@ const SetPfp = ({ states }) => {
     <div>
       {editmode ? (
         <div>
-          <ImagePreview file={file} />
-          <ImageInput states={{ formData, setFormData, file, setFile }} />
+          <ImagePreview style={{width: "70px",height: "70px",borderRadius: "100%"}} file={file} />
+          <ImageInput style={{width: "70px", height: "70px", borderRadius: "100%",}} states={{ formData, setFormData, file, setFile }} />
         </div>
       ) : (
         <DisplayPfp
