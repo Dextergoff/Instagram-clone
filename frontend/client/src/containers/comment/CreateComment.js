@@ -13,7 +13,7 @@ const CreateComment = (props) => {
   const page = props.page || undefined;
 
   const to = props.to || "";
-
+ 
   const queryName = props.queryName || "getComments";
 
   const [commentState, setCommentState] = useState({
@@ -45,7 +45,6 @@ const CreateComment = (props) => {
       body: e.target.value,
       user: userobj.pk,
     });
-    // sets the author and body when input is changed
   };
 
   const handleSubmit = (e) => {
@@ -53,13 +52,12 @@ const CreateComment = (props) => {
     addComment(commentState)
       .unwrap()
       .then(setCommentState({ ...commentState, body: "" }));
-    // add comment and clear body
   };
 
   useEffect(() => {
     result.status === "fulfilled" &&
+      
       UpdateComments({ result, parent, page, dispatch, queryName });
-    // update comments when the comment has been created and rtk query gets the ok from server
   }, [dispatch, parent, result, page, queryName]);
 
   return (
