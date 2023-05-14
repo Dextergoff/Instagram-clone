@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "Layout/Layout";
 import { useState } from "react";
 import CreateComment from "containers/comment/CreateComment";
@@ -8,17 +7,16 @@ import PostImage from "components/Image/PostImage";
 import UserDetails from "components/posts/UserDetails";
 import getQueryLength from "components/jobs/getQueryLength";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
+import LoadContent from "components/posts/LoadContent";
 const Posts = () => {
   // const { userobj } = useSelector((state) => state.user);
 
-  const [stateData, setStateData] = useState({
-    Page: 1,
+  const [state, setState] = useState({
+    page: 1,
   });
-  const { Page } = stateData;
-  const { data = [] } = useGetPageQuery(Page);
-  const handleLoadPosts = () => {
-    setStateData({ ...stateData, Page: Page + 1 });
-  };
+  const { page } = state;
+  const { data = [] } = useGetPageQuery(page);
+
   if (getQueryLength(data) > 0)
     return (
       <Layout>
@@ -33,7 +31,7 @@ const Posts = () => {
                 className="mt-5"
               >
                 <div className="d-flex align-items-center ">
-                  <UserDetails  post={post} />
+                  <UserDetails post={post} />
                 </div>
                 <PostImage
                   image={post.image}
@@ -63,19 +61,7 @@ const Posts = () => {
               </div>
             </div>
           ))}
-          {!data.end_of_data ? (
-            <div className="d-flex justify-content-center mt-5">
-              <button className="btn" onClick={() => handleLoadPosts()}>
-                <FontAwesomeIcon
-                  size="xl"
-                  className="text-light"
-                  icon="fa-regular fa-square-plus"
-                />
-              </button>
-            </div>
-          ) : (
-            <></>
-          )}
+          <LoadContent data={data} states={{ state, setState }} />
         </>
       </Layout>
     );

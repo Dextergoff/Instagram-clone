@@ -9,6 +9,7 @@ import CommentUsername from "components/comments/CommentUsername";
 import CommentBody from "components/comments/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/like_count/LikeCount";
+import LoadContent from "components/posts/LoadContent";
 const Comments = (prop) => {
   const [state, setState] = useState({
     page: 1,
@@ -63,8 +64,7 @@ const Comments = (prop) => {
                     post={comment.post}
                     page={page}
                     hideform={true}
-                    states={{state, setState}}
-
+                    states={{ state, setState }}
                   />
                 </div>
                 <Replys parent={comment} />
@@ -74,18 +74,7 @@ const Comments = (prop) => {
             )}
           </div>
         ))}
-        {!data.end_of_data ? (
-          <div className="d-flex justify-content-center">
-            <button
-              onClick={() => loadMoreComments()}
-              className="btn text-light"
-            >
-              <FontAwesomeIcon size="xl" icon="fa-regular fa-plus-square" />
-            </button>
-          </div>
-        ) : (
-          <></>
-        )}
+        <LoadContent data={data} states={{ state, setState }} />
       </div>
     );
 };

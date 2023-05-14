@@ -29,6 +29,7 @@ const Profile = () => {
         ...state,
         filter: { filter: { user: userobj.pk } },
         skip: false,
+        page: 1,
       }));
     }
   }, [loading, userobj]);
@@ -38,7 +39,7 @@ const Profile = () => {
       <Layout>
         <>
           <ProfileHeader data={data} userobj={userobj} />
-          <PostGallery data={data} state={{ state, setState }} />
+          <PostGallery data={data} states={{ state, setState }} />
         </>
       </Layout>
     );

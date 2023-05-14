@@ -1,13 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GalleryImages from "components/Image/GalleryImages";
-const PostGallery = ({ state, data }) => {
+import LoadContent from "components/posts/LoadContent";
+const PostGallery = ({ states, data }) => {
   const location = useLocation();
-
-  const loadMorePosts = () => {
-    state.setState({ ...state.state, page: page + 1 });
-  };
-  const { page } = state.state;
+  const state = states.state;
+  const setState = states.setState;
   return (
     <>
       <div>
@@ -42,15 +39,7 @@ const PostGallery = ({ state, data }) => {
           ))}
         </div>
       </div>
-      {!data?.end_of_data ? (
-        <div className="d-flex justify-content-center">
-          <button className="btn" onClick={() => loadMorePosts()}>
-            <FontAwesomeIcon size="xl" icon="fa-regular fa-plus-square" />
-          </button>
-        </div>
-      ) : (
-        <></>
-      )}
+      <LoadContent data={data} states={{ state, setState }} />
     </>
   );
 };
