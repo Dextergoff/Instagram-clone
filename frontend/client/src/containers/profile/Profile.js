@@ -8,7 +8,6 @@ import getQueryLength from "components/jobs/getQueryLength";
 import UserExists from "components/jobs/verification/UserExists";
 import ProfileHeader from "components/profile/ProfileHeader";
 import PostGallery from "components/profile/PostGallery";
-import "./css/imagelabel.css";
 const Profile = () => {
   const { userobj, loading } = useSelector((state) => state.user);
 
