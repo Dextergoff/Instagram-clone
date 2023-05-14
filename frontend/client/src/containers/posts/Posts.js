@@ -5,7 +5,7 @@ import CreateComment from "containers/comment/CreateComment";
 import InteractionBar from "components/interactionbar/InteractionBar";
 import { useGetPageQuery } from "endpoints/rtkQuery/postEndpoints";
 import PostImage from "components/Image/PostImage";
-import PostHeading from "components/posts/PostHeading";
+import UserDetails from "components/posts/UserDetails";
 import getQueryLength from "components/jobs/getQueryLength";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 const Posts = () => {
@@ -33,7 +33,7 @@ const Posts = () => {
                 className="mt-5"
               >
                 <div className="d-flex align-items-center ">
-                  <PostHeading post={post} />
+                  <UserDetails  post={post} />
                 </div>
                 <PostImage
                   image={post.image}
