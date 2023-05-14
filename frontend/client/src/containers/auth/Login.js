@@ -104,7 +104,7 @@ const Login = ({ Redirect }) => {
               </div>
             </div>
           </div>
-          // put this in a seprate file
+          // TODO componentize login and reg
         )}
       </form>
     </Layout>

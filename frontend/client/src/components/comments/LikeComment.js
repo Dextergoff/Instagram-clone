@@ -17,7 +17,6 @@ const LikeComment = (props) => {
   const [likeComment, result] = useLikeCommentMutation();
 
   const dispatch = useDispatch();
-  // const replyingto = props.data.replyingto ? props.data.replyingto : null
   const page = props.page;
   const comment = props.comment;
   const pk = comment.pk;

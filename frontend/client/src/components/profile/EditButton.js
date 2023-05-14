@@ -76,7 +76,7 @@ const EditButton = ({ states, userobj }) => {
       {(usernametaken && username?.length > 0) ||
       (usernametaken && description?.length > 0) ||
       (usernametaken && states.file?.length > 0) ? (
-        // these if statements are really bad and need to be changed
+        // TODO these if statements are really bad and need to be changed
         <button
           type="submit"
           onClick={onSubmit}

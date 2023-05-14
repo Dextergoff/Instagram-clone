@@ -19,7 +19,7 @@ const ProfileHeader = ({ data, userobj }) => {
     editmode: false,
     response: "",
   });
-  const { editmode } = state;
+  
   const [userState, setUserState] = useState({
     username: userobj.username,
     description: userobj.description,
@@ -50,6 +50,7 @@ const ProfileHeader = ({ data, userobj }) => {
             file,
             setFile,
           }}
+          
         />
 
         <Username
