@@ -1,7 +1,7 @@
 const TitleAndHashtags = (prop) => {
   const post = prop.post;
   return (
-    <div className="d-flex gap-1 mb-2">
+    <div className="d-flex gap-1 ">
       <div className="fw-light text-light">{post.title}</div>
       {post.hashtags.map((hashtag, index) => (
         <a
