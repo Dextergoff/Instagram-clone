@@ -19,7 +19,7 @@ const Replys = (props) => {
   const { page, skip, parent, open } = state;
 
   const { data = [] } = useGetReplysQuery({ parent, page }, { skip: skip });
-
+  
   return (
     <div style={{ marginLeft: "10px", marginTop: "20px" }}>
       <ViewReplys
@@ -28,8 +28,8 @@ const Replys = (props) => {
         states={{state, setState}}
       />
       {data.data?.map((reply) => (
-        
         <div className={!open ? "d-none" : ""} key={reply.pk}>
+
           {reply.parent === parent ? (
             <div className="mb-3">
               <div className="d-flex gap-1">
@@ -66,7 +66,6 @@ const Replys = (props) => {
                   page={page}
                   hideform={true}
                   queryName="getReplys"
-                  
                 />
               </div>
             </div>
