@@ -66,7 +66,6 @@ const Comments = (prop) => {
                     states={{state, setState}}
 
                   />
-                  {/* TODO show replies not being displayed when first reply is added */}
                 </div>
                 <Replys parent={comment} />
               </div>
