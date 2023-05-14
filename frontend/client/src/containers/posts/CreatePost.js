@@ -11,7 +11,6 @@ import UserExists from "components/jobs/verification/UserExists";
 import TitleInput from "components/inputs/TitleInput";
 import "./css/imagelabel.css";
 const CreatePost = () => {
-  // TODO fix the image preview and add warning for when title is too long
   const navigate = useNavigate();
   const { userobj, loading } = useSelector((state) => state.user);
 
