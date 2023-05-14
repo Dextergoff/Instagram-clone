@@ -10,8 +10,8 @@ const UpdateComments = ({ parent, dispatch, result, page, queryName }) => {
   if(queryName === "getReplys"){
     dispatch(
       splitApi.util.updateQueryData("getComments", undefined, (j) => {
-        let k = j.data.find((j) => j.pk == Number(parent))
-        k.children = k.children + 1
+        let p = j.data.find((j) => j.pk == Number(parent))
+        p.has_replys = true
       } ),
     )
   }
