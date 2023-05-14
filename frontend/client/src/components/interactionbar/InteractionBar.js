@@ -36,11 +36,13 @@ const InteractionBar = ({
       <div className="d-flex mt-2 mb-2 gap-3">
         <div>
           <div className="border-0 text-dark">
-            <FontAwesomeIcon
-              size="xl"
-              className="text-light"
-              icon="fa-regular fa-paper-plane"
-            />
+            <a href="/dm">
+              <FontAwesomeIcon
+                size="xl"
+                className="text-light"
+                icon="fa-regular fa-paper-plane"
+              />
+            </a>
           </div>
         </div>
         {feed ? (
