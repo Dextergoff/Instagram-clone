@@ -27,6 +27,7 @@ import {
   faUser,
   faEdit,
 } from "@fortawesome/free-regular-svg-icons";
+import Messages from "containers/messages/Messages";
 
 library.add(
   faHeart,
@@ -91,8 +92,10 @@ const App = () => {
           path="/register"
           element={<Register Redirect={Redirect} handleSubmit={onSubmit} />}
         />
+        <Route path="/dm" element={<Messages />} />
         <Route path="/forgot" element={<Forgot handleSubmit={onSubmit} />} />
         <Route path={`/reset`} element={<ResetPassword />} />
+        {/* TODO FORGOT AND RESET URLS HAVE NOT BEEN UPDATED */}
         <Route path="*" element={<NotFoud />} />
       </Routes>
       {background && (
