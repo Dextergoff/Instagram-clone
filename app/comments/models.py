@@ -17,7 +17,7 @@ class Comment(models.Model):
     likes = models.ManyToManyField(
         User, related_name="comment_likes", blank=True)
     likecount = models.IntegerField(default=0)
-    children = models.PositiveIntegerField(default=0)
+    has_replys = models.BooleanField(default=False)
     to = models.CharField(null=True, max_length=240)
 
 
