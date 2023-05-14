@@ -23,7 +23,6 @@ const CreatePost = () => {
     title: "",
   });
   const { user, title, image } = formData;
-
   const [file, setFile] = useState();
   const form_data = () => {
     let form_data = new FormData();
@@ -72,7 +71,6 @@ const CreatePost = () => {
                   >
                     Post now!
                   </button>
-                  {/* seperate this bubtton into a component */}
                 </div>
               </div>
             </div>
