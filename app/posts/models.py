@@ -16,7 +16,7 @@ class Image(models.Model):
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=250)
     image = models.ImageField(blank=True, null=True)
     hashtags = models.ManyToManyField(Hashtag, blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
