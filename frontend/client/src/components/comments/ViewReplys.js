@@ -8,7 +8,7 @@ const ViewReplys = ({ parent, eod, states }) => {
   };
   return (
     <>
-      {parent.children > 0 ? (
+      {parent.has_replys > 0 ? (
         <div
           onClick={() => loadReplys(parent.pk)}
           className={`text-muted mb-2 ${open ? "d-none" : ""}`}
