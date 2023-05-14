@@ -12,7 +12,7 @@ import { useGetPostQuery } from "endpoints/rtkQuery/postEndpoints";
 import CommentSection from "containers/comment/Comments";
 import PostImage from "components/Image/PostImage";
 import QueryDecider from "../../components/queryfuncs/QueryDecider";
-import PostHeading from "components/posts/PostHeading";
+import UserDetails from "components/posts/UserDetails";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import DisplayPfp from "components/Image/DisplayPfp";
 const PostModal = () => {
@@ -71,7 +71,11 @@ const PostModal = () => {
                   }}
                   className="mt-2 mb-2"
                 >
-                  <PostHeading post={post} />
+                  <UserDetails post={post} />
+                  <div  style={{marginLeft: "2.3rem"}} className="pl-5">
+                  <TitleAndHashtags post={post} />
+                  </div>
+
                 </div>
                 <div
                   style={{
@@ -80,15 +84,7 @@ const PostModal = () => {
                   className="comment-section"
                 >
                   <div className="d-flex mb-1">
-                    <DisplayPfp
-                      pfp={process.env.REACT_APP_API_URL + post.user.pfp}
-                      style={{
-                        width: "2rem",
-                        height: "2em",
-                        borderRadius: "100%",
-                      }}
-                    />
-                    <TitleAndHashtags post={post} />
+
                   </div>
                   <CommentSection parent={post.pk} />
                 </div>
@@ -119,7 +115,6 @@ const PostModal = () => {
                 >
                   <CreateComment parent={post} post={post.pk} />
                 </div>
-                {/* TODO fix responsiveness issue  of the modal the comment section is whats causing it if comments are empty it scales in size perfectly  */}
               </div>
             </Modal.Body>
           </Modal>
