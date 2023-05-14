@@ -33,7 +33,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'parent',
             'likes',
             'likecount',
-            'children',
+            'has_replys',
             'to'
 
         ]
@@ -63,7 +63,7 @@ class CreateCommentSerializer(serializers.Serializer):
         # this is problematic since if the parent is not a comment but a comment ahs the same pk then it will update  it
         try:
             comment = Comment.objects.get(pk=parent)
-            comment.children += 1
+            comment.has_replys = True
             comment.save()
         except Exception:
             pass
