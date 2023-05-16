@@ -13,7 +13,6 @@ from django.conf import settings
 from pathlib import Path
 from datetime import timedelta
 import os
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 PAGEIFY = {
@@ -30,25 +29,13 @@ QUERYING = {
     'POST_KEY': 'post',
 }
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-s8b@i8+59#x%07b4671g*&t@fwz-=^z=g%*5ti(9=bc^x#q_c%'
-# os.environ.get("SECRET_KEY")docker
-
-# DEBUG = int(os.environ.get("DEBUG", default=0)) docker
 
 DEBUG = True
 
-# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
-# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-
-# ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split() for docker
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -108,9 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "center.wsgi.application"
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql_psycopg2',
@@ -123,8 +107,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -147,15 +129,13 @@ INTERNAL_IPS = [
     # ...
 ]
 
-# routing.py will handle the ASGI
 ASGI_APPLICATION = "Messaging.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': "channels.layers.InMemoryChannelLayer"
     }
 }
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
 
 LANGUAGE_CODE = "en-us"
 
@@ -164,14 +144,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/"
@@ -190,7 +162,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'dextergoff571@gmail.com'
 EMAIL_HOST_PASSWORD = 'sqixvnvbepnqrxlh'
-# store these values in an env
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
