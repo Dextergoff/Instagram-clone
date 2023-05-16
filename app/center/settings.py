@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "posts",
+    "Messaging",
     "comments",
     "users",
     "profiles",
@@ -65,6 +66,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
     "corsheaders",
+    "channels",
     "debug_toolbar",
 ]
 
@@ -145,6 +147,13 @@ INTERNAL_IPS = [
     # ...
 ]
 
+# routing.py will handle the ASGI
+ASGI_APPLICATION = "Messaging.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
