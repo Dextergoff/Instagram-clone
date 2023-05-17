@@ -4,7 +4,6 @@ from channels.generic.websocket import WebsocketConsumer
 
 
 class MessageConsumer(WebsocketConsumer):
-
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.group_name = 'chat_%s' % self.room_name
