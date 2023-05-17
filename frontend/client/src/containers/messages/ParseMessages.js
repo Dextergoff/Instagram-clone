@@ -14,7 +14,7 @@ const ParseMessages = ({ messages, room, target_user }) => {
         }}
       >
         {messages.map((message) => (
-          <div key={message} className="">
+          <div key={message} className="d-flex justify-content-end">
             <div
               style={{ width: "fit-content" }}
               className="p-2 bg-primary rounded-pill pl-2"
