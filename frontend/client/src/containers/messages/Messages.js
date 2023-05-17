@@ -11,7 +11,6 @@ import { useLocation } from "react-router-dom";
 const Messages = () => {
   const location = useLocation();
   const { target_user } = location.state;
-  // TODO add pfp to room name
   const [state, setState] = useState({
     filledForm: false,
     messages: [],
@@ -25,15 +24,17 @@ const Messages = () => {
 
   useEffect(() => {
     client.onmessage = (message) => {
-      const servedData = JSON.parse(message.data);
-      if (servedData) {
-        setState({
-          ...state,
-          messages: [
-            ...messages,
-            { msg: servedData.text, sender: servedData.sender },
-          ],
-        });
+      if (client.readyState === client.OPEN) {
+        const servedData = JSON.parse(message.data);
+        if (servedData) {
+          setState({
+            ...state,
+            messages: [
+              ...messages,
+              { msg: servedData.text, sender: servedData.sender },
+            ],
+          });
+        }
       }
     };
   }, []);
