@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetHashtagPostsQuery } from "endpoints/rtkQuery/hashtagEndpoints";
 import { useState } from "react";
 import Layout from "Layout/Layout";
-import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GalleryImages from "components/Image/GalleryImages";
-import { useSelector } from "react-redux";
 import PostGallery from "components/profile/PostGallery";
 const Hashtag = () => {
   const params = useParams();
