@@ -1,17 +1,22 @@
+import { useSelector } from "react-redux";
 const SendMessage = ({ states, client }) => {
   const setState = states.setState;
   const state = states.state;
   const { value, name } = state;
+  const { userobj } = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
-    client.send(
-      JSON.stringify({
-        type: "message",
-        text: value,
-        sender: name,
-      })
-    );
-    setState({ ...state, value: "" });
+    if (value.length > 0) {
+      client.send(
+        JSON.stringify({
+          type: "message",
+          text: value,
+          sender: userobj?.username,
+        })
+      );
+      setState({ ...state, value: "" });
+    }
+
     e.preventDefault();
   };
   return (
