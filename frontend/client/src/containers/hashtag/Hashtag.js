@@ -39,7 +39,7 @@ const Hashtag = () => {
             {data?.post_count} posts
           </div>
         </div>
-        <PostGallery data={data} state={{ state, setState }} />
+        <PostGallery data={data} states={{ state, setState }} />
         {!data.end_of_data ? (
           <div className="d-flex justify-content-center">
             <button className="btn" onClick={() => loadMorePosts()}>
