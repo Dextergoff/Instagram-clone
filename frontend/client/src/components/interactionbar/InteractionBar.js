@@ -36,13 +36,21 @@ const InteractionBar = ({
       <div className="d-flex mt-2 mb-2 gap-3">
         <div>
           <div className="border-0 text-dark">
-            <a href="/dm">
-              <FontAwesomeIcon
-                size="xl"
-                className="text-light"
-                icon="fa-regular fa-paper-plane"
-              />
-            </a>
+            <Link
+              className="comments-link text-muted fw-light text-decoration-none"
+              to={`/dm`}
+              state={{
+                target_user: post.user,
+              }}
+            >
+              <a href={`dm/${post.user.username}`}>
+                <FontAwesomeIcon
+                  size="xl"
+                  className="text-light"
+                  icon="fa-regular fa-paper-plane"
+                />
+              </a>
+            </Link>
           </div>
         </div>
         {feed ? (
