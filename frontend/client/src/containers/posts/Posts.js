@@ -8,6 +8,7 @@ import UserDetails from "components/posts/UserDetails";
 import getQueryLength from "components/jobs/getQueryLength";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import LoadContent from "components/posts/LoadContent";
+import PostAge from "components/posts/PostAge";
 const Posts = () => {
   // const { userobj } = useSelector((state) => state.user);
 
@@ -31,7 +32,8 @@ const Posts = () => {
                 className="mt-5"
               >
                 <div className="d-flex align-items-center ">
-                  <UserDetails post={post} />
+                  <UserDetails user={post.user} />
+                  <PostAge date={post.date} />
                 </div>
                 <PostImage
                   image={post.image}

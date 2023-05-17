@@ -15,6 +15,7 @@ import QueryDecider from "../../components/queryfuncs/QueryDecider";
 import UserDetails from "components/posts/UserDetails";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import DisplayPfp from "components/Image/DisplayPfp";
+import PostAge from "components/posts/PostAge";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -71,11 +72,14 @@ const PostModal = () => {
                   }}
                   className="mt-2 mb-2"
                 >
-                  <UserDetails post={post} />
-                  <div  style={{marginLeft: "2.3rem"}} className="pl-5">
-                  <TitleAndHashtags post={post} />
+                  <div className="d-flex">
+                    <UserDetails user={post.user} />
+                    <PostAge date={post.date} />
                   </div>
 
+                  <div style={{ marginLeft: "2.3rem" }} className="pl-5">
+                    <TitleAndHashtags post={post} />
+                  </div>
                 </div>
                 <div
                   style={{
@@ -83,9 +87,7 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
-                  <div className="d-flex mb-1">
-
-                  </div>
+                  <div className="d-flex mb-1"></div>
                   <CommentSection parent={post.pk} />
                 </div>
                 <div
