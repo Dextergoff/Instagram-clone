@@ -1,8 +1,10 @@
-const ParseMessages = ({ messages, room }) => {
+import UserDetails from "components/posts/UserDetails";
+
+const ParseMessages = ({ messages, room, target_user }) => {
   return (
     <>
       {/* TODO set room name to target user and use a user id or token to seperate chats */}
-      <div className="text-light">Room Name: {room}</div>
+      <UserDetails user={target_user} />
       <div
         style={{
           height: 500,
@@ -13,8 +15,13 @@ const ParseMessages = ({ messages, room }) => {
       >
         {messages.map((message) => (
           <div key={message} className="">
-            <div className="text-light">
-              {message.sender}:{message.msg}
+            <div
+              style={{ width: "fit-content" }}
+              className="p-2 bg-primary rounded-pill pl-2"
+            >
+              <div className="">
+                {message.msg} {target_user.username}
+              </div>
             </div>
           </div>
         ))}
