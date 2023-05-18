@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { checkAuth } from "endpoints/auth/user";
+import { checkAuth, getUser } from "endpoints/auth/user";
 import { ProtectedRoute } from "./endpoints/auth/authRoutes";
 import Login from "containers/auth/Login";
 import Register from "containers/auth/Register";
@@ -44,7 +44,6 @@ const App = () => {
   let location = useLocation();
 
   let background = location.state && location.state.background;
-
   useEffect(() => {
     dispatch(checkAuth());
   });
@@ -92,7 +91,14 @@ const App = () => {
           path="/register"
           element={<Register Redirect={Redirect} handleSubmit={onSubmit} />}
         />
-        <Route path="/dm" element={<Messages />} />
+        <Route
+          path="/dm"
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/forgot" element={<Forgot handleSubmit={onSubmit} />} />
         <Route path={`/reset`} element={<ResetPassword />} />
         {/* TODO FORGOT AND RESET URLS HAVE NOT BEEN UPDATED */}
