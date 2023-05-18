@@ -1,9 +1,5 @@
 const BootstrapSpinner = () => {
-    return(
-        <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-        </div>
-    )
-}
+  return <div className="spinner-border text-primary " role="status" />;
+};
 
-export default BootstrapSpinner
+export default BootstrapSpinner;
