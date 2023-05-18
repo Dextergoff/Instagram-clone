@@ -9,9 +9,8 @@ import getQueryLength from "components/jobs/getQueryLength";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import LoadContent from "components/posts/LoadContent";
 import PostAge from "components/posts/PostAge";
+import Navbar from "Navbar/Navbar";
 const Posts = () => {
-  // const { userobj } = useSelector((state) => state.user);
-
   const [state, setState] = useState({
     page: 1,
   });
@@ -21,50 +20,49 @@ const Posts = () => {
   if (getQueryLength(data) > 0)
     return (
       <Layout>
-        <>
-          {data.nested_data?.data.map((post) => (
-            <div className="d-flex justify-content-center " key={post.pk}>
-              <div
+        {data.nested_data?.data.map((post) => (
+          <div className="d-flex justify-content-center " key={post.pk}>
+            <div
+              style={{
+                borderBottomStyle: "solid",
+                borderWidth: "1px",
+              }}
+              className="mt-5"
+            >
+              <div className="d-flex align-items-center ">
+                <UserDetails user={post.user} />
+                <PostAge date={post.date} />
+              </div>
+              <PostImage
+                image={post.image}
                 style={{
-                  borderBottomStyle: "solid",
+                  width: "20vw",
+                  overflow: "hidden",
+                  borderStyle: "solid",
+                  borderRadius: "5px",
                   borderWidth: "1px",
                 }}
-                className="mt-5"
-              >
-                <div className="d-flex align-items-center ">
-                  <UserDetails user={post.user} />
-                  <PostAge date={post.date} />
-                </div>
-                <PostImage
-                  image={post.image}
-                  style={{
-                    width: "20vw",
-                    overflow: "hidden",
-                    borderStyle: "solid",
-                    borderRadius: "5px",
-                    borderWidth: "1px",
-                  }}
-                />
+              />
 
-                <InteractionBar
-                  updateCacheArgument={post.page}
-                  queryName="getPage"
-                  post={post}
-                  feed={true}
-                />
-                <TitleAndHashtags post={post} />
+              <InteractionBar
+                updateCacheArgument={post.page}
+                queryName="getPage"
+                post={post}
+                feed={true}
+              />
+              <TitleAndHashtags post={post} />
 
-                <div>
-                  <div></div>
-                  <div className="mt-1 mb-3">
-                    <CreateComment parent={post} post={post.pk} />
-                  </div>
+              <div>
+                <div></div>
+                <div className="mt-1 mb-3">
+                  <CreateComment parent={post} post={post.pk} />
                 </div>
               </div>
             </div>
-          ))}
-          <LoadContent data={data} states={{ state, setState }} />
-        </>
+          </div>
+        ))}
+        <LoadContent data={data} states={{ state, setState }} />
+        <Navbar />
       </Layout>
     );
 };

@@ -9,6 +9,7 @@ import ImageInput from "components/inputs/ImageInput";
 import { useEffect } from "react";
 import UserExists from "components/jobs/verification/UserExists";
 import TitleInput from "components/inputs/TitleInput";
+import Navbar from "Navbar/Navbar";
 import "./css/imagelabel.css";
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -50,34 +51,29 @@ const CreatePost = () => {
 
   return (
     <Layout>
-      <>
-        {userobj || loading === false ? (
-          <form encType="multipart/form-data" onSubmit={onSubmit}>
-            <div className="d-flex mb-5 justify-content-center">
-              <div className="">
-                <ImagePreview file={file} />
-                <ImageInput states={{ formData, setFormData, file, setFile }} />
-                <TitleInput states={{ formData, setFormData }} />
+      <form encType="multipart/form-data" onSubmit={onSubmit}>
+        <div className="d-flex mb-5 justify-content-center">
+          <div className="">
+            <ImagePreview file={file} />
+            <ImageInput states={{ formData, setFormData, file, setFile }} />
+            <TitleInput states={{ formData, setFormData }} />
 
-                <div className="d-flex justify-content-center">
-                  <button
-                    className={
-                      title && image
-                        ? "text-primary btn border-0 shadow-0 mt-3"
-                        : "disabled text-primary btn mt-3 border-0 shadow-0"
-                    }
-                    type="submit"
-                  >
-                    Post now!
-                  </button>
-                </div>
-              </div>
+            <div className="d-flex justify-content-center">
+              <button
+                className={
+                  title && image
+                    ? "text-primary btn border-0 shadow-0 mt-3"
+                    : "disabled text-primary btn mt-3 border-0 shadow-0"
+                }
+                type="submit"
+              >
+                Post now!
+              </button>
             </div>
-          </form>
-        ) : (
-          <BootstrapSpinner />
-        )}
-      </>
+          </div>
+        </div>
+      </form>
+      <Navbar />
     </Layout>
   );
 };

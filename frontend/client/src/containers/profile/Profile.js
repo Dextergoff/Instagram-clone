@@ -3,11 +3,11 @@ import { useGetProfilePageQuery } from "endpoints/rtkQuery/profileEndpoints";
 import Layout from "Layout/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
-import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import getQueryLength from "components/jobs/getQueryLength";
 import UserExists from "components/jobs/verification/UserExists";
 import ProfileHeader from "components/profile/ProfileHeader";
 import PostGallery from "components/profile/PostGallery";
+import Navbar from "Navbar/Navbar";
 const Profile = () => {
   const { userobj, loading } = useSelector((state) => state.user);
 
@@ -37,17 +37,10 @@ const Profile = () => {
   if (getQueryLength(data) > 0) {
     return (
       <Layout>
-        <>
-          <ProfileHeader data={data} userobj={userobj} />
-          <PostGallery data={data} states={{ state, setState }} />
-        </>
+        <ProfileHeader data={data} userobj={userobj} />
+        <PostGallery data={data} states={{ state, setState }} />
+        <Navbar />
       </Layout>
-    );
-  } else {
-    return (
-      <>
-        <BootstrapSpinner />
-      </>
     );
   }
 };
