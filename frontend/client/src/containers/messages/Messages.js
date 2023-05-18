@@ -8,40 +8,51 @@ import Layout from "Layout/Layout";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Navbar from "Navbar/Navbar";
+import { logDOM } from "@testing-library/react";
 const Messages = () => {
+  let client;
+
   const location = useLocation();
   const { target_user } = location.state;
+
+  const { userobj } = useSelector((state) => state.user);
+
   const [state, setState] = useState({
     filledForm: false,
     messages: [],
     value: "",
     name: "",
-    room: target_user.username,
+    receiver_name: target_user.username,
   });
-  const { messages, room } = state;
-
-  const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room + "/");
+  const { messages, receiver_name } = state;
 
   useEffect(() => {
-    client.onmessage = (message) => {
-      if (client.readyState === client.OPEN) {
-        const servedData = JSON.parse(message.data);
-        if (servedData) {
-          setState({
-            ...state,
-            messages: [
-              ...messages,
-              { msg: servedData.text, sender: servedData.sender },
-            ],
-          });
+    if (userobj) {
+      client.onmessage = (message) => {
+        if (client.readyState === client.OPEN) {
+          const servedData = JSON.parse(message.data);
+          if (servedData) {
+            setState({
+              ...state,
+              messages: [
+                ...messages,
+                { msg: servedData.text, sender: servedData.sender },
+              ],
+            });
+          }
         }
-      }
-    };
+      };
+    }
   }, []);
 
-  return (
-    <Layout>
-      <>
+  if (userobj) {
+    client = new w3cwebsocket(
+      "ws://127.0.0.1:8000/ws/" + receiver_name + "/" + userobj?.username
+    );
+
+    return (
+      <Layout>
         <div className="d-flex flex-column align-items-center ">
           <div
             style={{
@@ -51,16 +62,17 @@ const Messages = () => {
             className=" "
           >
             <ParseMessages
-              room={room}
+              receiver_name={receiver_name}
               messages={messages}
               target_user={target_user}
             />
             <SendMessage states={{ state, setState }} client={client} />
           </div>
         </div>
-      </>
-    </Layout>
-  );
+        <Navbar />
+      </Layout>
+    );
+  }
 };
 
 export default Messages;
