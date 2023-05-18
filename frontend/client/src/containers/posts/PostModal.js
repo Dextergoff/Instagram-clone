@@ -16,6 +16,7 @@ import UserDetails from "components/posts/UserDetails";
 import TitleAndHashtags from "components/posts/TitleAndHashtags";
 import DisplayPfp from "components/Image/DisplayPfp";
 import PostAge from "components/posts/PostAge";
+import Layout from "Layout/Layout";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -48,7 +49,7 @@ const PostModal = () => {
 
   if (post)
     return (
-      <>
+      <Layout>
         <div className="">
           <Modal
             size="lg"
@@ -121,7 +122,7 @@ const PostModal = () => {
             </Modal.Body>
           </Modal>
         </div>
-      </>
+      </Layout>
     );
 };
 

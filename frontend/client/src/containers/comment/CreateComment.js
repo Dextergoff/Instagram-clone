@@ -13,7 +13,7 @@ const CreateComment = (props) => {
   const page = props.page || undefined;
 
   const to = props.to || "";
- 
+
   const queryName = props.queryName || "getComments";
 
   const [commentState, setCommentState] = useState({
@@ -56,7 +56,6 @@ const CreateComment = (props) => {
 
   useEffect(() => {
     result.status === "fulfilled" &&
-      
       UpdateComments({ result, parent, page, dispatch, queryName });
   }, [dispatch, parent, result, page, queryName]);
 

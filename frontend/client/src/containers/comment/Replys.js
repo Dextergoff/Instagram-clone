@@ -19,64 +19,65 @@ const Replys = (props) => {
   const { page, skip, parent, open } = state;
 
   const { data = [] } = useGetReplysQuery({ parent, page }, { skip: skip });
-  
+
   return (
-    <div style={{ marginLeft: "10px", marginTop: "20px" }}>
-      <ViewReplys
-        parent={props.parent}
-        eod={data.end_of_data}
-        states={{state, setState}}
-      />
-      {data.data?.map((reply) => (
-        <div className={!open ? "d-none" : ""} key={reply.pk}>
-
-          {reply.parent === parent ? (
-            <div className="mb-3">
-              <div className="d-flex gap-1">
-                <DisplayPfp
-                  pfp={process.env.REACT_APP_API_URL + reply.user.pfp}
-                  style={{
-                    width: "2rem",
-                    height: "2em",
-                    borderRadius: "100%",
-                  }}
-                />
-                <CommentUsername data={reply.user} />
-                <div className="text-primary">@{reply.to}</div>
-                <CommentBody data={reply.body} />
-                <LikeComment
-                  queryName="getReplys"
-                  comment={reply}
-                  page={page}
-                />
+    <>
+      <div style={{ marginLeft: "10px", marginTop: "20px" }}>
+        <ViewReplys
+          parent={props.parent}
+          eod={data.end_of_data}
+          states={{ state, setState }}
+        />
+        {data.data?.map((reply) => (
+          <div className={!open ? "d-none" : ""} key={reply.pk}>
+            {reply.parent === parent ? (
+              <div className="mb-3">
+                <div className="d-flex gap-1">
+                  <DisplayPfp
+                    pfp={process.env.REACT_APP_API_URL + reply.user.pfp}
+                    style={{
+                      width: "2rem",
+                      height: "2em",
+                      borderRadius: "100%",
+                    }}
+                  />
+                  <CommentUsername data={reply.user} />
+                  <div className="text-primary">@{reply.to}</div>
+                  <CommentBody data={reply.body} />
+                  <LikeComment
+                    queryName="getReplys"
+                    comment={reply}
+                    page={page}
+                  />
+                </div>
+                <div className="d-flex gap-2 align-items-center">
+                  <LikeCount
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "#6c757d",
+                      fontWeight: "bold",
+                    }}
+                    data={reply}
+                  />
+                  <CreateComment
+                    parent={props.parent}
+                    to={reply.user.username}
+                    post={reply.post}
+                    page={page}
+                    hideform={true}
+                    queryName="getReplys"
+                  />
+                </div>
               </div>
-              <div className="d-flex gap-2 align-items-center">
-                <LikeCount
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#6c757d",
-                    fontWeight: "bold",
-                  }}
-                  data={reply}
-                />
-                <CreateComment
-                  parent={props.parent}
-                  to={reply.user.username}
-                  post={reply.post}
-                  page={page}
-                  hideform={true}
-                  queryName="getReplys"
-                />
-              </div>
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
-      ))}
+            ) : (
+              <></>
+            )}
+          </div>
+        ))}
 
-      {/* ADD PAGINATION */}
-    </div>
+        {/* ADD PAGINATION */}
+      </div>
+    </>
   );
 };
 

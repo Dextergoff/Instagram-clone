@@ -1,15 +1,32 @@
-import Navbar from 'Navbar/Navbar';
-import {Helmet} from 'react-helmet'
+import Navbar from "Navbar/Navbar";
+import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
+import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
+const Layout = (props) => {
+  const { isAuthenticated } = useSelector((state) => state.user);
+  if (isAuthenticated) {
+    return (
+      <>
+        <style>{"body { background-color: #000; }"}</style>
+        <div className="">{props.children}</div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <style>{"body { background-color: #000; }"}</style>
+        <div
+          style={{
+            position: "fixed" /* or absolute */,
+            top: "50%",
+            left: "50%",
+          }}
+        >
+          <BootstrapSpinner />
+        </div>
+      </>
+    );
+  }
+};
 
-const Layout = ({title, content, children}) => (
-    <>
-        <Helmet>
-        <style>{'body { background-color: #000; }'}</style>
-            <title>{title}</title>
-            <meta name='description' content={content}/>
-        </Helmet>
-        <Navbar/>
-        <div className='container mt-5'>{children}</div>
-    </>
-)
 export default Layout;

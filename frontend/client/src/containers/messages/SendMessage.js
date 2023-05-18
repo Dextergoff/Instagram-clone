@@ -20,27 +20,29 @@ const SendMessage = ({ states, client }) => {
     e.preventDefault();
   };
   return (
-    <form className="" onSubmit={handleSubmit}>
-      <div className="d-flex">
-        <input
-          onChange={(e) => {
-            setState({ ...state, value: e.target.value });
-          }}
-          id="outlined-helperText"
-          label="Write text"
-          placeholder="Send Message"
-          style={{ boxShadow: "none", padding: 0 }}
-          autoComplete="off"
-          className="form-control border-0 fw-light bg-black text-light"
-          type="text"
-          name="body"
-          value={value}
-        />
-        <button type="submit" className={`border-0 bg-black text-primary`}>
-          Send
-        </button>
-      </div>
-    </form>
+    <>
+      <form className="" onSubmit={handleSubmit}>
+        <div className="d-flex">
+          <input
+            onChange={(e) => {
+              setState({ ...state, value: e.target.value });
+            }}
+            id="outlined-helperText"
+            label="Write text"
+            placeholder="Send Message"
+            style={{ boxShadow: "none", padding: 0 }}
+            autoComplete="off"
+            className="form-control border-0 fw-light bg-black text-light"
+            type="text"
+            name="body"
+            value={value}
+          />
+          <button type="submit" className={`border-0 bg-black text-primary`}>
+            Send
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 
