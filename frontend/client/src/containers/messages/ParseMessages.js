@@ -1,6 +1,6 @@
 import UserDetails from "components/posts/UserDetails";
 
-const ParseMessages = ({ messages, room, target_user }) => {
+const ParseMessages = ({ messages, target_user }) => {
   return (
     <>
       {/* TODO set room name to target user and use a user id or token to seperate chats */}
