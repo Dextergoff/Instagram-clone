@@ -4,8 +4,8 @@ User = get_user_model()
 
 
 class ChatRoom(models.Model):
-    sender = models.CharField(
+    sender_name = models.CharField(
         max_length=500, blank=True, null=True)
-    receiver = models.CharField(
+    receiver_name = models.CharField(
         max_length=500, blank=True, null=True)
     message = models.CharField(max_length=500, blank=True, null=True)
