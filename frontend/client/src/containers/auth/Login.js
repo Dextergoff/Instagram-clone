@@ -1,4 +1,4 @@
-import Layout from "Layout/Layout";
+import NoAuthLayout from "Layout/NoAuthLayout";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetRegistered, login } from "endpoints/auth/user";
@@ -32,7 +32,7 @@ const Login = ({ Redirect }) => {
   };
   if (userobj) Redirect({ location: "/" });
   return (
-    <Layout title="Login" content="Login page">
+    <NoAuthLayout>
       <form className="mt-5" onSubmit={onSubmit}>
         <div className="d-flex justify-content-center  ">
           <div className="form-group  w-25">
@@ -51,7 +51,6 @@ const Login = ({ Redirect }) => {
             />
           </div>
         </div>
-
         <div className="d-flex justify-content-center  ">
           <div className="form-group w-25 mt-3">
             <label className="form-label text-light" htmlFor="password">
@@ -69,45 +68,38 @@ const Login = ({ Redirect }) => {
             />
           </div>
         </div>
-
         <div role="alertdialog" className="error-msg text-danger text-center ">
           {response ? handleErrors({ response, rejected }) : <></>}{" "}
         </div>
-
-        {loading ? (
-          <BootstrapSpinner />
-        ) : (
-          <div>
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-primary mt-4 rounded-0 bg-black border-secondary">
-                Continue
-              </button>
-            </div>
-            <div className="d-flex justify-content-center">
-              <div className="mt-4">
-                <div
-                  onClick={() => Redirect({ location: "/resetpasswordsm/" })}
-                  className="mt-4 text-light"
-                >
-                  forgot password?
-                </div>
-              </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <div>
-                <div
-                  onClick={() => Redirect({ location: "/register/" })}
-                  className="ml-4 text-light "
-                >
-                  new user?
-                </div>
+        <div>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn-primary mt-4 rounded-0 bg-black border-secondary">
+              Continue
+            </button>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="mt-4">
+              <div
+                onClick={() => Redirect({ location: "/resetpasswordsm/" })}
+                className="mt-4 text-light"
+              >
+                forgot password?
               </div>
             </div>
           </div>
-          // TODO componentize login and reg
-        )}
+          <div className="d-flex justify-content-center">
+            <div>
+              <div
+                onClick={() => Redirect({ location: "/register/" })}
+                className="ml-4 text-light "
+              >
+                new user?
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
-    </Layout>
+    </NoAuthLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import Layout from "Layout/Layout";
+import NoAuthLayout from "Layout/NoAuthLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetpasswordsendmail } from "endpoints/auth/user";
@@ -17,7 +17,7 @@ const Forgot = ({ handleSubmit }) => {
 
   if (!submited) {
     return (
-      <Layout>
+      <NoAuthLayout>
         <form
           onSubmit={(e) =>
             handleSubmit({
@@ -59,13 +59,13 @@ const Forgot = ({ handleSubmit }) => {
             </div>
           )}
         </form>
-      </Layout>
+      </NoAuthLayout>
     );
   } else {
     return (
-      <Layout>
+      <NoAuthLayout>
         <h3 className="text-center text-light">check your email to continue</h3>
-      </Layout>
+      </NoAuthLayout>
     );
   }
 };

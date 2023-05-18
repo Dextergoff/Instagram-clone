@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Layout from "Layout/Layout";
+import NoAuthLayout from "Layout/NoAuthLayout";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "endpoints/auth/user";
@@ -22,7 +22,7 @@ const Register = ({ handleSubmit, Redirect }) => {
   if (registered) return <Navigate to="/login" />;
 
   return (
-    <Layout title="Auth Site | Register" content="Register page">
+    <NoAuthLayout>
       <h3 className="text-light text-center">Register</h3>
       <form
         className="mt-5"
@@ -112,7 +112,7 @@ const Register = ({ handleSubmit, Redirect }) => {
           </div>
         )}
       </form>
-    </Layout>
+    </NoAuthLayout>
   );
 };
 

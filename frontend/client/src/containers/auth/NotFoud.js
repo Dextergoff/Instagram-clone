@@ -1,10 +1,10 @@
-import Layout from "Layout/Layout";
+import NoAuthLayout from "Layout/NoAuthLayout";
 
 const NotFoud = () => {
   return (
-    <Layout title="404 NotFoud" content="NotFoud page">
+    <NoAuthLayout>
       <h1>404 Not found *o*</h1>
-    </Layout>
+    </NoAuthLayout>
   );
 };
 

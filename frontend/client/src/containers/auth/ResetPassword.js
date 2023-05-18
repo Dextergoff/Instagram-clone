@@ -1,4 +1,3 @@
-import Layout from "Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetpassword } from "endpoints/auth/user";
@@ -6,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { resetpasswordverify } from "endpoints/auth/user";
 import { useEffect } from "react";
 import handleErrors from "../../components/errors/handleErrors";
+import NoAuthLayout from "Layout/NoAuthLayout";
 const ResetPassword = () => {
   const [formData, setFormData] = useState({ newpassword: "", error: "" });
   const { newpassword, error } = formData;
@@ -49,7 +49,7 @@ const ResetPassword = () => {
 
   if (verified) {
     return (
-      <Layout>
+      <NoAuthLayout>
         <form onSubmit={onSubmit}>
           <div className="d-flex justify-content-center">
             <div className="mb-3 w-25">
@@ -80,27 +80,27 @@ const ResetPassword = () => {
             </div>
           )}
         </form>
-      </Layout>
+      </NoAuthLayout>
     );
   }
 
   if (rejected) {
     return (
-      <Layout>
+      <NoAuthLayout>
         <h1> Something went wrong please try again</h1>
-      </Layout>
+      </NoAuthLayout>
     );
   }
 
   if (submited) {
     return (
-      <Layout>
+      <NoAuthLayout>
         <h1 className="text-light text-center">
           {" "}
           password successfully reset return to login
         </h1>
         <a href="/login/"> login </a>
-      </Layout>
+      </NoAuthLayout>
     );
   }
 };
