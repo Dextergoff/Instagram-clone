@@ -15,19 +15,38 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework.parsers import MultiPartParser, FormParser
-from django.contrib.auth.models import update_last_login
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
-from .models import Post
-from .serializers import *
 from center.modules.actions.queryactions import pageify
+from .models import *
+from .serializers import *
+
 from center.settings import PAGEIFY, QUERYING
-from django.db.models import Prefetch
-
-
 # Create your views here.
 
-class Messages(viewsets.ViewSet):
 
-    def get_messages(self):
-        pass
+# class GetRoom(viewsets.ViewSet):
+#     def main(self, request, data):
+
+#         queryset = ChatRoom.objects.get(
+#             sender_name=data['sender_name'], receiver_name=data['receiver_name'])
+#         serializer = ChatRoomSerializer(
+#             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+#         response = {
+#             QUERYING['ND_KEY']: {QUERYING['DATA_KEY']: serializer.data},
+#             PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
+#         }
+#         return Response(response)
+
+
+# class GetMessages(viewsets.ViewSet):
+#     def main(self, request, sender_name, receiver_name, page):
+#         queryset = Messages.objects.get(
+#             sender_name=sender_name, receiver_name=receiver_name)
+#         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+#         serializer = ChatRoomSerializer(
+#             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+#         response = {
+#             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+#             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+#             PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
+#         }
+#         return Response(response)
