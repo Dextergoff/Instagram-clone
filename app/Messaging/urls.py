@@ -1,8 +1,8 @@
 from django.urls import path
-from .apiviews import *
+from .views import *
 
-app_name = "messaging"
+app_name = "Messaging"
 urlpatterns = [
-    # path('messages/<sender_name>/<receiver_name>', ProfilePosts.as_view({'get': 'main'}), ),
+    # path('messages/<receiver>/<sender>', ProfilePosts.as_view({'get': 'main'}), ),
 
 ]

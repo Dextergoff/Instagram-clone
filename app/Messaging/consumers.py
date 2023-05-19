@@ -6,9 +6,8 @@ from .models import *
 
 class MessageConsumer(WebsocketConsumer):
     def connect(self):
-        self.receiver_name = self.scope['url_route']['kwargs']['receiver_name']
-        self.sender_name = self.scope['url_route']['kwargs']['sender_name']
-        self.create_session()
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.create_chat_room()
         self.join_room()
         self.accept()
 
@@ -25,14 +24,20 @@ class MessageConsumer(WebsocketConsumer):
     def chat_message(self, event):
         self.send_to_socket(event['message'], event['sender'])
 
-    def create_session(self):
-        ChatRoom.objects.select_related().get_or_create(
-            receiver_name=self.receiver_name, sender_name=self.sender_name)
-        ChatRoom.objects.select_related().get_or_create(
-            sender_name=self.receiver_name, receiver_name=self.sender_name)
+    def create_chat_room(self):
+        # sender_user = User.objects.select_related().get(pk=self.sender)
+        # receiver_user = User.objects.select_related().get(pk=self.receiver)
+
+        # ChatRoom.objects.get_or_create(
+        #     receiver=receiver_user, sender=sender_user)
+
+        # ChatRoom.objects.get_or_create(
+        #     sender=receiver_user, receiver=sender_user)
+        pass
+# TODO CREATE CHAT AFTER USER SENDS MESSAGE OR SEND SOMETHING WHEN USER CONNECTS WITH SENDER AND RECIVER
 
     def join_room(self):
-        self.group_name = 'chat_%s' % self.receiver_name
+        self.group_name = 'chat_%s' % self.room_name
         async_to_sync(self.channel_layer.group_add)(
             self.group_name,
             self.channel_name
