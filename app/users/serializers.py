@@ -20,7 +20,7 @@ class VerifyResetSerializer(serializers.Serializer):
             uid = data['uid']
             User.objects.get(resetkey = uid)
             return uid
-        except: 
+        except:
             raise exceptions.ValidationError(('Cannot verify uid'))
 
 class ResetPasswordSerializer(serializers.Serializer):
@@ -45,12 +45,12 @@ class SendMailSerializer(serializers.Serializer):
         response = email_validated.send(sender=self.__class__, data=data)
         token = Tokens.get_token_from_response(response)
         return(token)
-        
+
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
-        
+
     def validate_password(self,data):
         Validation.validate_password(data=data)
         return data
