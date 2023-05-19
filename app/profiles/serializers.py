@@ -27,4 +27,3 @@ class GalleryPostSerializer(serializers.ModelSerializer):
             'user',
             'image',
         ]
-
