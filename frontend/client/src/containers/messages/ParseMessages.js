@@ -19,9 +19,7 @@ const ParseMessages = ({ messages, target_user }) => {
               style={{ width: "fit-content" }}
               className="p-2 bg-primary rounded-pill pl-2"
             >
-              <div className="">
-                {message.msg} {target_user.username}
-              </div>
+              <div className="">{message.msg}</div>
             </div>
           </div>
         ))}
