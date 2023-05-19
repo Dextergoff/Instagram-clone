@@ -1,15 +1,14 @@
 import { w3cwebsocket } from "websocket";
-import { Component } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import SendMessage from "./SendMessage";
 import ParseMessages from "./ParseMessages";
 import Layout from "Layout/Layout";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "Navbar/Navbar";
-import { logDOM } from "@testing-library/react";
+import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
+//TODO create a endpoint for retrieving previous messages when user connects to ws
 const Messages = () => {
   let client;
 
@@ -23,10 +22,17 @@ const Messages = () => {
     messages: [],
     value: "",
     name: "",
-    receiver_name: target_user.username,
+    receiver: target_user,
+    skip: true,
   });
-  const { messages, receiver_name } = state;
-
+  const { messages, receiver, skip } = state;
+  const { old_messages } = useGetMessagesQuery(
+    {
+      ...receiver.pk,
+      ...userobj?.pk,
+    },
+    { skip: skip }
+  );
   useEffect(() => {
     if (userobj) {
       client.onmessage = (message) => {
@@ -45,11 +51,18 @@ const Messages = () => {
       };
     }
   }, []);
-
+  useEffect(() => {
+    if (userobj) {
+      setState({
+        ...state,
+        skip: false,
+      });
+    }
+  }, []);
   if (userobj) {
-    client = new w3cwebsocket(
-      "ws://127.0.0.1:8000/ws/" + receiver_name + "/" + userobj?.username
-    );
+    const room_name = receiver.pk * 3 + userobj?.pk * 3;
+
+    client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
 
     return (
       <Layout>
@@ -62,7 +75,7 @@ const Messages = () => {
             className=" "
           >
             <ParseMessages
-              receiver_name={receiver_name}
+              receiver={receiver.username}
               messages={messages}
               target_user={target_user}
             />
