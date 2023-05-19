@@ -1,12 +1,12 @@
 import { splitApi } from "./splitApi";
 import { handleNewComments } from "components/rtkQuery/handleNewComments";
-const endpoint = "comments";
+const endpoint = "Messaging";
 
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: ({ sender_name, receiver_name }) => ({
-        url: `${endpoint}/${sender_name}/${receiver_name}`,
+      query: ({ room_name }) => ({
+        url: `${endpoint}/${room_name}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
