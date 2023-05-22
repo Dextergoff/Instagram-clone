@@ -8,14 +8,16 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Navbar from "Navbar/Navbar";
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 //TODO create a endpoint for retrieving previous messages when user connects to ws
 const Messages = () => {
-  let client;
-
   const location = useLocation();
   const { target_user } = location.state;
-
   const { userobj } = useSelector((state) => state.user);
+
+  let client;
+  let servedData;
+  let calc_room;
 
   const [state, setState] = useState({
     filledForm: false,
@@ -23,47 +25,30 @@ const Messages = () => {
     value: "",
     name: "",
     receiver: target_user,
-    skip: true,
   });
   const { messages, receiver, skip } = state;
-  const { old_messages } = useGetMessagesQuery(
-    {
-      ...receiver.pk,
-      ...userobj?.pk,
-    },
-    { skip: skip }
-  );
+
+  calc_room = receiver?.pk * 3 + userobj?.pk * 3;
+
   useEffect(() => {
     if (userobj) {
       client.onmessage = (message) => {
         if (client.readyState === client.OPEN) {
-          const servedData = JSON.parse(message.data);
-          if (servedData) {
-            setState({
-              ...state,
-              messages: [
-                ...messages,
-                { msg: servedData.text, sender: servedData.sender },
-              ],
-            });
-          }
+          servedData = JSON.parse(message.data);
+          setState({
+            ...state,
+            messages: [
+              ...messages,
+              { msg: servedData.text, sender: servedData.sender },
+            ],
+          });
         }
       };
     }
   }, []);
-  useEffect(() => {
-    if (userobj) {
-      setState({
-        ...state,
-        skip: false,
-      });
-    }
-  }, []);
+
   if (userobj) {
-    const room_name = receiver.pk * 3 + userobj?.pk * 3;
-
-    client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
-
+    client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + calc_room);
     return (
       <Layout>
         <div className="d-flex flex-column align-items-center ">
@@ -75,9 +60,9 @@ const Messages = () => {
             className=" "
           >
             <ParseMessages
-              receiver={receiver.username}
-              messages={messages}
+              states={{ state, setState }}
               target_user={target_user}
+              calc_room={calc_room}
             />
             <SendMessage states={{ state, setState }} client={client} />
           </div>
