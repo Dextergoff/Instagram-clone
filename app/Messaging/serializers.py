@@ -21,12 +21,13 @@ User = get_user_model()
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
 
     class Meta:
         model = Message
         fields = [
             'pk',
-            'sender',
+            'user',
             'message',
             'room_name',
             'date'
