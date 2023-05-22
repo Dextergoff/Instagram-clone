@@ -7,7 +7,6 @@ from .models import *
 class MessageConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.create_chat_room()
         self.join_room()
         self.accept()
 
@@ -19,21 +18,22 @@ class MessageConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         data = json.loads(text_data)
-        self.send_to_group(data['text'], data['sender'])
+
+        text = data['text']
+        sender = data['sender']
+        self.store_message(sender, text)
+        self.send_to_group(text, sender)
 
     def chat_message(self, event):
-        self.send_to_socket(event['message'], event['sender'])
+        message = event['message']
+        sender = event['message']
+        self.send_to_socket(message, sender)
 
-    def create_chat_room(self):
-        # sender_user = User.objects.select_related().get(pk=self.sender)
-        # receiver_user = User.objects.select_related().get(pk=self.receiver)
+    def store_message(self, sender, text):
+        print(self.room_name)
+        Message.objects.create(room_name=self.room_name,
+                               message=text, sender=sender)
 
-        # ChatRoom.objects.get_or_create(
-        #     receiver=receiver_user, sender=sender_user)
-
-        # ChatRoom.objects.get_or_create(
-        #     sender=receiver_user, receiver=sender_user)
-        pass
 # TODO CREATE CHAT AFTER USER SENDS MESSAGE OR SEND SOMETHING WHEN USER CONNECTS WITH SENDER AND RECIVER
 
     def join_room(self):
