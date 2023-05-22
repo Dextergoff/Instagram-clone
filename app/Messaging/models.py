@@ -12,7 +12,7 @@ User = get_user_model()
 #         User, on_delete=models.CASCADE, related_name="receiver")
 
 class Message(models.Model):
-    sender = models.CharField(max_length=500, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=500, blank=True, null=True)
     room_name = models.CharField(max_length=500, blank=True, null=True)
     date = models.DateTimeField(default=now)
