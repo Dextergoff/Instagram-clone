@@ -1,6 +1,9 @@
 import UserDetails from "components/posts/UserDetails";
-
-const ParseMessages = ({ messages, target_user }) => {
+import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
+import { useState } from "react";
+import OldMessages from "./OldMessages";
+const ParseMessages = ({ states, target_user, calc_room }) => {
+  const { messages } = states.state;
   return (
     <>
       {/* TODO set room name to target user and use a user id or token to seperate chats */}
@@ -13,6 +16,7 @@ const ParseMessages = ({ messages, target_user }) => {
           boxShadow: "none",
         }}
       >
+        <OldMessages calc_room={calc_room} />
         {messages.map((message) => (
           <div key={message} className="d-flex justify-content-end">
             <div
