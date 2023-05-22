@@ -20,19 +20,14 @@ from users.serializers import *
 User = get_user_model()
 
 
-class MessageSerializer(serializers.Serializer):
-    def get_messages(self):
-        pass
-
-
-class ChatRoomSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True)
+class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Messages
+        model = Message
         fields = [
             'pk',
             'sender',
-            'receiver',
-            'messages',
+            'message',
+            'room_name',
+            'date'
         ]
