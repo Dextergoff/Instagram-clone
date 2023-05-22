@@ -5,8 +5,8 @@ const endpoint = "Messaging";
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: ({ room_name }) => ({
-        url: `${endpoint}/${room_name}`,
+      query: ({ calc_room, page }) => ({
+        url: `${endpoint}/messages/${calc_room}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
