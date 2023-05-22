@@ -19,6 +19,7 @@ splitApi.injectEndpoints({
 
       merge: (currentCache, newItems, args) => {
         handleNewComments({ currentCache, newItems, args });
+        currentCache.end_of_data = newItems.end_of_data;
       },
 
       forceRefetch({ currentArg, previousArg }) {
@@ -39,6 +40,7 @@ splitApi.injectEndpoints({
       },
       merge: (currentCache, newItems, args) => {
         currentCache.data.push(...newItems.data);
+        currentCache.end_of_data = newItems.end_of_data;
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
