@@ -2,13 +2,16 @@ import { w3cwebsocket } from "websocket";
 import { useState } from "react";
 import { useEffect } from "react";
 import SendMessage from "./SendMessage";
-import ParseMessages from "./ParseMessages";
+import ParseMessages from "./NewMessages";
 import Layout from "Layout/Layout";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Navbar from "Navbar/Navbar";
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import OldMessages from "./OldMessages";
+import NewMessages from "./NewMessages";
+import RoomDetails from "./RoomDetails";
 //TODO create a endpoint for retrieving previous messages when user connects to ws
 const Messages = () => {
   const location = useLocation();
@@ -35,13 +38,19 @@ const Messages = () => {
       client.onmessage = (message) => {
         if (client.readyState === client.OPEN) {
           servedData = JSON.parse(message.data);
-          setState({
-            ...state,
-            messages: [
-              ...messages,
-              { msg: servedData.text, sender: servedData.sender },
-            ],
-          });
+          if (servedData) {
+            setState({
+              ...state,
+              messages: [
+                ...messages,
+                {
+                  msg: servedData.text,
+                  sender: servedData.sender,
+                  user: servedData.user,
+                },
+              ],
+            });
+          }
         }
       };
     }
@@ -59,11 +68,9 @@ const Messages = () => {
             }}
             className=" "
           >
-            <ParseMessages
-              states={{ state, setState }}
-              target_user={target_user}
-              calc_room={calc_room}
-            />
+            <RoomDetails target_user={target_user} />
+            <OldMessages calc_room={calc_room} />
+            <NewMessages messages={messages} calc_room={calc_room} />
             <SendMessage states={{ state, setState }} client={client} />
           </div>
         </div>
