@@ -11,7 +11,7 @@ const SendMessage = ({ states, client }) => {
         JSON.stringify({
           type: "message",
           text: value,
-          sender: userobj?.username,
+          sender: userobj?.pk,
         })
       );
       setState({ ...state, value: "" });
