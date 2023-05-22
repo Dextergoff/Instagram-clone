@@ -1,1 +1,0 @@
-// TODO make an endpoint to get all of the users chats and this is where they will be displyed /dm will route to here but when you click the paper plane button it will go straight to the messaging part. the messages and chats can be siaplyed to gether if the room name is passed as a prop and the message is a component of this file
