@@ -3,6 +3,7 @@ from .views import *
 
 app_name = "Messaging"
 urlpatterns = [
-    # path('messages/<receiver>/<sender>', ProfilePosts.as_view({'get': 'main'}), ),
+    path('messages/<room_name>/<int:page>',
+         GetMessages.as_view({'get': 'main'}), ),
 
 ]
