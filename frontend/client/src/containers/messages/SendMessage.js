@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
-const SendMessage = ({ states, client }) => {
-  const setState = states.setState;
-  const state = states.state;
-  const { value, name } = state;
-  const { userobj } = useSelector((state) => state.user);
+import { useState } from "react";
+const SendMessage = ({ client, userobj }) => {
+  const [formState, setFormState] = useState({
+    value: "",
+    name: "",
+  });
+  const { value } = formState;
 
   const handleSubmit = (e) => {
     if (value.length > 0) {
@@ -14,9 +16,23 @@ const SendMessage = ({ states, client }) => {
           sender: userobj?.pk,
         })
       );
-      setState({ ...state, value: "" });
+      setFormState({ ...formState, value: "" });
     }
+    e.preventDefault();
+  };
+  const handleChange = (e) => {
+    e.preventDefault();
 
+    if (value.length > 0) {
+      client.send(
+        JSON.stringify({
+          type: "message",
+          text: value,
+          sender: userobj?.pk,
+        })
+      );
+      setFormState({ ...formState, value: "" });
+    }
     e.preventDefault();
   };
   return (
@@ -25,7 +41,7 @@ const SendMessage = ({ states, client }) => {
         <div className="d-flex">
           <input
             onChange={(e) => {
-              setState({ ...state, value: e.target.value });
+              setFormState({ ...formState, value: e.target.value });
             }}
             id="outlined-helperText"
             label="Write text"
