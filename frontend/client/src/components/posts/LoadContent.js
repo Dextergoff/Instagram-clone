@@ -8,7 +8,7 @@ const LoadContent = ({ data, states }) => {
   return (
     <>
       {!data.end_of_data ? (
-        <div className="d-flex justify-content-center mt-5">
+        <div className="d-flex justify-content-center">
           <button className="btn" onClick={() => LoadContent()}>
             <FontAwesomeIcon
               size="xl"
