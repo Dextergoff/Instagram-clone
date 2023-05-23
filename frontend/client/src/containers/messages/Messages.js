@@ -1,83 +1,47 @@
-import { w3cwebsocket } from "websocket";
-import { useState } from "react";
-import { useEffect } from "react";
-import SendMessage from "./SendMessage";
-import ParseMessages from "./NewMessages";
-import Layout from "Layout/Layout";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import Navbar from "Navbar/Navbar";
+import UserDetails from "components/posts/UserDetails";
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import OldMessages from "./OldMessages";
-import NewMessages from "./NewMessages";
-import RoomDetails from "./RoomDetails";
-//TODO create a endpoint for retrieving previous messages when user connects to ws
-const Messages = () => {
-  const location = useLocation();
-  const { target_user } = location.state;
-  const { userobj } = useSelector((state) => state.user);
-
-  let client;
-  let servedData;
-  let calc_room;
-
+import LoadContent from "components/posts/LoadContent";
+import { useState } from "react";
+import DisplayPfp from "components/Image/DisplayPfp";
+import { splitApi } from "endpoints/rtkQuery/splitApi";
+const Messages = ({ calc_room }) => {
   const [state, setState] = useState({
-    filledForm: false,
-    messages: [],
-    value: "",
-    name: "",
-    receiver: target_user,
+    page: 1,
   });
-  const { messages, receiver, skip } = state;
+  const { page } = state;
+  const { data = [] } = useGetMessagesQuery({ calc_room, page });
 
-  calc_room = receiver?.pk * 3 + userobj?.pk * 3;
-
-  useEffect(() => {
-    if (userobj) {
-      client.onmessage = (message) => {
-        if (client.readyState === client.OPEN) {
-          servedData = JSON.parse(message.data);
-          if (servedData) {
-            setState({
-              ...state,
-              messages: [
-                ...messages,
-                {
-                  msg: servedData.text,
-                  sender: servedData.sender,
-                  user: servedData.user,
-                },
-              ],
-            });
-          }
-        }
-      };
-    }
-  }, []);
-
-  if (userobj) {
-    client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + calc_room);
+  if (data.data) {
     return (
-      <Layout>
-        <div className="d-flex flex-column align-items-center ">
-          <div
-            style={{
-              borderStyle: "solid",
-              borderWidth: "1px",
-            }}
-            className=" "
-          >
-            <RoomDetails target_user={target_user} />
-            <OldMessages calc_room={calc_room} />
-            <NewMessages messages={messages} calc_room={calc_room} />
-            <SendMessage states={{ state, setState }} client={client} />
+      <div style={{ maxHeight: "95vw", height: "90vh" }}>
+        <LoadContent data={data} states={{ state, setState }} />
+        {data.data.map((message) => (
+          <div key={message.pk} className="d-flex justify-content-start">
+            <div
+              style={{ width: "fit-content" }}
+              className="p-2 text-light pl-2"
+            >
+              <div className="d-flex align-items-center gap-1 ">
+                <DisplayPfp
+                  style={{
+                    width: "2rem",
+                    height: "2rem",
+                    borderRadius: "100%",
+                  }}
+                  pfp={process.env.REACT_APP_API_URL + message.user.pfp}
+                />
+                <div>
+                  <div className="text-center text-light ">
+                    {message.user.username}
+                  </div>
+                  <div className="">{message.message}</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <Navbar />
-      </Layout>
+        ))}
+      </div>
     );
   }
 };
-
 export default Messages;
