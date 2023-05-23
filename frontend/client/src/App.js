@@ -16,6 +16,7 @@ import Redirect from "components/forms/Redirect";
 import onSubmit from "components/forms/onSubmit";
 import Forgot from "containers/auth/Forgot";
 import NotFoud from "containers/auth/NotFoud";
+import MessageWS from "containers/messages/MessageWS";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -27,7 +28,7 @@ import {
   faUser,
   faEdit,
 } from "@fortawesome/free-regular-svg-icons";
-import Messages from "containers/messages/Messages";
+import Messages from "containers/messages/MessageWS";
 
 library.add(
   faHeart,
@@ -95,7 +96,7 @@ const App = () => {
           path="/dm"
           element={
             <ProtectedRoute>
-              <Messages />
+              <MessageWS />
             </ProtectedRoute>
           }
         />
