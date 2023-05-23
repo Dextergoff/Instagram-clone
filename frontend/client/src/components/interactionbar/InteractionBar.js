@@ -43,13 +43,11 @@ const InteractionBar = ({
                 target_user: post.user,
               }}
             >
-              <a href={`dm/${post.user.username}`}>
-                <FontAwesomeIcon
-                  size="xl"
-                  className="text-light"
-                  icon="fa-regular fa-paper-plane"
-                />
-              </a>
+              <FontAwesomeIcon
+                size="xl"
+                className="text-light"
+                icon="fa-regular fa-paper-plane"
+              />
             </Link>
           </div>
         </div>
