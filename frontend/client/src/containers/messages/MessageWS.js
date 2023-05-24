@@ -10,10 +10,10 @@ import Sidebar from "./Sidebar";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
 import HandleServedData from "./HandleServedData";
-//TODO create a endpoint for retrieving previous messages when user connects to ws
 const MessageWS = () => {
-  const { userobj } = useSelector((state) => state.user);
+  // TODO but this in a try catch nad navigate to login on catch
 
+  const { userobj } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -28,16 +28,21 @@ const MessageWS = () => {
 
   const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + calc_room);
 
-  useEffect(() => {
-    client.onmessage = (message) => {
-      HandleServedData({
-        message,
-        state,
-        dispatch,
-        calc_room,
-      });
-    };
-  }, []);
+  client.onmessage = (message) => {
+    HandleServedData({
+      message,
+      state,
+      dispatch,
+      calc_room,
+    });
+  };
+  // websocket sending message three times?!
+
+  // client.onmessage = function (e) {
+  //   if (typeof e.data === "string") {
+  //     console.log("Received: '" + e.data + "'");
+  //   }
+  // };
 
   if (userobj) {
     return (
