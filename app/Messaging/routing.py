@@ -3,16 +3,5 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from django.urls import re_path, path
 from .consumers import MessageConsumer
 websocket_urlpatterns = [
-
-    path(
-        'ws/<room_name>',
-        MessageConsumer.as_asgi(),
-        name='project_config'
-    ),
+    re_path(r"ws/(?P<room_name>\w+)$", MessageConsumer.as_asgi()),
 ]
-application = ProtocolTypeRouter({
-    'websocket':
-        URLRouter(
-            websocket_urlpatterns
-        ),
-})

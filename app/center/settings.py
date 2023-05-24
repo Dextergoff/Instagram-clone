@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -127,7 +128,7 @@ INTERNAL_IPS = [
     # ...
 ]
 
-ASGI_APPLICATION = "Messaging.routing.application"
+ASGI_APPLICATION = "center.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': "channels.layers.InMemoryChannelLayer"
