@@ -5,7 +5,7 @@ import InfoBar from "./InfoBar";
 import EditButton from "./EditButton";
 import Username from "./Username";
 import Description from "./Description";
-import SetPfp from "../Image/SetPfp";
+import SetPfp from "components/Image/SetPfp";
 const ProfileHeader = ({ data, userobj }) => {
   const [formData, setFormData] = useState({
     user: userobj.pk,
@@ -19,7 +19,7 @@ const ProfileHeader = ({ data, userobj }) => {
     editmode: false,
     response: "",
   });
-  
+
   const [userState, setUserState] = useState({
     username: userobj.username,
     description: userobj.description,
@@ -50,7 +50,6 @@ const ProfileHeader = ({ data, userobj }) => {
             file,
             setFile,
           }}
-          
         />
 
         <Username

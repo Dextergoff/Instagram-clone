@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
 import CreateComment from "./CreateComment";
-import CommentUsername from "components/comments/CommentUsername";
-import CommentBody from "components/comments/CommentBody";
+import CommentUsername from "./CommentUsername";
+import CommentBody from "containers/comment/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
-import LikeComment from "components/comments/LikeComment";
-import LikeCount from "components/like_count/LikeCount";
+import LikeComment from "./LikeComment";
+import LikeCount from "components/interactionbar/LikeCount";
 import { useGetReplysQuery } from "endpoints/rtkQuery/commentEndpoints";
-import ViewReplys from "components/comments/ViewReplys";
+import ViewReplys from "./ViewReplys";
 const Replys = (props) => {
   const [state, setState] = useState({
     page: 1,

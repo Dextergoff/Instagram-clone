@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import getQueryLength from "components/jobs/getQueryLength";
 import UserExists from "components/jobs/verification/UserExists";
-import ProfileHeader from "components/profile/ProfileHeader";
-import PostGallery from "components/profile/PostGallery";
+import ProfileHeader from "./ProfileHeader";
+import PostGallery from "./PostGallery";
 import Navbar from "Navbar/Navbar";
 const Profile = () => {
   const { userobj, loading } = useSelector((state) => state.user);

@@ -1,6 +1,6 @@
 import { splitApi } from "./splitApi";
-import mergeNewItems from "components/rtkQuery/mergeNewItems";
-import setResponse from "components/rtkQuery/setResponse";
+import mergeNewItems from "./mergeNewItems";
+import setResponse from "./setResponse";
 
 const endpoint = "profiles";
 splitApi.injectEndpoints({
@@ -26,7 +26,6 @@ splitApi.injectEndpoints({
 
       merge: (currentCache, newItems) => {
         mergeNewItems({ currentCache, newItems });
-        // pushes new items to currentCacge
       },
 
       forceRefetch({ currentArg, previousArg }) {

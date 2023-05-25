@@ -5,7 +5,7 @@ import SendMessage from "./SendMessage";
 import Layout from "Layout/Layout";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import UserDetails from "components/posts/UserDetails";
+import UserDetails from "containers/posts/UserDetails";
 import Sidebar from "./Sidebar";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";

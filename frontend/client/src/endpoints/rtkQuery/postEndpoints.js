@@ -1,11 +1,10 @@
 import { splitApi } from "./splitApi";
-import mergeNewItems from "components/rtkQuery/mergeNewItems";
-import setResponse from "components/rtkQuery/setResponse";
-const callto = 'posts'
+import mergeNewItems from "./mergeNewItems";
+import setResponse from "./setResponse";
+const callto = "posts";
 
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
-
     getPost: builder.query({
       query: (pk) => ({
         url: `${callto}/post/${pk}`,
@@ -25,14 +24,14 @@ splitApi.injectEndpoints({
         },
       }),
       transformResponse: (response, arg) => {
-        setResponse({response, arg})
-        return response
+        setResponse({ response, arg });
+        return response;
       },
       serializeQueryArgs: ({ getPage }) => {
         return getPage;
       },
       merge: (currentCache, newItems) => {
-        mergeNewItems({currentCache, newItems})
+        mergeNewItems({ currentCache, newItems });
       },
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
@@ -54,9 +53,7 @@ splitApi.injectEndpoints({
         method: "post",
         body: { pk, requser },
       }),
-
     }),
-
   }),
 });
 

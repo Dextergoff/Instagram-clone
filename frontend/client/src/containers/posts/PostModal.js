@@ -11,11 +11,10 @@ import { useLocation } from "react-router-dom";
 import { useGetPostQuery } from "endpoints/rtkQuery/postEndpoints";
 import CommentSection from "containers/comment/Comments";
 import PostImage from "components/Image/PostImage";
-import QueryDecider from "../../components/queryfuncs/QueryDecider";
-import UserDetails from "components/posts/UserDetails";
-import TitleAndHashtags from "components/posts/TitleAndHashtags";
-import DisplayPfp from "components/Image/DisplayPfp";
-import PostAge from "components/posts/PostAge";
+import QueryDecider from "../../components/queryfun/QueryDecider";
+import UserDetails from "./UserDetails";
+import TitleAndHashtags from "./TitleAndHashtags";
+import PostAge from "./PostAge";
 import Layout from "Layout/Layout";
 const PostModal = () => {
   const [modalState, setModalState] = useState({

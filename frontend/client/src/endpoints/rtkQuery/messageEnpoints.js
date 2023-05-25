@@ -1,5 +1,5 @@
 import { splitApi } from "./splitApi";
-import { handleNewComments } from "components/rtkQuery/handleNewComments";
+import { handleNewComments } from "endpoints/rtkQuery/handleNewComments";
 const endpoint = "Messaging";
 
 splitApi.injectEndpoints({

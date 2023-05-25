@@ -4,11 +4,11 @@ import CreateComment from "containers/comment/CreateComment";
 import InteractionBar from "components/interactionbar/InteractionBar";
 import { useGetPageQuery } from "endpoints/rtkQuery/postEndpoints";
 import PostImage from "components/Image/PostImage";
-import UserDetails from "components/posts/UserDetails";
+import UserDetails from "./UserDetails";
 import getQueryLength from "components/jobs/getQueryLength";
-import TitleAndHashtags from "components/posts/TitleAndHashtags";
-import LoadContent from "components/posts/LoadContent";
-import PostAge from "components/posts/PostAge";
+import TitleAndHashtags from "./TitleAndHashtags";
+import LoadContent from "containers/posts/LoadContent";
+import PostAge from "./PostAge";
 import Navbar from "Navbar/Navbar";
 const Posts = () => {
   const [state, setState] = useState({

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import GalleryImages from "components/Image/GalleryImages";
-import LoadContent from "components/posts/LoadContent";
+import LoadContent from "containers/posts/LoadContent";
 const PostGallery = ({ states, data }) => {
   const location = useLocation();
   const state = states.state;

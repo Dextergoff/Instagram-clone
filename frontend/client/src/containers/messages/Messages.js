@@ -1,9 +1,6 @@
-import UserDetails from "components/posts/UserDetails";
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
-import LoadContent from "components/posts/LoadContent";
-import { useState } from "react";
+import LoadContent from "containers/posts/LoadContent";
 import DisplayPfp from "components/Image/DisplayPfp";
-import { splitApi } from "endpoints/rtkQuery/splitApi";
 const Messages = ({ states, calc_room }) => {
   const state = states.state;
   const setState = states.setState;

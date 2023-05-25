@@ -3,7 +3,7 @@ import { useGetHashtagPostsQuery } from "endpoints/rtkQuery/hashtagEndpoints";
 import { useState } from "react";
 import Layout from "Layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PostGallery from "components/profile/PostGallery";
+import PostGallery from "containers/profile/PostGallery";
 import Navbar from "Navbar/Navbar";
 const Hashtag = () => {
   const params = useParams();

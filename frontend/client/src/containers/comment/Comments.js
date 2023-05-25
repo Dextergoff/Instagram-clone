@@ -1,15 +1,14 @@
 import { useGetCommentsQuery } from "endpoints/rtkQuery/commentEndpoints";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import LikeComment from "../../components/comments/LikeComment";
+import LikeComment from "./LikeComment";
 import Replys from "./Replys";
 import getQueryLength from "components/jobs/getQueryLength";
 import CreateComment from "./CreateComment";
-import CommentUsername from "components/comments/CommentUsername";
-import CommentBody from "components/comments/CommentBody";
+import CommentUsername from "./CommentUsername";
+import CommentBody from "containers/comment/CommentBody";
 import DisplayPfp from "components/Image/DisplayPfp";
-import LikeCount from "components/like_count/LikeCount";
-import LoadContent from "components/posts/LoadContent";
+import LikeCount from "components/interactionbar/LikeCount";
+import LoadContent from "containers/posts/LoadContent";
 import Layout from "Layout/Layout";
 const Comments = (prop) => {
   const [state, setState] = useState({
