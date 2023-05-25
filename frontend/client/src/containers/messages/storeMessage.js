@@ -1,6 +1,5 @@
 import { splitApi } from "endpoints/rtkQuery/splitApi";
-const HandleServedData = ({ page, calc_room, dispatch, message }) => {
-  const jsonMessage = JSON.parse(message.data);
+const storeMessage = ({ jsonMessage, page, calc_room, dispatch }) => {
   dispatch(
     splitApi.util.updateQueryData("getMessages", { calc_room, page }, (i) => {
       i.data.push({
@@ -12,4 +11,4 @@ const HandleServedData = ({ page, calc_room, dispatch, message }) => {
   );
 };
 
-export default HandleServedData;
+export default storeMessage;
