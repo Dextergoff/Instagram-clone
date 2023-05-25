@@ -4,10 +4,9 @@ import LoadContent from "components/posts/LoadContent";
 import { useState } from "react";
 import DisplayPfp from "components/Image/DisplayPfp";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
-const Messages = ({ calc_room }) => {
-  const [state, setState] = useState({
-    page: 1,
-  });
+const Messages = ({ states, calc_room }) => {
+  const state = states.state;
+  const setState = states.setState;
   const { page } = state;
   const { data = [] } = useGetMessagesQuery({ calc_room, page });
 
