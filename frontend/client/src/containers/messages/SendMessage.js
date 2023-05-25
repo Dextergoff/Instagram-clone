@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-const SendMessage = ({ client, userobj }) => {
+const SendMessage = ({ client }) => {
+  const { userobj } = useSelector((state) => state.user);
+
   const [formState, setFormState] = useState({
     value: "",
     name: "",
@@ -20,21 +22,7 @@ const SendMessage = ({ client, userobj }) => {
     }
     e.preventDefault();
   };
-  const handleChange = (e) => {
-    e.preventDefault();
 
-    if (value.length > 0) {
-      client.send(
-        JSON.stringify({
-          type: "message",
-          text: value,
-          sender: userobj?.pk,
-        })
-      );
-      setFormState({ ...formState, value: "" });
-    }
-    e.preventDefault();
-  };
   return (
     <>
       <form className="" onSubmit={handleSubmit}>
