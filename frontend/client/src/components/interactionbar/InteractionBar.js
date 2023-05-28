@@ -38,7 +38,7 @@ const InteractionBar = ({
           <div className="border-0 text-dark">
             <Link
               className="comments-link text-muted fw-light text-decoration-none"
-              to={`/dm`}
+              to={`/dm/u`}
               state={{
                 target_user: post.user,
               }}
