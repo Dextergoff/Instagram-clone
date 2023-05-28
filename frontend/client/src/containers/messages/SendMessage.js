@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-const SendMessage = ({ client }) => {
-  const { userobj } = useSelector((state) => state.user);
-
+const SendMessage = ({ client, target_user, userobj }) => {
   const [formState, setFormState] = useState({
     value: "",
     name: "",
@@ -16,6 +14,7 @@ const SendMessage = ({ client }) => {
           type: "message",
           text: value,
           sender: userobj?.pk,
+          receiver: target_user?.pk,
         })
       );
       setFormState({ ...formState, value: "" });
