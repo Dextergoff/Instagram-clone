@@ -10,6 +10,7 @@ import Sidebar from "./Sidebar";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
 import storeMessage from "./storeMessage";
+import ChatRooms from "./ChatRooms";
 const MessageWS = () => {
   const { userobj } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -47,21 +48,45 @@ const MessageWS = () => {
     <Layout>
       <div className="d-flex flex-row">
         <div>
-          <Sidebar
-            style={{
-              maxHeight: "95vh",
-              width: "40vh",
-            }}
-          />
+          <ChatRooms />
         </div>
-        <div>
-          <UserDetails user={target_user} />
-          <Messages states={{ state, setState }} calc_room={room_name} />
-          <SendMessage
-            client={client}
+
+        <div
+          style={{
+            height: "100vh",
+            width: "100vw",
+            borderStyle: "solid",
+            borderWidth: "1px",
+          }}
+          className="d-flex flex-column"
+        >
+          <div
+            style={{
+              borderBottomStyle: "solid",
+              borderWidth: "1px",
+            }}
+          >
+            <UserDetails
+              style={{
+                width: "3rem",
+                height: "3rem",
+                borderRadius: "100%",
+              }}
+              user={target_user}
+            />
+          </div>
+          <Messages
+            states={{ state, setState }}
+            room_name={room_name}
             userobj={userobj}
-            target_user={target_user}
           />
+          <div class="mt-auto p-2">
+            <SendMessage
+              client={client}
+              userobj={userobj}
+              target_user={target_user}
+            />
+          </div>
         </div>
       </div>
     </Layout>
