@@ -5,8 +5,8 @@ const endpoint = "Messaging";
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: ({ calc_room, page }) => ({
-        url: `${endpoint}/messages/${calc_room}/${page}`,
+      query: ({ room_name, page }) => ({
+        url: `${endpoint}/messages/${room_name}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -26,8 +26,8 @@ splitApi.injectEndpoints({
       keepUnusedDataFor: 0,
     }),
     getChatRoom: builder.query({
-      query: (user) => ({
-        url: `${endpoint}/chatroom/${user}`,
+      query: (sender) => ({
+        url: `${endpoint}/chatroom/${sender}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
