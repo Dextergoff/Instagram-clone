@@ -5,13 +5,12 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
-    
+
     def create_user(self, username, email, password=None):
 
         if not email:
             raise ValueError('Users must have an email address')
 
-    
         user = self.model(
             username=username,
             email=self.normalize_email(email),
@@ -24,7 +23,7 @@ class UserManager(BaseUserManager):
     def update_password(self, email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
-            
+
         user = self.get(
             email=self.normalize_email(email),
         )
@@ -44,11 +43,12 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
         max_length=225,
-        error_messages={"unique":"This email has already been registered."}
+        error_messages={"unique": "This email has already been registered."}
     )
     username = models.CharField(max_length=225, unique=True)
     description = models.CharField(max_length=225, blank=True, null=True)
@@ -59,4 +59,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+
+
 
