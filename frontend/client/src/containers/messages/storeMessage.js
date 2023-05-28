@@ -1,7 +1,7 @@
 import { splitApi } from "endpoints/rtkQuery/splitApi";
-const storeMessage = ({ jsonMessage, page, calc_room, dispatch }) => {
+const storeMessage = ({ jsonMessage, page, room_name, dispatch }) => {
   dispatch(
-    splitApi.util.updateQueryData("getMessages", { calc_room, page }, (i) => {
+    splitApi.util.updateQueryData("getMessages", { room_name, page }, (i) => {
       i.data.push({
         message: jsonMessage.text,
         sender: jsonMessage.sender,

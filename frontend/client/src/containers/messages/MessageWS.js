@@ -17,7 +17,7 @@ const MessageWS = () => {
 
   const { target_user } = location.state;
 
-  const calc_room = target_user?.pk * 3 + userobj?.pk * 3;
+  const room_name = target_user?.pk * 3 + userobj?.pk * 3;
 
   const [state, setState] = useState({
     page: 1,
@@ -26,7 +26,7 @@ const MessageWS = () => {
 
   // TODO make the sidebar for users others chats display what user your talking too on both sides of the chat, scroll overflow
 
-  const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + calc_room);
+  const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
 
   useEffect(() => {
     client.onmessage = (message) => {
@@ -35,7 +35,7 @@ const MessageWS = () => {
         page,
         jsonMessage,
         dispatch,
-        calc_room,
+        room_name,
       });
     };
     return () => {
@@ -56,7 +56,7 @@ const MessageWS = () => {
         </div>
         <div>
           <UserDetails user={target_user} />
-          <Messages states={{ state, setState }} calc_room={calc_room} />
+          <Messages states={{ state, setState }} calc_room={room_name} />
           <SendMessage
             client={client}
             userobj={userobj}

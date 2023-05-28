@@ -1,11 +1,11 @@
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
 import LoadContent from "containers/posts/LoadContent";
 import DisplayPfp from "components/Image/DisplayPfp";
-const Messages = ({ states, calc_room }) => {
+const Messages = ({ states, room_name }) => {
   const state = states.state;
   const setState = states.setState;
   const { page } = state;
-  const { data = [] } = useGetMessagesQuery({ calc_room, page });
+  const { data = [] } = useGetMessagesQuery({ room_name, page });
 
   if (data.data) {
     return (
