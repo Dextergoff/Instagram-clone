@@ -17,6 +17,7 @@ import onSubmit from "components/forms/onSubmit";
 import Forgot from "containers/auth/Forgot";
 import NotFoud from "containers/auth/NotFoud";
 import MessageWS from "containers/messages/MessageWS";
+import ChatRooms from "containers/messages/ChatRooms";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -93,10 +94,18 @@ const App = () => {
           element={<Register Redirect={Redirect} handleSubmit={onSubmit} />}
         />
         <Route
-          path="/dm"
+          path="/dm/u"
           element={
             <ProtectedRoute>
               <MessageWS />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dm"
+          element={
+            <ProtectedRoute>
+              <ChatRooms />
             </ProtectedRoute>
           }
         />
