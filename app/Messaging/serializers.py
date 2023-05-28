@@ -35,12 +35,12 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class ChatRoomSerializer(serializers.ModelSerializer):
-    participants = UserSerializer(many=True)
+    receiver = UserSerializer(many=False)
 
     class Meta:
         model = Message
         fields = [
             'pk',
             'room_name',
-            'participants',
+            'receiver',
         ]

@@ -59,14 +59,10 @@ class MessageConsumer(WebsocketConsumer):
         }))
 
     def create_room(self, sender, receiver):
-        try:
-            chat_room = ChatRoom.objects.get(
-                room_name=self.room_name)
+        sender = User.objects.get(pk=sender)
+        receiver = User.objects.get(pk=receiver)
 
-        except:
-            chat_room = ChatRoom.objects.create(
-                room_name=self.room_name)
-
-        chat_room.participants.add(sender)
-        chat_room.participants.add(receiver)
-        chat_room.save()
+        ChatRoom.objects.get_or_create(
+            sender=sender, receiver=receiver, room_name=self.room_name)
+        ChatRoom.objects.get_or_create(
+            sender=receiver, receiver=sender, room_name=self.room_name)

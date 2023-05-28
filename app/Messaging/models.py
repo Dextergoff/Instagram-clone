@@ -8,7 +8,10 @@ User = get_user_model()
 class ChatRoom(models.Model):
     room_name = models.IntegerField(
         blank=True, null=True)
-    participants = models.ManyToManyField(User)
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='receiver')
 
 
 class Message(models.Model):
