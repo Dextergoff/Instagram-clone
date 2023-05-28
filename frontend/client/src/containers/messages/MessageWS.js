@@ -17,7 +17,7 @@ const MessageWS = () => {
 
   const { target_user } = location.state;
 
-  let calc_room = target_user?.pk * 3 + userobj?.pk * 3;
+  const calc_room = target_user?.pk * 3 + userobj?.pk * 3;
 
   const [state, setState] = useState({
     page: 1,
@@ -57,7 +57,11 @@ const MessageWS = () => {
         <div>
           <UserDetails user={target_user} />
           <Messages states={{ state, setState }} calc_room={calc_room} />
-          <SendMessage client={client} />
+          <SendMessage
+            client={client}
+            userobj={userobj}
+            target_user={target_user}
+          />
         </div>
       </div>
     </Layout>
