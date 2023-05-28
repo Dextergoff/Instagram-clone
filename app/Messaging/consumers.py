@@ -21,6 +21,7 @@ class MessageConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         self.send_to_group(data['text'], data['sender'])
         self.store_message(data['sender'], data['text'])
+        self.create_room(data['sender'], data['receiver'])
 
     def chat_message(self, event):
         self.send_to_socket(event['message'], event['sender'])
@@ -38,6 +39,7 @@ class MessageConsumer(WebsocketConsumer):
 
     def send_to_group(self, text, sender):
         user = UserSerializer(User.objects.get(pk=sender))
+        # might be able to get rid of this when chatroom model is finished
         async_to_sync(self.channel_layer.group_send)(
             self.group_name,
             {
@@ -55,3 +57,16 @@ class MessageConsumer(WebsocketConsumer):
             'sender': sender,
             'user': user.data
         }))
+
+    def create_room(self, sender, receiver):
+        try:
+            chat_room = ChatRoom.objects.get(
+                room_name=self.room_name)
+
+        except:
+            chat_room = ChatRoom.objects.create(
+                room_name=self.room_name)
+
+        chat_room.participants.add(sender)
+        chat_room.participants.add(receiver)
+        chat_room.save()
