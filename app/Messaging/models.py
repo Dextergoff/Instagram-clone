@@ -5,11 +5,14 @@ from django.utils.timezone import now
 User = get_user_model()
 
 
-# class ChatRoom(models.Model):
-#     sender = models.ForeignKey(
-#         User, on_delete=models.CASCADE, related_name="sender")
-#     receiver = models.ForeignKey(
-#         User, on_delete=models.CASCADE, related_name="receiver")
+class ChatRoom(models.Model):
+    room_name = models.IntegerField(
+        blank=True, null=True)
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='sender', default=1)
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='receiver', default=1)
+
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
