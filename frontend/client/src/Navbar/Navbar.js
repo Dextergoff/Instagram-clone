@@ -60,7 +60,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link mx-5" to="/">
+                <NavLink className="nav-link mx-5" to="/dm">
                   <FontAwesomeIcon
                     className="text-light"
                     icon="fa-regular fa-paper-plane"
