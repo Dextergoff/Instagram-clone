@@ -26,7 +26,7 @@ class GetMessages(viewsets.ViewSet):
     def main(self, request, room_name, page):
         queryset = Message.objects.filter(
             room_name=room_name).order_by('-date')
-        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+        queryset = pageify(queryset=queryset, page=page, items_per_page=10)
         serializer = MessageSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True,)
         response = {
@@ -34,5 +34,20 @@ class GetMessages(viewsets.ViewSet):
             QUERYING['DATA_KEY']: serializer.data,
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
             PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
+        }
+        return Response(response)
+
+
+class GetChatRoom(viewsets.ViewSet):
+    def main(self, request, user):
+        queryset = ChatRoom.objects.filter(
+            participants=user)
+        print(queryset)
+        serializer = ChatRoomSerializer(
+            queryset, many=True,)
+        response = {
+            QUERYING['DATA_KEY']: serializer.data,
+            # PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+            # PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
         }
         return Response(response)
