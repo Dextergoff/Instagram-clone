@@ -1,7 +1,7 @@
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
 import LoadContent from "containers/posts/LoadContent";
 import DisplayPfp from "components/Image/DisplayPfp";
-const Messages = ({ states, room_name }) => {
+const Messages = ({ states, room_name, userobj }) => {
   const state = states.state;
   const setState = states.setState;
   const { page } = state;
@@ -9,28 +9,29 @@ const Messages = ({ states, room_name }) => {
 
   if (data.data) {
     return (
-      <div style={{ maxHeight: "95vw", height: "90vh" }}>
+      <div>
         <LoadContent data={data} states={{ state, setState }} />
         {data.data.map((message) => (
-          <div key={message.pk} className="d-flex justify-content-start">
-            <div
-              style={{ width: "fit-content" }}
-              className="p-2 text-light pl-2"
-            >
-              <div className="d-flex align-items-center gap-1 ">
-                <DisplayPfp
-                  style={{
-                    width: "2rem",
-                    height: "2rem",
-                    borderRadius: "100%",
-                  }}
-                  pfp={process.env.REACT_APP_API_URL + message.user.pfp}
-                />
+          <div
+            key={message.pk}
+            className={
+              message.user.pk == userobj.pk
+                ? "d-flex justify-content-end text-light mb-2 p-2"
+                : "d-flex justify-content-start text-light mb-2 p-2"
+            }
+          >
+            <div style={{ width: "fit-content" }} className="text-light">
+              <div className="d-flex  gap-1 ">
                 <div>
-                  <div className="text-center text-light ">
-                    {message.user.username}
+                  <div
+                    className={
+                      message.user.pk == userobj.pk
+                        ? "bg-primary p-2 rounded-5 "
+                        : "bg-dark p-2 rounded-5"
+                    }
+                  >
+                    {message.message}
                   </div>
-                  <div className="">{message.message}</div>
                 </div>
               </div>
             </div>
