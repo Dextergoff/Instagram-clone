@@ -12,10 +12,6 @@ splitApi.injectEndpoints({
           "Content-type": "application/json",
         },
       }),
-
-      serializeQueryArgs: ({ getComments }) => {
-        return getComments;
-      },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
@@ -29,7 +25,16 @@ splitApi.injectEndpoints({
       },
       keepUnusedDataFor: 0,
     }),
+    getChatRoom: builder.query({
+      query: (user) => ({
+        url: `${endpoint}/chatroom/${user}`,
+        method: "get",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetMessagesQuery } = splitApi;
+export const { useGetMessagesQuery, useGetChatRoomQuery } = splitApi;
