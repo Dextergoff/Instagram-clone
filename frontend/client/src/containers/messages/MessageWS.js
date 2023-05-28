@@ -26,6 +26,7 @@ const MessageWS = () => {
   const { page } = state;
 
   // TODO make the sidebar for users others chats display what user your talking too on both sides of the chat, scroll overflow
+  //TODO MAKE SURE THIS ONLY WORKS WHEN USEROBJ IS INTITIZLIED
 
   const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
 

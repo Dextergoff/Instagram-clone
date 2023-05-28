@@ -16,7 +16,7 @@ const ChatRooms = () => {
       setState({ skip: false });
     }
   }, [userobj]);
-
+  // TODO MAKE THIS SHIT LOOK BETTER
   return (
     <Layout>
       <div>
