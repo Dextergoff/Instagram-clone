@@ -25,7 +25,7 @@ const SendMessage = ({ client, target_user, userobj }) => {
   return (
     <>
       <form className="" onSubmit={handleSubmit}>
-        <div className="d-flex">
+        <div className="d-flex border border-secondary rounded-5 p-2">
           <input
             onChange={(e) => {
               setFormState({ ...formState, value: e.target.value });
