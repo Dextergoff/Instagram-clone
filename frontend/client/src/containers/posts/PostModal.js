@@ -87,8 +87,6 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
-                  <div className="d-flex mb-1"></div>
-                  {/* TODO why is this here */}
                   <CommentSection parent={post.pk} />
                 </div>
                 <div

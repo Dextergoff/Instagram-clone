@@ -10,5 +10,4 @@ const storeMessage = ({ jsonMessage, page, calc_room, dispatch }) => {
     })
   );
 };
-
 export default storeMessage;

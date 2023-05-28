@@ -26,7 +26,6 @@ splitApi.injectEndpoints({
       merge: (currentCache, newItems, args) => {
         handleNewComments({ currentCache, newItems, args });
         currentCache.end_of_data = newItems.end_of_data;
-        // TODO items keep being pushed if page is revisted without refresh could probaly implement same fix that is used in the comments endpoint
       },
       keepUnusedDataFor: 0,
     }),

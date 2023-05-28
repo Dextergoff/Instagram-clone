@@ -24,7 +24,7 @@ const MessageWS = () => {
   });
   const { page } = state;
 
-  // TODO clean up html, increase amount of messages per page, make the sidebar for users others chats display what user your talking too on both sides of the chat
+  // TODO make the sidebar for users others chats display what user your talking too on both sides of the chat, scroll overflow
 
   const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + calc_room);
 
