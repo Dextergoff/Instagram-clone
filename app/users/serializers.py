@@ -11,17 +11,20 @@ from center import settings
 from .views import *
 from django.dispatch import receiver
 from .signals import *
-User=get_user_model()
+User = get_user_model()
+
 
 class VerifyResetSerializer(serializers.Serializer):
     uid = serializers.CharField()
+
     def verify(self, data):
         try:
             uid = data['uid']
-            User.objects.get(resetkey = uid)
+            User.objects.get(resetkey=uid)
             return uid
         except:
             raise exceptions.ValidationError(('Cannot verify uid'))
+
 
 class ResetPasswordSerializer(serializers.Serializer):
     newpassword = serializers.CharField()
@@ -35,35 +38,37 @@ class ResetPasswordSerializer(serializers.Serializer):
         newpassword_validated.send(sender=self.__class__, data=data)
         return data
 
-class SendMailSerializer(serializers.Serializer):
+
+class ForgotSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    def validate_email(self,data):
+
+    def validate_email(self, data):
         Validation.validate_email(data=data)
         return data
 
     def send_email(self, data):
-        response = email_validated.send(sender=self.__class__, data=data)
-        token = Tokens.get_token_from_response(response)
-        return(token)
+        return (Mail.send_email(data=data))
+
 
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
 
-    def validate_password(self,data):
+    def validate_password(self, data):
         Validation.validate_password(data=data)
         return data
 
-    def create(self,validated_data):
+    def create(self, validated_data):
         user = User.objects.create_user(
-            username = validated_data['username'],
-            email = validated_data['email'],
-            password = validated_data['password']
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
         )
         return user
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-            model = User
-            fields = ['pk','username','email','description','pfp']
+        model = User
+        fields = ['pk', 'username', 'email', 'description', 'pfp']
