@@ -97,13 +97,13 @@ export const register = createAsyncThunk(
   }
 );
 
-export const resetpasswordsendmail = createAsyncThunk(
-  "resetpasswordsendmail",
+export const forgot = createAsyncThunk(
+  "forgot",
   async ({ email }, thunkAPI) => {
     const body = JSON.stringify({ email });
 
     try {
-      const res = await fetch("/auth/users/resetpasswordsendmail", {
+      const res = await fetch("/auth/users/forgot", {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -124,13 +124,13 @@ export const resetpasswordsendmail = createAsyncThunk(
   }
 );
 
-export const resetpasswordverify = createAsyncThunk(
-  "resetpasswordverify",
+export const authorizereset = createAsyncThunk(
+  "authorizereset",
   async ({ uid }, thunkAPI) => {
     const body = JSON.stringify({ uid });
 
     try {
-      const res = await fetch("/auth/users/resetpasswordverify", {
+      const res = await fetch("/auth/users/authorizereset", {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -255,7 +255,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builer) => {
     builer
-      .addCase(register.pending, (state) => {})
       .addCase(register.fulfilled, (state) => {
         state.registered = true;
       })
@@ -268,7 +267,6 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state) => {
         state.isAuthenticated = true;
       })
-      .addCase(login.pending, (state) => {})
       .addCase(getUser.rejected, (state) => {
         state.isAuthenticated = false;
         state.verifydone = true;
@@ -291,24 +289,25 @@ const userSlice = createSlice({
       .addCase(logout.pending, (state) => {})
       .addCase(refresh.rejected, (state) => {
         state.verifydone = true;
+        state.loading = false;
       })
       .addCase(refresh.fulfilled, (state) => {
         state.verifydone = true;
-
         state.isAuthenticated = true;
+        state.loading = false;
       })
       .addCase(refresh.pending, (state) => {
         state.verifydone = false;
+        state.loading = true;
       })
-      .addCase(resetpasswordsendmail.rejected, (state, action) => {
+      .addCase(forgot.rejected, (state, action) => {
         state.submited = false;
-
-        state.response = action.payload.error;
+        // state.response = action.payload.error;
       })
-      .addCase(resetpasswordsendmail.fulfilled, (state) => {
+      .addCase(forgot.fulfilled, (state) => {
         state.submited = true;
       })
-      .addCase(resetpasswordsendmail.pending, (state) => {
+      .addCase(forgot.pending, (state) => {
         state.submited = false;
       })
       .addCase(resetpassword.rejected, (state, action) => {
@@ -326,29 +325,18 @@ const userSlice = createSlice({
 
         state.error = null;
       })
-      .addCase(resetpasswordverify.rejected, (state, action) => {
-        state.response = action.payload.error;
-
+      .addCase(authorizereset.rejected, (state, action) => {
+        // state.response = action.payload.error;
         state.verified = false;
         state.rejected = true;
       })
-      .addCase(resetpasswordverify.fulfilled, (state) => {
+      .addCase(authorizereset.fulfilled, (state) => {
         state.verified = true;
         state.error = null;
       })
-      .addCase(resetpasswordverify.pending, (state) => {
+      .addCase(authorizereset.pending, (state) => {
         state.verified = false;
       });
-    // .addCase(checkAuth.rejected, (state) => {
-    //
-
-    // })
-    // .addCase(checkAuth.fulfilled, (state) => {
-    //   state.loading = true
-    // })
-    // .addCase(checkAuth.pending, (state) => {
-    //
-    // });
   },
 });
 
