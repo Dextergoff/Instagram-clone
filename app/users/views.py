@@ -12,13 +12,15 @@ User = get_user_model()
 
 
 class Mail():
-    def send_email(data, uid):
+    def send_email(data):
+        token = Tokens.create_token(data=data)
         send_mail(
             'reset password',
-            'http://localhost:3000/resetpassword?uid='+uid,
+            'http://localhost:3000/resetpassword?uid='+token['uid'],
             'dextergoff571@gmail.com',
             [data['email']]
         )
+        return token
 
 
 class CreateResetKey():
