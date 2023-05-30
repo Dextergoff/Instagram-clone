@@ -28,6 +28,8 @@ import {
   faCompass,
   faUser,
   faEdit,
+  faCheckCircle,
+  faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
 import Messages from "containers/messages/MessageWS";
 
@@ -39,7 +41,9 @@ library.add(
   faBuilding,
   faCompass,
   faUser,
-  faEdit
+  faEdit,
+  faCheckCircle,
+  faCircleXmark
 );
 const App = () => {
   const dispatch = useDispatch();
@@ -110,8 +114,7 @@ const App = () => {
           }
         />
         <Route path="/forgot" element={<Forgot handleSubmit={onSubmit} />} />
-        <Route path={`/reset`} element={<ResetPassword />} />
-        {/* TODO FORGOT AND RESET URLS HAVE NOT BEEN UPDATED */}
+        <Route path={`/resetpassword`} element={<ResetPassword />} />
         <Route path="*" element={<NotFoud />} />
       </Routes>
       {background && (
