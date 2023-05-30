@@ -2,38 +2,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetpassword } from "endpoints/auth/user";
 import { useSearchParams } from "react-router-dom";
-import { resetpasswordverify } from "endpoints/auth/user";
+import { authorizereset } from "endpoints/auth/user";
 import { useEffect } from "react";
 import handleErrors from "../../components/errors/handleErrors";
 import NoAuthLayout from "Layout/NoAuthLayout";
+import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const ResetPassword = () => {
   const [formData, setFormData] = useState({ newpassword: "", error: "" });
   const { newpassword, error } = formData;
 
-  const { verified, rejected, submited, response, loading } = useSelector(
+  const { verified, rejected, submited, response } = useSelector(
     (state) => state.user
   );
-
+  const [loading, setLoading] = useState(false);
   const [queryParameters] = useSearchParams();
   const uid = queryParameters.get("uid");
 
   const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(resetpassword({ newpassword }));
-  };
   const ValidatePassword = (prop) => {
     let error;
     if (prop.length < 8) {
       error += "password is too short";
     }
     if (!/[a-zA-Z]/.test(prop)) {
-      error += "password needs to contain letters";
+      error += "Password is too insecure";
     }
     return error;
   };
-  const onChange = (e) => {
+  const handleChange = (e) => {
     e.preventDefault();
     let errors = ValidatePassword(e.target.value);
     setFormData({
@@ -44,42 +42,59 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    dispatch(resetpasswordverify({ uid }));
+    dispatch(authorizereset({ uid }));
   }, [uid, dispatch]);
+
+  useEffect(() => {
+    if (loading) {
+      dispatch(resetpassword({ newpassword }));
+    }
+  }, [loading]);
 
   if (verified) {
     return (
       <NoAuthLayout>
-        <form onSubmit={onSubmit}>
-          <div className="d-flex justify-content-center">
-            <div className="mb-3 w-25">
-              <input
-                placeholder="
+        <div className="d-flex justify-content-center">
+          <div
+            style={{ width: "30vw" }}
+            className="border rounded-1 border-secondary p-3 mt-5"
+          >
+            <div
+              style={{ fontSize: "1.5rem" }}
+              className="text-center text-light mt-5"
+            >
+              Reset Your Password
+            </div>
+            <div className="d-flex justify-content-center">
+              <div style={{ width: "15vw" }} className="mb-5 mt-5">
+                <input
+                  placeholder="
               New password
               "
-                type="password"
-                name="newpassword"
-                value={newpassword}
-                onChange={onChange}
-                className="form-control form-control-sm bg-black border-dark text-light"
-                id="newpassword"
-              />
-              {error}
-              {response ? handleErrors({ response, rejected }) : <></>}
+                  type="password"
+                  name="newpassword"
+                  value={newpassword}
+                  onChange={handleChange}
+                  className="form-control form-control-sm bg-black border-dark text-light"
+                  id="newpassword"
+                />
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+              {loading ? (
+                <BootstrapSpinner />
+              ) : (
+                <button
+                  type="submit"
+                  onClick={() => setLoading(true)}
+                  className="btn btn-black rounded-0 border-secondary text-light mb-5"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </div>
-          {loading ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          ) : (
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-black border-secondary rounded-0 text-light">
-                Submit
-              </button>
-            </div>
-          )}
-        </form>
+        </div>
       </NoAuthLayout>
     );
   }
@@ -87,7 +102,31 @@ const ResetPassword = () => {
   if (rejected) {
     return (
       <NoAuthLayout>
-        <h1> Something went wrong please try again</h1>
+        <div className="d-flex justify-content-center">
+          <div
+            style={{ width: "30vw" }}
+            className="border rounded-1 border-secondary p-3 mt-5"
+          >
+            <div
+              style={{ fontSize: "1.5rem" }}
+              className="text-center text-light mt-5"
+            >
+              Something went wrong
+            </div>
+            <div className="text-center mt-3">
+              <a href="/login" className="text-primary">
+                Return to Login
+              </a>
+            </div>
+            <div className="mb-5 mt-5 text-center ">
+              <FontAwesomeIcon
+                style={{ width: "6rem", height: "6rem" }}
+                className="text-danger"
+                icon="fa-regular fa-circle-xmark"
+              />
+            </div>
+          </div>
+        </div>
       </NoAuthLayout>
     );
   }
@@ -95,11 +134,31 @@ const ResetPassword = () => {
   if (submited) {
     return (
       <NoAuthLayout>
-        <h1 className="text-light text-center">
-          {" "}
-          password successfully reset return to login
-        </h1>
-        <a href="/login/"> login </a>
+        <div className="d-flex justify-content-center">
+          <div
+            style={{ width: "30vw" }}
+            className="border rounded-1 border-secondary p-3 mt-5"
+          >
+            <div
+              style={{ fontSize: "1.5rem" }}
+              className="text-center text-light mt-5"
+            >
+              Password successfully Reset!
+            </div>
+            <div className="text-center mt-3">
+              <a href="/login" className="text-primary">
+                Return to Login
+              </a>
+            </div>
+            <div className="mb-5 mt-5 text-center ">
+              <FontAwesomeIcon
+                style={{ width: "6rem", height: "6rem" }}
+                className="text-success"
+                icon="fa-regular fa-check-circle"
+              />
+            </div>
+          </div>
+        </div>
       </NoAuthLayout>
     );
   }

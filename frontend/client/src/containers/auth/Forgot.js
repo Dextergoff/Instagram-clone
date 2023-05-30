@@ -1,13 +1,15 @@
 import NoAuthLayout from "Layout/NoAuthLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { resetpasswordsendmail } from "endpoints/auth/user";
+import { useEffect, useState } from "react";
+import { forgot } from "endpoints/auth/user";
 import handleErrors from "../../components/errors/handleErrors";
-const Forgot = ({ handleSubmit }) => {
+import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const Forgot = () => {
   const [formData, setFormData] = useState({ email: "" });
   const { email } = formData;
-
-  const { submited, loading, response } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const { submited, response } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -15,56 +17,83 @@ const Forgot = ({ handleSubmit }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (loading) {
+      try {
+        dispatch(forgot({ email }));
+      } catch (err) {
+        return err;
+      }
+    }
+  }, [loading]);
   if (!submited) {
     return (
       <NoAuthLayout>
-        <form
-          onSubmit={(e) =>
-            handleSubmit({
-              email,
-              dispatch,
-              e,
-              endpoint: resetpasswordsendmail,
-            })
-          }
-        >
-          <h3 className="text-center text-light">Reset password</h3>
-          <div className="d-flex justify-content-center">
-            <div className="mb-3 w-25">
-              <label className="form-label text-light" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                value={email}
-                onChange={handleChange}
-                className="form-control form-control-sm bg-black border-dark text-light"
-                id="email"
-              />
+        <div className="d-flex justify-content-center">
+          <div
+            style={{ width: "30vw" }}
+            className="border rounded-1 border-secondary p-3 mt-5"
+          >
+            <div
+              style={{ fontSize: "1.5rem" }}
+              className="text-center text-light mt-5"
+            >
+              Reset Your Password
+            </div>
+            <div className="d-flex justify-content-center">
+              <div style={{ width: "15vw" }} className="mb-5 mt-5">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={email}
+                  onChange={handleChange}
+                  className="form-control form-control-sm bg-black border-dark text-light"
+                  id="email"
+                />
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+              {loading ? (
+                <BootstrapSpinner />
+              ) : (
+                <button
+                  type="submit"
+                  onClick={() => setLoading(true)}
+                  className="btn btn-black rounded-0 border-secondary text-light mb-5"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </div>
-          {response ? handleErrors({ response }) : <></>}
-
-          {loading ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          ) : (
-            <div className="d-flex justify-content-center t">
-              <button className="btn btn-black rounded-0 border-secondary text-light">
-                Continue
-              </button>
-            </div>
-          )}
-        </form>
+        </div>
       </NoAuthLayout>
     );
   } else {
     return (
       <NoAuthLayout>
-        <h3 className="text-center text-light">check your email to continue</h3>
+        <div className="d-flex justify-content-center">
+          <div
+            style={{ width: "30vw" }}
+            className="border rounded-1 border-secondary p-3 mt-5"
+          >
+            <div
+              style={{ fontSize: "1.5rem" }}
+              className="text-center text-light mt-5"
+            >
+              Check your email for instructions
+            </div>
+            <div className="text-center text-light mt-5">sent to {email}</div>
+            <div className="mb-5 mt-5 text-center ">
+              <FontAwesomeIcon
+                style={{ width: "6rem", height: "6rem" }}
+                className="text-success"
+                icon="fa-regular fa-check-circle"
+              />
+            </div>
+          </div>
+        </div>
       </NoAuthLayout>
     );
   }
