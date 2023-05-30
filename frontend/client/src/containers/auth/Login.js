@@ -39,7 +39,6 @@ const Login = ({ Redirect }) => {
             <label className="form-label text-light" htmlFor="email">
               Email
             </label>
-
             <input
               className="form-control form-control-sm bg-black border-dark text-light shadow-none"
               type="email"
@@ -80,7 +79,7 @@ const Login = ({ Redirect }) => {
           <div className="d-flex justify-content-center">
             <div className="mt-4">
               <div
-                onClick={() => Redirect({ location: "/resetpasswordsm/" })}
+                onClick={() => Redirect({ location: "/forgot/" })}
                 className="mt-4 text-light"
               >
                 forgot password?
