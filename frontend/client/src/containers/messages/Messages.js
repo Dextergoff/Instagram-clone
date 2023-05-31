@@ -9,7 +9,12 @@ const Messages = ({ states, room_name, userobj }) => {
 
   if (data.data) {
     return (
-      <div>
+      <div
+        style={{
+          overflow: "scroll",
+          height: "100%",
+        }}
+      >
         <LoadContent data={data} states={{ state, setState }} />
         {data.data.map((message) => (
           <div
