@@ -6,7 +6,6 @@ import Layout from "Layout/Layout";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import UserDetails from "containers/posts/UserDetails";
-import Sidebar from "./Sidebar";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
 import storeMessage from "./storeMessage";
@@ -24,9 +23,6 @@ const MessageWS = () => {
     page: 1,
   });
   const { page } = state;
-
-  // TODO make the sidebar for users others chats display what user your talking too on both sides of the chat, scroll overflow
-  //TODO MAKE SURE THIS ONLY WORKS WHEN USEROBJ IS INTITIZLIED
 
   const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
 
@@ -61,12 +57,7 @@ const MessageWS = () => {
           }}
           className="d-flex flex-column"
         >
-          <div
-            style={{
-              borderBottomStyle: "solid",
-              borderWidth: "1px",
-            }}
-          >
+          <div className="d-flex flex-row align-self-center mb-3 mt-2">
             <UserDetails
               style={{
                 width: "3rem",
