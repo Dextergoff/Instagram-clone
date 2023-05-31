@@ -16,7 +16,7 @@ const ChatRooms = () => {
       setState({ skip: false });
     }
   }, [userobj]);
-  // TODO MAKE THIS SHIT LOOK BETTER
+  // TODO make this look instagrams intial inbox page
   return (
     <Layout>
       <div>
