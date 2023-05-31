@@ -316,7 +316,6 @@ const userSlice = createSlice({
       })
       .addCase(resetpassword.fulfilled, (state) => {
         state.submited = true;
-
         state.verified = false;
         state.error = null;
       })
