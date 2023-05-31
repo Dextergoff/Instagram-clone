@@ -8,6 +8,7 @@ from users.serializers import UserSerializer
 class MessageConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_created = False
         self.join_room()
         self.accept()
 
@@ -21,10 +22,11 @@ class MessageConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         self.send_to_group(data['text'], data['sender'])
         self.store_message(data['sender'], data['text'])
-        self.create_room(data['sender'], data['receiver'])
+        if self.room_created is False:
+            self.create_room(data['sender'], data['receiver'])
 
     def chat_message(self, event):
-        self.send_to_socket(event['message'], event['sender'])
+        self.send_message(event['message'], event['sender'])
 
     def store_message(self, sender, text):
         Message.objects.create(room_name=self.room_name,
@@ -38,31 +40,32 @@ class MessageConsumer(WebsocketConsumer):
         )
 
     def send_to_group(self, text, sender):
-        user = UserSerializer(User.objects.get(pk=sender))
-        # might be able to get rid of this when chatroom model is finished
         async_to_sync(self.channel_layer.group_send)(
             self.group_name,
             {
                 'type': 'chat_message',
                 'message': text,
                 'sender': sender,
-                'user': user.data
             }
         )
 
-    def send_to_socket(self, text, sender):
+    def send_message(self, text, sender):
         user = UserSerializer(User.objects.get(pk=sender))
         self.send(text_data=json.dumps({
             'text': text,
             'sender': sender,
-            'user': user.data
+            'user': user.data,
+            'sent': True,
         }))
 
     def create_room(self, sender, receiver):
         sender = User.objects.get(pk=sender)
         receiver = User.objects.get(pk=receiver)
-
-        ChatRoom.objects.get_or_create(
-            sender=sender, receiver=receiver, room_name=self.room_name)
-        ChatRoom.objects.get_or_create(
-            sender=receiver, receiver=sender, room_name=self.room_name)
+        try:
+            ChatRoom.objects.get_or_create(
+                sender=sender, receiver=receiver, room_name=self.room_name)
+            ChatRoom.objects.get_or_create(
+                sender=receiver, receiver=sender, room_name=self.room_name)
+            self.room_created = True
+        except:
+            self.room_created = False
