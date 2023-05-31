@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "endpoints/auth/user";
 import handleErrors from "../../components/errors/handleErrors";
+import SubmitButton from "./SubmitButton";
+import { useEffect } from "react";
 const Register = ({ handleSubmit, Redirect }) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -11,32 +13,30 @@ const Register = ({ handleSubmit, Redirect }) => {
     password: "",
   });
   const { username, email, password } = formData;
-
-  const { registered, loading, response } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const { registered, response } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  if (registered) return <Navigate to="/login" />;
 
+  useEffect(() => {
+    if (loading) {
+      try {
+        dispatch(register({ username, email, password }));
+      } catch (err) {
+        return err;
+      }
+    }
+  }, [loading]);
+
+  if (registered) return <Navigate to="/" />;
   return (
     <NoAuthLayout>
       <h3 className="text-light text-center">Register</h3>
-      <form
-        className="mt-5"
-        onSubmit={(e) =>
-          handleSubmit({
-            username,
-            email,
-            password,
-            dispatch,
-            e,
-            endpoint: register,
-          })
-        }
-      >
+      <form className="mt-5">
         <div className="d-flex justify-content-center">
           <div className="form-group w-25">
             <label className="form-label text-light" htmlFor="username">
@@ -97,9 +97,9 @@ const Register = ({ handleSubmit, Redirect }) => {
         ) : (
           <div>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-primary rounded-0 bg-black border-secondary mt-4">
-                Continue
-              </button>
+              <div className="mt-5">
+                <SubmitButton loading={loading} setLoading={setLoading} />
+              </div>
             </div>
             <div>
               <div

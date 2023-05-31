@@ -8,13 +8,12 @@ import handleErrors from "../../components/errors/handleErrors";
 import NoAuthLayout from "Layout/NoAuthLayout";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SubmitButton from "./SubmitButton";
 const ResetPassword = () => {
   const [formData, setFormData] = useState({ newpassword: "", error: "" });
-  const { newpassword, error } = formData;
+  const { newpassword } = formData;
 
-  const { verified, rejected, submited, response } = useSelector(
-    (state) => state.user
-  );
+  const { verified, rejected, submited } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [queryParameters] = useSearchParams();
   const uid = queryParameters.get("uid");
@@ -68,9 +67,7 @@ const ResetPassword = () => {
             <div className="d-flex justify-content-center">
               <div style={{ width: "15vw" }} className="mb-5 mt-5">
                 <input
-                  placeholder="
-              New password
-              "
+                  placeholder="New password"
                   type="password"
                   name="newpassword"
                   value={newpassword}
@@ -80,19 +77,7 @@ const ResetPassword = () => {
                 />
               </div>
             </div>
-            <div className="d-flex justify-content-center">
-              {loading ? (
-                <BootstrapSpinner />
-              ) : (
-                <button
-                  type="submit"
-                  onClick={() => setLoading(true)}
-                  className="btn btn-black rounded-0 border-secondary text-light mb-5"
-                >
-                  Submit
-                </button>
-              )}
-            </div>
+            <SubmitButton loading={loading} setLoading={setLoading} />
           </div>
         </div>
       </NoAuthLayout>

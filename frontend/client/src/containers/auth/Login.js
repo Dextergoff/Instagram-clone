@@ -6,34 +6,37 @@ import { useEffect } from "react";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import handleErrors from "../../components/errors/handleErrors";
 import onSubmit from "components/forms/onSubmit";
+import SubmitButton from "./SubmitButton";
 const Login = ({ Redirect }) => {
+  const dispatch = useDispatch();
+  const { userobj, response, rejected } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     password: "",
     email: "",
   });
   const { password, email } = formData;
 
-  const { loading, userobj, registered, response, rejected } = useSelector(
-    (state) => state.user
-  );
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (registered) dispatch(resetRegistered());
-  });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login({ email, password }));
-  };
+  useEffect(() => {
+    if (loading) {
+      try {
+        dispatch(login({ email, password }));
+      } catch (err) {
+        return err;
+      }
+    }
+  }, [loading]);
+
   if (userobj) Redirect({ location: "/" });
+  // TODO seperate inputs into components
   return (
     <NoAuthLayout>
-      <form className="mt-5" onSubmit={onSubmit}>
+      <div className="mt-5">
         <div className="d-flex justify-content-center  ">
           <div className="form-group  w-25">
             <label className="form-label text-light" htmlFor="email">
@@ -71,11 +74,10 @@ const Login = ({ Redirect }) => {
           {response ? handleErrors({ response, rejected }) : <></>}{" "}
         </div>
         <div>
-          <div className="d-flex justify-content-center">
-            <button className="btn btn-primary mt-4 rounded-0 bg-black border-secondary">
-              Continue
-            </button>
+          <div className="mt-5">
+            <SubmitButton loading={loading} setLoading={setLoading} />
           </div>
+
           <div className="d-flex justify-content-center">
             <div className="mt-4">
               <div
@@ -97,7 +99,7 @@ const Login = ({ Redirect }) => {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </NoAuthLayout>
   );
 };

@@ -5,6 +5,7 @@ import { forgot } from "endpoints/auth/user";
 import handleErrors from "../../components/errors/handleErrors";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SubmitButton from "./SubmitButton";
 const Forgot = () => {
   const [formData, setFormData] = useState({ email: "" });
   const { email } = formData;
@@ -53,19 +54,7 @@ const Forgot = () => {
                 />
               </div>
             </div>
-            <div className="d-flex justify-content-center">
-              {loading ? (
-                <BootstrapSpinner />
-              ) : (
-                <button
-                  type="submit"
-                  onClick={() => setLoading(true)}
-                  className="btn btn-black rounded-0 border-secondary text-light mb-5"
-                >
-                  Submit
-                </button>
-              )}
-            </div>
+            <SubmitButton loading={loading} setLoading={setLoading} />
           </div>
         </div>
       </NoAuthLayout>
