@@ -1,6 +1,7 @@
 import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
 import LoadContent from "containers/posts/LoadContent";
 import DisplayPfp from "components/Image/DisplayPfp";
+import MessageWS from "./MessageWS";
 const Messages = ({ states, room_name, userobj }) => {
   const state = states.state;
   const setState = states.setState;
@@ -15,6 +16,9 @@ const Messages = ({ states, room_name, userobj }) => {
           height: "100%",
         }}
       >
+        {/* TODO add loading screens when data is being loaded */}
+        {/* TODO sometimes you have to refresh for it to work that needs to be fixed */}
+
         <LoadContent data={data} states={{ state, setState }} />
         {data.data.map((message) => (
           <div
