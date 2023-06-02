@@ -30,6 +30,7 @@ import {
   faEdit,
   faCheckCircle,
   faCircleXmark,
+  faMessage,
 } from "@fortawesome/free-regular-svg-icons";
 import Messages from "containers/messages/MessageWS";
 
@@ -43,7 +44,8 @@ library.add(
   faUser,
   faEdit,
   faCheckCircle,
-  faCircleXmark
+  faCircleXmark,
+  faMessage
 );
 const App = () => {
   const dispatch = useDispatch();
