@@ -2,6 +2,7 @@ import { useGetMessagesQuery } from "endpoints/rtkQuery/messageEnpoints";
 import LoadContent from "containers/posts/LoadContent";
 import DisplayPfp from "components/Image/DisplayPfp";
 import MessageWS from "./MessageWS";
+
 const Messages = ({ states, room_name, userobj }) => {
   const state = states.state;
   const setState = states.setState;
@@ -30,7 +31,7 @@ const Messages = ({ states, room_name, userobj }) => {
             }
           >
             <div style={{ width: "fit-content" }} className="text-light">
-              <div className="d-flex  gap-1 ">
+              <div className="d-flex flex-row  gap-1 ">
                 <div>
                   <div
                     className={
@@ -41,6 +42,7 @@ const Messages = ({ states, room_name, userobj }) => {
                   >
                     {message.message}
                   </div>
+                  {/* TODO add dates */}
                 </div>
               </div>
             </div>
