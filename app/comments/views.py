@@ -20,8 +20,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .models import Comment
 from .serializers import *
-from center.modules.actions.queryactions import pageify
+from center.modules.actions.pageify import pageify
+
 from center.settings import PAGEIFY, QUERYING
+
 
 class CommentsView(viewsets.ViewSet):
     def get_post(self, data):
@@ -50,6 +52,7 @@ class CommentsView(viewsets.ViewSet):
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
         }
         return Response(response)
+
 
 class LikeComment(viewsets.ViewSet):
 
@@ -81,4 +84,3 @@ class CreateComment(viewsets.ViewSet):
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
         data = serializer.handle_comment(data=request.data)
         return Response(data)
-

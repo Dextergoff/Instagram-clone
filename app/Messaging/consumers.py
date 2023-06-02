@@ -3,9 +3,13 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .models import *
 from users.serializers import UserSerializer
+from django.utils.timezone import now
+from center.modules.actions.serializers import serialize_datetime
+import datetime
 
 
 class MessageConsumer(WebsocketConsumer):
+
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_created = False
@@ -45,6 +49,7 @@ class MessageConsumer(WebsocketConsumer):
             {
                 'type': 'chat_message',
                 'message': text,
+                # 'date': json.dumps(datetime.datetime.now(), default=serialize_datetime),
                 'sender': sender,
             }
         )
@@ -55,7 +60,6 @@ class MessageConsumer(WebsocketConsumer):
             'text': text,
             'sender': sender,
             'user': user.data,
-            'sent': True,
         }))
 
     def create_room(self, sender, receiver):

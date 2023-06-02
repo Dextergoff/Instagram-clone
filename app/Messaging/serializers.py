@@ -36,6 +36,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class ChatRoomSerializer(serializers.ModelSerializer):
     receiver = UserSerializer(many=False)
+
     class Meta:
         model = Message
         fields = [

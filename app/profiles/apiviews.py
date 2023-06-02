@@ -19,7 +19,8 @@ from django.contrib.auth.models import update_last_login
 from django.shortcuts import get_object_or_404
 from posts.models import Post
 from .serializers import *
-from center.modules.actions.queryactions import pageify
+from center.modules.actions.pageify import pageify
+
 from center.settings import PAGEIFY, QUERYING
 from django.http import HttpResponse
 from users.serializers import UserSerializer
@@ -99,7 +100,7 @@ class EditProfile(viewsets.ViewSet):
                 user.pfp = request.FILES['image']
         except:
             TypeError
-            
+
         try:
             description = data.get(descriptionkey)
             if len(description) > 0:

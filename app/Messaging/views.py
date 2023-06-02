@@ -15,7 +15,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework.parsers import MultiPartParser, FormParser
-from center.modules.actions.queryactions import pageify
+from center.modules.actions.pageify import pageify
 from .models import *
 from .serializers import *
 

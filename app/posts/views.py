@@ -20,7 +20,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .models import Post
 from .serializers import *
-from center.modules.actions.queryactions import pageify
+from center.modules.actions.pageify import pageify
+
 from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
 
