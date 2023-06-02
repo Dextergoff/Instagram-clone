@@ -9,20 +9,18 @@ import UserDetails from "containers/posts/UserDetails";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
 import storeMessage from "./storeMessage";
-import ChatRooms from "./ChatRooms";
-const MessageWS = () => {
-  const { userobj } = useSelector((state) => state.user);
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const MessageWS = (props) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const { target_user } = location.state;
-
-  const room_name = target_user?.pk * 3 + userobj?.pk * 3;
+  const { userobj } = useSelector((state) => state.user);
 
   const [state, setState] = useState({
     page: 1,
   });
   const { page } = state;
+
+  const target_user = props.target_user || null;
+  const room_name = target_user?.pk * 3 + userobj?.pk * 3;
 
   const client = new w3cwebsocket("ws://127.0.0.1:8000/ws/" + room_name);
 
@@ -41,48 +39,81 @@ const MessageWS = () => {
     };
   });
 
-  return (
-    <Layout>
-      <div className="d-flex flex-row">
-        <div>
-          <ChatRooms />
+  if (target_user) {
+    return (
+      <Layout>
+        <div className="">
+          <div
+            style={{
+              height: "100vh",
+            }}
+            className="d-flex flex-column "
+          >
+            <div className="d-flex flex-row align-self-center mb-3 mt-2">
+              <UserDetails
+                style={{
+                  width: "2rem",
+                  height: "2rem",
+                  borderRadius: "100%",
+                }}
+                user={target_user}
+              />
+            </div>
+            <Messages
+              states={{ state, setState }}
+              room_name={room_name}
+              userobj={userobj}
+            />
+            <div class="mt-auto p-2">
+              <SendMessage
+                client={client}
+                userobj={userobj}
+                target_user={target_user}
+              />
+            </div>
+          </div>
         </div>
-
+      </Layout>
+    );
+  } else {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100vw",
+        }}
+        className=""
+      >
         <div
           style={{
-            height: "100vh",
-            width: "100vw",
-            borderStyle: "solid",
-            borderWidth: "1px",
+            position: "fixed",
+            top: "50%",
+            left: "50%",
           }}
-          className="d-flex flex-column"
+          className="text-light d-flex flex-column text-center"
         >
-          <div className="d-flex flex-row align-self-center mb-3 mt-2">
-            <UserDetails
+          <div className="mb-2">
+            <FontAwesomeIcon
               style={{
-                width: "3rem",
-                height: "3rem",
-                borderRadius: "100%",
+                fontSize: "5rem",
               }}
-              user={target_user}
+              icon="fa-regular fa-message"
             />
           </div>
-          <Messages
-            states={{ state, setState }}
-            room_name={room_name}
-            userobj={userobj}
-          />
-          <div class="mt-auto p-2">
-            <SendMessage
-              client={client}
-              userobj={userobj}
-              target_user={target_user}
-            />
+
+          <div className="mb-2">Your messages</div>
+          <div
+            style={{
+              fontSize: "0.7rem",
+            }}
+            className="text-muted"
+          >
+            Send private messages to a friend or group
           </div>
         </div>
       </div>
-    </Layout>
-  );
+    );
+  }
 };
 
 export default MessageWS;
