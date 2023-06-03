@@ -74,6 +74,7 @@ class PageView(viewsets.ViewSet):
         queryset = Post.objects.filter(**kwargs).order_by("-date").prefetch_related(
             Prefetch('likes'),
             Prefetch('hashtags'))
+
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = PostSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
