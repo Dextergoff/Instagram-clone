@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Navbar = () => {
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, userobj } = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(true);
   let prevScrollPosition = window.scrollY;
 
@@ -69,7 +69,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link mx-5" to="/u">
+                <NavLink className="nav-link mx-5" to={`u/${userobj?.pk}`}>
                   <FontAwesomeIcon
                     className="text-light"
                     icon="fa-regular fa-user"
