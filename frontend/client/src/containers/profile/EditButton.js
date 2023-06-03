@@ -6,9 +6,9 @@ const EditButton = ({ states, userobj }) => {
   const { state, setState } = states;
   const { userState, setUserState } = states;
 
-  const { file, setFile } = states;
+  const { setFile } = states;
   const { editmode, response } = state;
-  const { user, description, username, image } = formData;
+  const { description, username } = formData;
 
   const enableEdit = () => {
     setState({
@@ -19,8 +19,8 @@ const EditButton = ({ states, userobj }) => {
     resetFormData();
     resetFile();
   };
-  const [editProfile, result] = useEditProfileMutation();
-
+  const [editProfile] = useEditProfileMutation();
+  // TODO items not bein updated properly after submit
   const usernametaken = Boolean(response != "username is taken");
 
   const resetFormData = () => {
