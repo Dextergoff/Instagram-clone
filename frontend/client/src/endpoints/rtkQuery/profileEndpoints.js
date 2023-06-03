@@ -32,7 +32,15 @@ splitApi.injectEndpoints({
         return currentArg !== previousArg;
       },
     }),
-
+    getUser: builder.query({
+      query: ({ pk }) => ({
+        url: `/profiles/user/${pk}`,
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+    }),
     editProfile: builder.mutation({
       query: (body) => ({
         url: `${endpoint}/editprofile`,
@@ -43,4 +51,8 @@ splitApi.injectEndpoints({
   }),
 });
 
-export const { useGetProfilePageQuery, useEditProfileMutation } = splitApi;
+export const {
+  useGetProfilePageQuery,
+  useGetUserQuery,
+  useEditProfileMutation,
+} = splitApi;
