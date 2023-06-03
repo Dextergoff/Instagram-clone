@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import BootstrapSpinner from "components/bootstrap/BootstrapSpinner";
 const AwaitData = (props) => {
   const { isAuthenticated } = useSelector((state) => state.user);
-  if (props.data) {
+  if (props.data !== undefined || null) {
     return (
       <>
         <style>{"body { background-color: #000; }"}</style>
@@ -15,13 +15,7 @@ const AwaitData = (props) => {
     return (
       <>
         <style>{"body { background-color: #000; }"}</style>
-        <div
-          style={{
-            position: "fixed" /* or absolute */,
-            top: "50%",
-            left: "50%",
-          }}
-        >
+        <div style={props.style}>
           <BootstrapSpinner />
         </div>
       </>
