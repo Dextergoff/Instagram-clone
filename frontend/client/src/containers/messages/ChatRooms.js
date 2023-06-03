@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import MessageWS from "./MessageWS";
 import AwaitData from "components/loading/AwaitData";
+import LoadContent from "containers/posts/LoadContent";
 const ChatRooms = () => {
   const location = useLocation();
   const { userobj } = useSelector((state) => state.user);
@@ -14,10 +15,12 @@ const ChatRooms = () => {
   const [state, setState] = useState({
     skip: true,
     target_user: null,
+    page: 1,
   });
-  const { target_user, skip } = state;
+  const { target_user, skip, page } = state;
+  const sender = userobj?.pk;
 
-  const { data } = useGetChatRoomQuery(userobj?.pk, { skip: skip });
+  const { data } = useGetChatRoomQuery({ sender, page }, { skip: skip });
 
   const handleClick = (target_user) => {
     setState({ ...state, target_user: target_user });
@@ -64,7 +67,7 @@ const ChatRooms = () => {
               Messages
             </div>
             {data?.data.map((room) => (
-              <div className="p-2">
+              <div key={room.pk} className="p-2">
                 <button
                   onClick={() => handleClick(room.receiver)}
                   className="comments-link text-muted bg-black border-0 fw-light text-decoration-none"
@@ -94,7 +97,7 @@ const ChatRooms = () => {
                     >
                       last message test • 1h ago
                     </div>
-                    {/* TODO implement last messages and truncate to "..." after a few chars */}
+                    <LoadContent data={data} states={{ state, setState }} />
                   </div>
                 </button>
               </div>

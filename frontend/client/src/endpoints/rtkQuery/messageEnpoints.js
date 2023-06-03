@@ -33,8 +33,8 @@ splitApi.injectEndpoints({
     }),
 
     getChatRoom: builder.query({
-      query: (sender) => ({
-        url: `${endpoint}/chatroom/${sender}`,
+      query: ({ sender, page }) => ({
+        url: `${endpoint}/chatroom/${sender}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
