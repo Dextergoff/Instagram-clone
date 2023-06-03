@@ -17,9 +17,6 @@ const Messages = ({ states, room_name, userobj }) => {
           height: "100%",
         }}
       >
-        {/* TODO add loading screens when data is being loaded */}
-        {/* TODO sometimes you have to refresh for it to work that needs to be fixed */}
-
         <LoadContent data={data} states={{ state, setState }} />
         {data.data.map((message) => (
           <div
