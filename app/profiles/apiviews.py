@@ -27,21 +27,11 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
-class ProfilePosts(viewsets.ViewSet):
-    serializer = GalleryPostSerializer
-
-    def main(self, request, pk, page):
-        queryset = Post.objects.filter(user=pk).order_by(
-            "-date").prefetch_related('likes').select_related('user')
-        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = GalleryPostSerializer(
-            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
-        response = {
-            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
-            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
-            PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
-        }
-        return Response(response)
+class GetUser(viewsets.ViewSet):
+    def main(self, request, pk):
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
 
 
 class EditProfile(viewsets.ViewSet):
@@ -77,17 +67,14 @@ class EditProfile(viewsets.ViewSet):
 
     def main(self, request):
         data = request.data
-        print(data)
         user = User.objects.select_related().get(pk=data['user'])
-        save = data['save']
-        usernamekey = 'username'
-        descriptionkey = 'description'
-        response = {descriptionkey: user.username,
-                    usernamekey: user.description, }
+
+        response = {'description': user.username,
+                    'username': user.description, }
         try:
-            username = data.get(usernamekey)
+            username = data.get('username')
             if len(username) > 0:
-                if save:
+                if data['save']:
                     item = self.edit_username(username, user)
                 else:
                     item = self.check_username(username, user)
@@ -102,7 +89,7 @@ class EditProfile(viewsets.ViewSet):
             TypeError
 
         try:
-            description = data.get(descriptionkey)
+            description = data.get('description')
             if len(description) > 0:
                 item = self.edit_description(description, user)
                 response.update(item)
