@@ -26,7 +26,7 @@ const Hashtag = () => {
   return (
     <Layout>
       <>
-        <div className="d-flex gap-3 justify-content-center ">
+        <div className="d-flex gap-3 justify-content-center mt-4 ">
           <div className="username  fw-light align-self-center text-light">
             #{hashtag}
           </div>
