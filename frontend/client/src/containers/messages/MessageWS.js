@@ -64,7 +64,7 @@ const MessageWS = (props) => {
               room_name={room_name}
               userobj={userobj}
             />
-            <div class="mt-auto p-2">
+            <div className="mt-auto p-2">
               <SendMessage
                 client={client}
                 userobj={userobj}
