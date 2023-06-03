@@ -1,9 +1,10 @@
 from django.urls import path
 from .apiviews import *
 
-app_name="profiles"
+app_name = "profiles"
 urlpatterns = [
-    path('posts/<pk>/<int:page>', ProfilePosts.as_view({'get': 'main'}), ),
+    path('user/<int:pk>', GetUser.as_view({'post': 'main'}), ),
+
     path('editprofile', EditProfile.as_view({'post': 'main'}), ),
 
 ]
