@@ -39,8 +39,15 @@ const ChatRooms = () => {
   }, [location.state]);
 
   return (
-    <AwaitData data={data}>
-      <Layout data={data}>
+    <AwaitData
+      style={{
+        position: "absolute" /* or absolute */,
+        top: "50%",
+        left: "50%",
+      }}
+      data={data}
+    >
+      <Layout>
         <div className="d-flex flex-row">
           <div
             style={{
