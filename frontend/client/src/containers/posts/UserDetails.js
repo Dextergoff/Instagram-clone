@@ -7,13 +7,15 @@ const UserDetails = (props) => {
     borderRadius: "100%",
   };
   return (
-    <div className="d-flex align-items-center gap-3 ">
-      <DisplayPfp
-        style={style}
-        pfp={process.env.REACT_APP_API_URL + props.user.pfp}
-      />
-      <div className="text-center text-light ">{props.user.username}</div>
-    </div>
+    <a href={`u/${props.user.pk}`} style={{ textDecoration: "none" }}>
+      <div className="d-flex align-items-center gap-2 ">
+        <DisplayPfp
+          style={style}
+          pfp={process.env.REACT_APP_API_URL + props.user.pfp}
+        />
+        <div className="text-center text-light ">{props.user.username}</div>
+      </div>
+    </a>
   );
 };
 
