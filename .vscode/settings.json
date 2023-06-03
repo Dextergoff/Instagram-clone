@@ -38,7 +38,7 @@
     "markdown.preview.scrollPreviewWithEditor": true,
     "terminal.integrated.fontFamily": "Inconsolata for Powerline", // Install Powerline fonts for this to work
     "terminal.integrated.fontSize": 12,
-    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreview": true,
     "workbench.editor.tabCloseButton": "right",
     "workbench.editor.tabSizing": "shrink",
     "workbench.panel.defaultLocation": "right",
