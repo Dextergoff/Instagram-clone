@@ -1,43 +1,43 @@
 import { useSelector } from "react-redux";
-import { useGetProfilePageQuery } from "endpoints/rtkQuery/profileEndpoints";
+import {
+  useGetProfilePageQuery,
+  useGetUserQuery,
+} from "endpoints/rtkQuery/profileEndpoints";
 import Layout from "Layout/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
-import getQueryLength from "components/jobs/getQueryLength";
-import UserExists from "components/jobs/verification/UserExists";
 import ProfileHeader from "./ProfileHeader";
 import PostGallery from "./PostGallery";
 import Navbar from "Navbar/Navbar";
+import { useParams } from "react-router-dom";
 const Profile = () => {
-  const { userobj, loading } = useSelector((state) => state.user);
-
+  const params = useParams();
+  const { pk } = params;
   const [state, setState] = useState({
     page: 1,
     skip: true,
     filter: null,
   });
-  const { user, page, skip, filter } = state;
+  const { page, skip, filter } = state;
 
-  const { data = [] } = useGetProfilePageQuery(
-    { filter, page },
-    { skip: skip }
-  );
+  const { data } = useGetProfilePageQuery({ filter, page }, { skip: skip });
+  const { user = [] } = useGetUserQuery({ pk });
 
   useEffect(() => {
-    if (UserExists({ userobj, loading })) {
-      setState((state) => ({
-        ...state,
-        filter: { filter: { user: userobj.pk } },
-        skip: false,
-        page: 1,
-      }));
-    }
-  }, [loading, userobj]);
-
-  if (getQueryLength(data) > 0) {
+    setState((state) => ({
+      ...state,
+      filter: { filter: { user: Number(pk) } },
+      skip: false,
+      page: 1,
+    }));
+  }, []);
+  // TODO rtkquery shows the data but it cant be accessed here for some reason
+  if (data && user) {
     return (
       <Layout>
-        <ProfileHeader data={data} userobj={userobj} />
+        <div className="mt-3">
+          <ProfileHeader data={data} userobj={user} />
+        </div>
         <PostGallery data={data} states={{ state, setState }} />
         <Navbar />
       </Layout>
