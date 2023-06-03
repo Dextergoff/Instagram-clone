@@ -72,12 +72,12 @@ const PostModal = () => {
                   }}
                   className="mt-2 mb-2"
                 >
-                  <div className="d-flex">
+                  <div className="d-flex flex-row align-items-center">
                     <UserDetails user={post.user} />
                     <PostAge date={post.date} />
                   </div>
 
-                  <div style={{ marginLeft: "2.3rem" }} className="pl-5">
+                  <div className="mb-2">
                     <TitleAndHashtags post={post} />
                   </div>
                 </div>
