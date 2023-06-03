@@ -38,7 +38,6 @@ const ProfileHeader = ({ data, userobj }) => {
 
   return (
     <div>
-      <div className="d-flex justify-content-end "></div>
       <div className="d-flex gap-3 justify-content-center ">
         <SetPfp
           states={{
