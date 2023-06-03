@@ -47,15 +47,15 @@ class GetMessages(viewsets.ViewSet):
 
 
 class GetChatRoom(viewsets.ViewSet):
-    def main(self, request, sender):
+    def main(self, request, sender, page):
         queryset = ChatRoom.objects.filter(
             sender=sender)
+        queryset = pageify(queryset=queryset, page=page, items_per_page=10)
         serializer = ChatRoomSerializer(
-            queryset, many=True,)
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
             QUERYING['DATA_KEY']: serializer.data,
-            # PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
-            # PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+            PAGEIFY['PC_KEY']: queryset[PAGEIFY['PC_KEY']]
         }
-        # TODO pageify
         return Response(response)
