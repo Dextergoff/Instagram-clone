@@ -10,6 +10,7 @@ import DisplayPfp from "components/Image/DisplayPfp";
 import LikeCount from "components/interactionbar/LikeCount";
 import LoadContent from "containers/posts/LoadContent";
 import Layout from "Layout/Layout";
+import AwaitData from "components/loading/AwaitData";
 const Comments = (prop) => {
   const [state, setState] = useState({
     page: 1,
@@ -17,15 +18,15 @@ const Comments = (prop) => {
   const { page } = state;
 
   const parent = prop.parent;
-  const { data = [] } = useGetCommentsQuery({ parent, page });
+  const { data } = useGetCommentsQuery({ parent, page });
 
   const loadMoreComments = () => {
     setState({ ...state, page: page + 1 });
   };
 
-  if (getQueryLength(data) > 0)
-    // return if data is not empty
-    return (
+  // return if data is not empty
+  return (
+    <AwaitData data={data}>
       <Layout>
         <div className="comments-container ">
           {data?.data.map((comment) => (
@@ -78,6 +79,7 @@ const Comments = (prop) => {
           <LoadContent data={data} states={{ state, setState }} />
         </div>
       </Layout>
-    );
+    </AwaitData>
+  );
 };
 export default Comments;
