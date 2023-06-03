@@ -24,7 +24,6 @@ const Comments = (prop) => {
     setState({ ...state, page: page + 1 });
   };
 
-  // return if data is not empty
   return (
     <AwaitData data={data}>
       <Layout>
