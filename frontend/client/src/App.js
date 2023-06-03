@@ -84,7 +84,7 @@ const App = () => {
           }
         />
         <Route
-          path="/u"
+          path="/u/:pk"
           element={
             <ProtectedRoute>
               <Profile />
