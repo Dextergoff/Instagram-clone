@@ -1,6 +1,5 @@
 import { splitApi } from "./splitApi";
-import mergeNewItems from "./mergeNewItems";
-import setResponse from "./setResponse";
+import UpdateProfile from "./UpdateProfile";
 
 const endpoint = "profiles";
 splitApi.injectEndpoints({
@@ -19,7 +18,7 @@ splitApi.injectEndpoints({
       },
 
       merge: (currentCache, newItems, args) => {
-        mergeNewItems({ currentCache, newItems, args });
+        UpdateProfile({ currentCache, newItems, args });
       },
 
       forceRefetch({ currentArg, previousArg }) {
