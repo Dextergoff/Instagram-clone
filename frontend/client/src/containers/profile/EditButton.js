@@ -1,7 +1,7 @@
 import { useEditProfileMutation } from "endpoints/rtkQuery/profileEndpoints";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const EditButton = ({ states, userobj }) => {
+const EditButton = ({ states }) => {
   const { formData, setFormData } = states;
   const { state, setState } = states;
   const { userState, setUserState } = states;

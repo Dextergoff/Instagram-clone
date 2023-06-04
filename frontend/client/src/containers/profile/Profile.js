@@ -12,31 +12,25 @@ import Navbar from "Navbar/Navbar";
 import { useParams } from "react-router-dom";
 const Profile = () => {
   const params = useParams();
-  const { pk } = params;
+  const pk = Number(params.pk);
   const [state, setState] = useState({
     page: 1,
-    skip: true,
-    filter: null,
+    skip: false,
   });
-  const { page, skip, filter } = state;
-
-  const { data } = useGetProfilePageQuery({ filter, page }, { skip: skip });
-  const { user = [] } = useGetUserQuery({ pk });
+  const { page, skip } = state;
 
   useEffect(() => {
-    setState((state) => ({
-      ...state,
-      filter: { filter: { user: Number(pk) } },
-      skip: false,
-      page: 1,
-    }));
-  }, []);
-  // TODO rtkquery shows the data but it cant be accessed here for some reason
-  if (data && user) {
+    setState({ ...state, filter: { filter: { user: pk } }, page: 1 });
+  }, [params]);
+  console.log(page);
+  const { data } = useGetProfilePageQuery({ pk, page });
+  // page  not changing when its increased and then user navigates to another profile
+  // TODO rtkquery shows the user data but it cant be accessed here for some reason
+  if (data) {
     return (
       <Layout>
         <div className="mt-3">
-          <ProfileHeader data={data} userobj={user} />
+          <ProfileHeader data={data} userobj={data.nested_data.user} />
         </div>
         <PostGallery data={data} states={{ state, setState }} />
         <Navbar />

@@ -35,9 +35,13 @@ const ProfileHeader = ({ data, userobj }) => {
   useEffect(() => {
     username && editProfile({ user, username, save: false });
   }, [username]);
+  useEffect(() => {
+    setFormData({ ...formData, user: userobj.pk });
+  }, [userobj]);
 
   return (
     <div>
+      <div className="d-flex justify-content-end "></div>
       <div className="d-flex gap-3 justify-content-center ">
         <SetPfp
           states={{
@@ -49,6 +53,7 @@ const ProfileHeader = ({ data, userobj }) => {
             file,
             setFile,
           }}
+          userobj={userobj}
         />
 
         <Username
@@ -66,7 +71,6 @@ const ProfileHeader = ({ data, userobj }) => {
             file,
             setFile,
           }}
-          userobj={userobj}
         />
       </div>
 
