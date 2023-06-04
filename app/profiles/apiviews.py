@@ -27,11 +27,23 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
-class GetUser(viewsets.ViewSet):
-    def main(self, request, pk):
+class ProfilePosts(viewsets.ViewSet):
+    serializer = GalleryPostSerializer
+
+    def main(self, request, pk, page):
         user = User.objects.get(pk=pk)
-        serializer = UserSerializer(user, many=False)
-        return Response(serializer.data)
+        serialized_user = UserSerializer(user, many=False)
+        queryset = Post.objects.filter(user=pk).order_by(
+            "-date").prefetch_related('likes').select_related('user')
+        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+        serializer = GalleryPostSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        response = {
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data, 'user': serialized_user.data},
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+
+        }
+        return Response(response)
 
 
 class EditProfile(viewsets.ViewSet):

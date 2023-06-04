@@ -6,41 +6,28 @@ const endpoint = "profiles";
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getProfilePage: builder.query({
-      query: ({ filter, page }) => ({
-        url: `/posts/page/${page}/`,
-        method: "post",
+      query: ({ pk, page }) => ({
+        url: `profiles/posts/${pk}/${page}`,
+        method: "get",
         headers: {
           "Content-type": "application/json",
         },
-        body: filter,
       }),
 
       serializeQueryArgs: ({ getProfilePage }) => {
         return getProfilePage;
       },
 
-      transformResponse: (response, arg) => {
-        setResponse({ response, arg });
-        return response;
-      },
-
-      merge: (currentCache, newItems) => {
-        mergeNewItems({ currentCache, newItems });
+      merge: (currentCache, newItems, args) => {
+        mergeNewItems({ currentCache, newItems, args });
       },
 
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
+      keepUnusedDataFor: 0,
     }),
-    getUser: builder.query({
-      query: ({ pk }) => ({
-        url: `/profiles/user/${pk}`,
-        method: "post",
-        headers: {
-          "Content-type": "application/json",
-        },
-      }),
-    }),
+
     editProfile: builder.mutation({
       query: (body) => ({
         url: `${endpoint}/editprofile`,
@@ -53,6 +40,6 @@ splitApi.injectEndpoints({
 
 export const {
   useGetProfilePageQuery,
-  useGetUserQuery,
+
   useEditProfileMutation,
 } = splitApi;
