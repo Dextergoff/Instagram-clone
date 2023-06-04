@@ -6,9 +6,11 @@ import EditButton from "./EditButton";
 import Username from "./Username";
 import Description from "./Description";
 import SetPfp from "components/Image/SetPfp";
-const ProfileHeader = ({ data, userobj }) => {
+import { useSelector } from "react-redux";
+const ProfileHeader = ({ data, requested_user }) => {
+  const { userobj } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
-    user: userobj.pk,
+    user: requested_user.pk,
     username: "",
     description: "",
     image: "",
@@ -21,23 +23,30 @@ const ProfileHeader = ({ data, userobj }) => {
   });
 
   const [userState, setUserState] = useState({
-    username: userobj.username,
-    description: userobj.description,
-    pfp: process.env.REACT_APP_API_URL + userobj?.pfp,
+    username: requested_user.username,
+    description: requested_user.description,
+    pfp: process.env.REACT_APP_API_URL + requested_user.pfp,
   });
 
   const [editProfile, result] = useEditProfileMutation();
 
   useEffect(() => {
-    result.data && setState({ ...state, response: result.data.response });
+    if (result.data) {
+      setState({ ...state, response: result.data.response });
+    }
   }, [result]);
+
+  useEffect(() => {
+    setState({ ...state, response: "", editmode: false });
+  }, [requested_user]);
 
   useEffect(() => {
     username && editProfile({ user, username, save: false });
   }, [username]);
+
   useEffect(() => {
-    setFormData({ ...formData, user: userobj.pk });
-  }, [userobj]);
+    setFormData({ ...formData, user: requested_user.pk });
+  }, [requested_user]);
 
   return (
     <div>
@@ -53,32 +62,36 @@ const ProfileHeader = ({ data, userobj }) => {
             file,
             setFile,
           }}
-          userobj={userobj}
+          requested_user={requested_user}
         />
 
         <Username
           states={{ state, setState, formData, setFormData, userState }}
-          userobj={userobj}
+          requested_user={requested_user}
         />
-        <EditButton
-          states={{
-            state,
-            setState,
-            formData,
-            setFormData,
-            userState,
-            setUserState,
-            file,
-            setFile,
-          }}
-        />
+        {userobj.pk == requested_user.pk ? (
+          <EditButton
+            states={{
+              state,
+              setState,
+              formData,
+              setFormData,
+              userState,
+              setUserState,
+              file,
+              setFile,
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
 
       <InfoBar data={data} />
 
       <Description
         states={{ state, setState, formData, setFormData, userState }}
-        userobj={userobj}
+        requested_user={requested_user}
       />
     </div>
   );
