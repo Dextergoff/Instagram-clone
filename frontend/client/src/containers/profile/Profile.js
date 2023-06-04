@@ -15,22 +15,24 @@ const Profile = () => {
   const pk = Number(params.pk);
   const [state, setState] = useState({
     page: 1,
-    skip: false,
   });
-  const { page, skip } = state;
+  const { page } = state;
 
   useEffect(() => {
-    setState({ ...state, filter: { filter: { user: pk } }, page: 1 });
-  }, [params]);
-  console.log(page);
+    setState({
+      ...state,
+      filter: { filter: { user: pk } },
+      page: 1,
+    });
+  }, [params, page]);
+
   const { data } = useGetProfilePageQuery({ pk, page });
-  // page  not changing when its increased and then user navigates to another profile
-  // TODO rtkquery shows the user data but it cant be accessed here for some reason
+
   if (data) {
     return (
       <Layout>
         <div className="mt-3">
-          <ProfileHeader data={data} userobj={data.nested_data.user} />
+          <ProfileHeader data={data} requested_user={data.nested_data.user} />
         </div>
         <PostGallery data={data} states={{ state, setState }} />
         <Navbar />
