@@ -1,7 +1,7 @@
 import ImagePreview from "components/inputs/ImagePreview";
 import ImageInput from "components/inputs/ImageInput";
 import DisplayPfp from "components/Image/DisplayPfp";
-const SetPfp = ({ states, userobj }) => {
+const SetPfp = ({ states, requested_user }) => {
   const { file, setFile } = states;
   const { formData, setFormData } = states;
   const { state } = states;
@@ -23,7 +23,7 @@ const SetPfp = ({ states, userobj }) => {
       ) : (
         <DisplayPfp
           style={{ width: "4rem  ", height: " 4rem", borderRadius: "100%" }}
-          pfp={process.env.REACT_APP_API_URL + userobj.pfp}
+          pfp={process.env.REACT_APP_API_URL + requested_user.pfp}
         />
       )}
     </div>

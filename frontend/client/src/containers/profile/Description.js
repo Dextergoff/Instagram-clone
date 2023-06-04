@@ -1,4 +1,4 @@
-const Description = ({ states, formData, userobj }) => {
+const Description = ({ states, formData, requested_user }) => {
   const { editmode } = states.state;
 
   const onChange = (e) => {
@@ -15,14 +15,14 @@ const Description = ({ states, formData, userobj }) => {
           <input
             autoComplete="off"
             name="description"
-            defaultValue={userobj.description}
+            defaultValue={requested_user.description}
             className=" text-center text-light form-control bg-black border-0 "
             onChange={onChange}
           />
         </div>
       ) : (
         <div className="h6 align-self-center text-light fw-light">
-          {userobj.description}
+          {requested_user.description}
         </div>
       )}
     </div>

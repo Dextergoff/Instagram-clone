@@ -1,6 +1,6 @@
 import user from "endpoints/auth/user";
 
-const Username = ({ states, userobj }) => {
+const Username = ({ states, requested_user }) => {
   const onChange = (e) => {
     e.preventDefault();
 
@@ -19,14 +19,14 @@ const Username = ({ states, userobj }) => {
             <input
               autoComplete="off"
               name="username"
-              defaultValue={userobj.username}
+              defaultValue={requested_user.username}
               className="form-control text-light bg-black border-0  "
               onChange={onChange}
             />
             <div className="text-muted">{response}</div>
           </div>
         ) : (
-          <div> {userobj.username} </div>
+          <div> {requested_user.username} </div>
         )}
       </div>
     </>
