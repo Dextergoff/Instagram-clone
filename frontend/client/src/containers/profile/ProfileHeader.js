@@ -12,6 +12,7 @@ import MessageBtn from "components/buttons/MessageBtn";
 
 const ProfileHeader = ({ data, requested_user }) => {
   const { userobj } = useSelector((state) => state.user);
+  const is_self = Boolean(userobj.pk == requested_user.pk);
   const [formData, setFormData] = useState({
     user: requested_user.pk,
     username: "",
@@ -71,13 +72,22 @@ const ProfileHeader = ({ data, requested_user }) => {
           states={{ state, setState, formData, setFormData, userState }}
           requested_user={requested_user}
         />
-        <button className="align-self-center btn btn-sm btn-primary">
-          Follow
-        </button>
-        <div className="align-self-center">
-          <MessageBtn target={requested_user} size="sm" />
-        </div>
-        {userobj.pk == requested_user.pk ? (
+
+        {!is_self ? (
+          <div className="d-flex flex-row gap-3">
+            <button className="align-self-center btn btn-sm btn-primary">
+              Follow
+            </button>
+
+            <div className="align-self-center">
+              <MessageBtn target={requested_user} size="sm" />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {is_self ? (
           <EditButton
             states={{
               state,
