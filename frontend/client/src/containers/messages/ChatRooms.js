@@ -78,10 +78,6 @@ const ChatRooms = () => {
                 <button
                   onClick={() => handleClick(room.receiver)}
                   className="comments-link text-muted bg-black border-0 fw-light text-decoration-none"
-                  to={`/dm/u`}
-                  state={{
-                    target_user: room.receiver,
-                  }}
                 >
                   <div
                     style={{
@@ -89,6 +85,7 @@ const ChatRooms = () => {
                     }}
                   >
                     <UserDetails
+                      disable_link={true}
                       user={room.receiver}
                       style={{
                         width: "2rem",
