@@ -7,6 +7,9 @@ import Username from "./Username";
 import Description from "./Description";
 import SetPfp from "components/Image/SetPfp";
 import { useSelector } from "react-redux";
+
+import MessageBtn from "components/buttons/MessageBtn";
+
 const ProfileHeader = ({ data, requested_user }) => {
   const { userobj } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
@@ -64,11 +67,16 @@ const ProfileHeader = ({ data, requested_user }) => {
           }}
           requested_user={requested_user}
         />
-
         <Username
           states={{ state, setState, formData, setFormData, userState }}
           requested_user={requested_user}
         />
+        <button className="align-self-center btn btn-sm btn-primary">
+          Follow
+        </button>
+        <div className="align-self-center">
+          <MessageBtn target={requested_user} size="sm" />
+        </div>
         {userobj.pk == requested_user.pk ? (
           <EditButton
             states={{

@@ -5,6 +5,7 @@ import { useLikePostMutation } from "endpoints/rtkQuery/postEndpoints";
 import { Link, useLocation } from "react-router-dom";
 import UpdateLikes from "./UpdateLikes";
 import LikeCount from "components/interactionbar/LikeCount";
+import MessageBtn from "components/buttons/MessageBtn";
 const InteractionBar = ({
   addArgument,
   updateCacheArgument,
@@ -36,19 +37,7 @@ const InteractionBar = ({
       <div className="d-flex mt-2 mb-2 gap-3">
         <div>
           <div className="border-0 text-dark">
-            <Link
-              className="comments-link text-muted fw-light text-decoration-none"
-              to={`/dm/`}
-              state={{
-                target_user: post.user,
-              }}
-            >
-              <FontAwesomeIcon
-                size="xl"
-                className="text-light"
-                icon="fa-regular fa-paper-plane"
-              />
-            </Link>
+            <MessageBtn target={post.user} size="xl" />
           </div>
         </div>
         {feed ? (
