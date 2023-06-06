@@ -9,12 +9,9 @@ import SetPfp from "components/Image/SetPfp";
 import { useSelector } from "react-redux";
 import { useManageFollowersMutation } from "endpoints/rtkQuery/profileEndpoints";
 import MessageBtn from "components/buttons/MessageBtn";
+import FollowBtn from "./FollowBtn";
 
-const ProfileHeader = ({ data, requested_user }) => {
-  const { userobj } = useSelector((state) => state.user);
-  const pk = userobj.pk;
-  const requested_user_pk = requested_user.pk;
-  const [manage_followers] = useManageFollowersMutation();
+const ProfileHeader = ({ data, requested_user, userobj }) => {
   const is_self = Boolean(userobj.pk == requested_user.pk);
   const [formData, setFormData] = useState({
     user: requested_user.pk,
@@ -75,23 +72,12 @@ const ProfileHeader = ({ data, requested_user }) => {
           states={{ state, setState, formData, setFormData, userState }}
           requested_user={requested_user}
         />
-
-        {!is_self ? (
-          <div className="d-flex flex-row gap-3">
-            <div
-              onClick={() => manage_followers({ pk, requested_user_pk })}
-              className="align-self-center btn btn-sm btn-primary"
-            >
-              Follow
-            </div>
-
-            <div className="align-self-center">
-              <MessageBtn target={requested_user} size="sm" />
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
+        <FollowBtn
+          is_self={is_self}
+          is_following={data.is_following}
+          requested_user={requested_user}
+          userobj={userobj}
+        />
 
         {is_self ? (
           <EditButton
@@ -111,7 +97,9 @@ const ProfileHeader = ({ data, requested_user }) => {
         )}
       </div>
 
-      <InfoBar data={data} />
+      <InfoBar requested_user={requested_user} />
+      {/* TODO update follower count and is_following by returning that data in manage followers response  */}
+      {/* TODO create a page or  popup to display followers and following this is easy  */}
 
       <Description
         states={{ state, setState, formData, setFormData, userState }}
