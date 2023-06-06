@@ -44,6 +44,7 @@ const FollowingModal = () => {
                 display: "inline-block",
                 height: "30vh",
                 overflow: "scroll",
+                minWidth: "14vw",
               }}
               className=" bg-dark rounded"
             >
