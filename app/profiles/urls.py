@@ -3,7 +3,8 @@ from .apiviews import *
 
 app_name = "profiles"
 urlpatterns = [
-    path('posts/<pk>/<int:page>', ProfilePosts.as_view({'get': 'main'}), ),
+    path('posts/<int:requested_user_pk>/<int:pk>/<int:page>',
+         ProfilePosts.as_view({'get': 'main'}), ),
     path('editprofile', EditProfile.as_view({'post': 'main'}), ),
     path('manage_followers/<int:pk>/<int:requested_user_pk>',
          ManageFollowers.as_view()),
