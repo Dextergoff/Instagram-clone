@@ -10,7 +10,11 @@ import ProfileHeader from "./ProfileHeader";
 import PostGallery from "./PostGallery";
 import Navbar from "Navbar/Navbar";
 import { useParams } from "react-router-dom";
+
+import { useLocation } from "react-router-dom";
 const Profile = () => {
+  const location = useLocation();
+
   const params = useParams();
   const { userobj } = useSelector((state) => state.user);
   const requested_user_pk = Number(params.pk);
@@ -51,6 +55,7 @@ const Profile = () => {
             data={data}
             requested_user={data.nested_data.user}
             userobj={userobj}
+            location={location}
           />
         </div>
         <PostGallery data={data} states={{ state, setState }} />
@@ -60,4 +65,5 @@ const Profile = () => {
   }
 };
 
+// TODO check if user is following the users in the following and followers page to properly dsipaly follow buttons
 export default Profile;
