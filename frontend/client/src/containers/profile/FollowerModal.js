@@ -40,6 +40,7 @@ const FollowerModal = () => {
               style={{
                 display: "inline-block",
                 height: "30vh",
+                minWidth: "14vw",
                 overflow: "scroll",
               }}
               className=" bg-dark rounded"
@@ -52,21 +53,24 @@ const FollowerModal = () => {
                 }}
                 className=" text-muted"
               />
-              {data.nested_data.data.map((follower) => (
-                <div
-                  key={follower.pk}
-                  className="d-flex justify-content-between align-items-center"
-                >
-                  <div className="p-2 ">
-                    <UserDetails display_desc={true} user={follower} />
-                  </div>
 
-                  <div className="p-2 ml-auto">
-                    <FollowBtn
-                      is_following={data.is_following}
-                      requested_user={follower}
-                      userobj={userobj}
-                    />
+              {data.nested_data.data.map((follower) => (
+                <div>
+                  <div
+                    key={follower.pk}
+                    className="d-flex justify-content-between align-items-center"
+                  >
+                    <div className="p-2 ">
+                      <UserDetails display_desc={true} user={follower} />
+                    </div>
+
+                    <div className="p-2 ml-auto">
+                      <FollowBtn
+                        is_following={data.is_following}
+                        requested_user={follower}
+                        userobj={userobj}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
