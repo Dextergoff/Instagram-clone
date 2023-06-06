@@ -12,27 +12,46 @@ import Navbar from "Navbar/Navbar";
 import { useParams } from "react-router-dom";
 const Profile = () => {
   const params = useParams();
-  const pk = Number(params.pk);
+  const { userobj } = useSelector((state) => state.user);
+  const requested_user_pk = Number(params.pk);
   const [state, setState] = useState({
     page: 1,
+    pk: null,
+    skip: true,
   });
-  const { page } = state;
+  const { page, pk, skip } = state;
 
   useEffect(() => {
     setState({
       ...state,
-      filter: { filter: { user: pk } },
+      filter: { filter: { user: requested_user_pk } },
       page: 1,
     });
   }, [params, page]);
 
-  const { data } = useGetProfilePageQuery({ pk, page });
+  useEffect(() => {
+    if (userobj)
+      setState({
+        ...state,
+        pk: userobj?.pk,
+        skip: false,
+      });
+  }, [userobj]);
+
+  const { data } = useGetProfilePageQuery(
+    { pk, requested_user_pk, page },
+    { skip: skip }
+  );
 
   if (data) {
     return (
       <Layout>
         <div className="mt-3">
-          <ProfileHeader data={data} requested_user={data.nested_data.user} />
+          <ProfileHeader
+            data={data}
+            requested_user={data.nested_data.user}
+            userobj={userobj}
+          />
         </div>
         <PostGallery data={data} states={{ state, setState }} />
         <Navbar />
