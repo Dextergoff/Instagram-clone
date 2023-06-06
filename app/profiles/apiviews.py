@@ -27,6 +27,18 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
+class ManageFollowers(APIView):
+    def post(self, request,  pk, requested_user_pk):
+        requested_user = User.objects.get(pk=requested_user_pk)
+        user = User.objects.get(pk=pk)
+        following = requested_user.followers.filter(pk=user.pk).exists()
+        if (following):
+            requested_user.followers.remove(user)
+        else:
+            requested_user.followers.add(user)
+            # requested_user.followers.remove(user)
+
+
 class ProfilePosts(viewsets.ViewSet):
     serializer = GalleryPostSerializer
 

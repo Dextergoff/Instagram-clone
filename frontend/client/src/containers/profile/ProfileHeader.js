@@ -7,11 +7,14 @@ import Username from "./Username";
 import Description from "./Description";
 import SetPfp from "components/Image/SetPfp";
 import { useSelector } from "react-redux";
-
+import { useManageFollowersMutation } from "endpoints/rtkQuery/profileEndpoints";
 import MessageBtn from "components/buttons/MessageBtn";
 
 const ProfileHeader = ({ data, requested_user }) => {
   const { userobj } = useSelector((state) => state.user);
+  const pk = userobj.pk;
+  const requested_user_pk = requested_user.pk;
+  const [manage_followers] = useManageFollowersMutation();
   const is_self = Boolean(userobj.pk == requested_user.pk);
   const [formData, setFormData] = useState({
     user: requested_user.pk,
@@ -75,9 +78,12 @@ const ProfileHeader = ({ data, requested_user }) => {
 
         {!is_self ? (
           <div className="d-flex flex-row gap-3">
-            <button className="align-self-center btn btn-sm btn-primary">
+            <div
+              onClick={() => manage_followers({ pk, requested_user_pk })}
+              className="align-self-center btn btn-sm btn-primary"
+            >
               Follow
-            </button>
+            </div>
 
             <div className="align-self-center">
               <MessageBtn target={requested_user} size="sm" />

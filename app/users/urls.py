@@ -7,5 +7,4 @@ urlpatterns = [
     path('forgot', Forgot.as_view()),
     path('resetpassword', ResetPassword.as_view()),
     path('authorizereset', AuthorizeReset.as_view()),
-
 ]

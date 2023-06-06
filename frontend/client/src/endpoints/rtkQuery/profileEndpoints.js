@@ -34,11 +34,17 @@ splitApi.injectEndpoints({
         body: body,
       }),
     }),
+    manageFollowers: builder.mutation({
+      query: ({ pk, requested_user_pk }) => ({
+        url: `${endpoint}/manage_followers/${pk}/${requested_user_pk}`,
+        method: "post",
+      }),
+    }),
   }),
 });
 
 export const {
   useGetProfilePageQuery,
-
+  useManageFollowersMutation,
   useEditProfileMutation,
 } = splitApi;
