@@ -27,6 +27,34 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
+class GetFollowers(APIView):
+    def get(self, request, requested_user_pk, page):
+        user = User.objects.get(pk=requested_user_pk)
+        queryset = user.followers.all()
+        queryset = pageify(queryset=queryset, page=page, items_per_page=6)
+        serializer = UserSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        response = {
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+        }
+        return Response(response)
+
+
+class GetFollowing(APIView):
+    def get(self, request, requested_user_pk, page):
+        user = User.objects.get(pk=requested_user_pk)
+        queryset = user.following.all()
+        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+        serializer = UserSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        response = {
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+        }
+        return Response(response)
+
+
 class ManageFollowers(APIView):
 
     def post(self, request,  pk, requested_user_pk):

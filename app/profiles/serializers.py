@@ -16,6 +16,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from posts.models import *
 from .serializers import *
+from users.serializers import *
 User = get_user_model()
 
 

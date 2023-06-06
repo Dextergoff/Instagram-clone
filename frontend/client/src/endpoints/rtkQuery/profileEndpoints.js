@@ -26,6 +26,24 @@ splitApi.injectEndpoints({
       },
       keepUnusedDataFor: 0,
     }),
+    getFollowing: builder.query({
+      query: ({ requested_user_pk, page }) => ({
+        url: `profiles/following/${requested_user_pk}/${page}`,
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+    }),
+
+    getFollowers: builder.query({
+      query: ({ requested_user_pk, page }) => ({
+        url: `profiles/followers/${requested_user_pk}/${page}`,
+        method: "get",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+    }),
 
     editProfile: builder.mutation({
       query: (body) => ({
@@ -34,6 +52,7 @@ splitApi.injectEndpoints({
         body: body,
       }),
     }),
+
     manageFollowers: builder.mutation({
       query: ({ pk, requested_user_pk }) => ({
         url: `${endpoint}/manage_followers/${pk}/${requested_user_pk}`,
@@ -45,6 +64,8 @@ splitApi.injectEndpoints({
 
 export const {
   useGetProfilePageQuery,
+  useGetFollowersQuery,
+  useGetFollowingQuery,
   useManageFollowersMutation,
   useEditProfileMutation,
 } = splitApi;

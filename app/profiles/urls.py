@@ -8,5 +8,8 @@ urlpatterns = [
     path('editprofile', EditProfile.as_view({'post': 'main'}), ),
     path('manage_followers/<int:pk>/<int:requested_user_pk>',
          ManageFollowers.as_view()),
+    path('followers/<int:requested_user_pk>/<int:page>',
+         GetFollowers.as_view()),
+    path('following/<int:requested_user_pk>/<int:page>', GetFollowing.as_view()),
 
 ]
