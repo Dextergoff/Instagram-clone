@@ -65,5 +65,5 @@ const Profile = () => {
   }
 };
 
-// TODO check if user is following the users in the following and followers page to properly dsipaly follow buttons
+// TODO check if user is following the users in the following and followers page to properly display follow buttons
 export default Profile;
