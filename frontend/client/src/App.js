@@ -33,6 +33,8 @@ import {
   faMessage,
 } from "@fortawesome/free-regular-svg-icons";
 import Messages from "containers/messages/MessageWS";
+import FollowerModal from "containers/profile/FollowerModal";
+import FollowingModal from "containers/profile/FollowingModal";
 
 library.add(
   faHeart,
@@ -122,6 +124,8 @@ const App = () => {
       {background && (
         <Routes>
           <Route path="/:pk" element={<PostModal />} />
+          <Route path="/followers/" element={<FollowerModal />} />
+          <Route path="/following/" element={<FollowingModal />} />
         </Routes>
       )}
     </Fragment>
