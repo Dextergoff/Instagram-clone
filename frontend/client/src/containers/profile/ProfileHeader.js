@@ -11,7 +11,7 @@ import { useManageFollowersMutation } from "endpoints/rtkQuery/profileEndpoints"
 import MessageBtn from "components/buttons/MessageBtn";
 import FollowBtn from "./FollowBtn";
 
-const ProfileHeader = ({ data, requested_user, userobj }) => {
+const ProfileHeader = ({ data, requested_user, userobj, location }) => {
   const is_self = Boolean(userobj.pk == requested_user.pk);
   const [formData, setFormData] = useState({
     user: requested_user.pk,
@@ -73,7 +73,6 @@ const ProfileHeader = ({ data, requested_user, userobj }) => {
           requested_user={requested_user}
         />
         <FollowBtn
-          is_self={is_self}
           is_following={data.is_following}
           requested_user={requested_user}
           userobj={userobj}
@@ -97,9 +96,9 @@ const ProfileHeader = ({ data, requested_user, userobj }) => {
         )}
       </div>
 
-      <InfoBar requested_user={requested_user} />
+      <InfoBar requested_user={requested_user} location={location} />
       {/* TODO update follower count and is_following by returning that data in manage followers response  */}
-      {/* TODO create a page or  popup to display followers and following this is easy  */}
+      {/* TODO create a page or  popup to display followers and following */}
 
       <Description
         states={{ state, setState, formData, setFormData, userState }}
