@@ -5,8 +5,8 @@ const endpoint = "profiles";
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getProfilePage: builder.query({
-      query: ({ pk, page }) => ({
-        url: `profiles/posts/${pk}/${page}`,
+      query: ({ requested_user_pk, pk, page }) => ({
+        url: `profiles/posts/${requested_user_pk}/${pk}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",

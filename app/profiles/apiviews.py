@@ -28,24 +28,50 @@ User = get_user_model()
 
 
 class ManageFollowers(APIView):
+
     def post(self, request,  pk, requested_user_pk):
-        requested_user = User.objects.get(pk=requested_user_pk)
-        user = User.objects.get(pk=pk)
-        following = requested_user.followers.filter(pk=user.pk).exists()
-        if (following):
-            requested_user.followers.remove(user)
+        self.requested_user = User.objects.select_related().get(pk=requested_user_pk)
+        self.user = User.objects.select_related().get(pk=pk)
+        self.is_following = self.requested_user.followers.filter(
+            pk=self.user.pk).exists()
+        self.add_or_remove()
+        self.user.save()
+        self.requested_user.save()
+
+    def add_follower(self):
+        self.requested_user.followers.remove(self.user)
+        self.requested_user.followers_count -= 1
+
+        self.user.following.remove(self.requested_user)
+        self.user.following_count -= 1
+
+    def remove_follower(self):
+        self.requested_user.followers.add(self.user)
+        self.requested_user.followers_count += 1
+
+        self.user.following.add(self.requested_user)
+        self.user.following_count += 1
+
+    def add_or_remove(self):
+        if (self.is_following):
+            self.add_follower()
         else:
-            requested_user.followers.add(user)
-            # requested_user.followers.remove(user)
+            self.remove_follower()
 
 
 class ProfilePosts(viewsets.ViewSet):
     serializer = GalleryPostSerializer
 
-    def main(self, request, pk, page):
-        user = User.objects.get(pk=pk)
-        serialized_user = UserSerializer(user, many=False)
-        queryset = Post.objects.filter(user=pk).order_by(
+    def following_check(self):
+        self.is_following = self.requested_user.followers.filter(
+            pk=self.user.pk).exists()
+
+    def main(self, request, requested_user_pk, pk, page):
+        self.requested_user = User.objects.select_related().get(pk=requested_user_pk)
+        self.user = User.objects.select_related().get(pk=pk)
+        self.following_check()
+        serialized_user = UserSerializer(self.requested_user, many=False)
+        queryset = Post.objects.filter(user=requested_user_pk).order_by(
             "-date").prefetch_related('likes').select_related('user')
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = GalleryPostSerializer(
@@ -53,6 +79,7 @@ class ProfilePosts(viewsets.ViewSet):
         response = {
             QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data, 'user': serialized_user.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
+            'is_following': self.is_following
 
         }
         return Response(response)
