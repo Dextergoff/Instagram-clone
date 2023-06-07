@@ -9,6 +9,7 @@ const EditButton = ({ states }) => {
   const { setFile } = states;
   const { editmode, response } = state;
   const { description, username } = formData;
+  const [editProfile] = useEditProfileMutation();
 
   const enableEdit = () => {
     setState({
@@ -19,9 +20,12 @@ const EditButton = ({ states }) => {
     resetFormData();
     resetFile();
   };
-  const [editProfile] = useEditProfileMutation();
-  // TODO items not bein updated properly after submit
+  // TODO items not being updated properly after submit
   const usernametaken = Boolean(response != "username is taken");
+
+  // useEffect(() => {
+
+  // }, [username, description, states.file]);
 
   const resetFormData = () => {
     setFormData({
@@ -73,10 +77,7 @@ const EditButton = ({ states }) => {
   };
   return (
     <>
-      {(usernametaken && username?.length > 0) ||
-      (usernametaken && description?.length > 0) ||
-      (usernametaken && states.file?.length > 0) ? (
-        // TODO these if statements are really bad and need to be changed
+      {states.state.editmode ? (
         <button
           type="submit"
           onClick={onSubmit}
