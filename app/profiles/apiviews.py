@@ -28,31 +28,50 @@ User = get_user_model()
 
 
 class GetFollowers(APIView):
-    def get(self, request, requested_user_pk, page):
-        user = User.objects.get(pk=requested_user_pk)
-        queryset = user.followers.all()
-        queryset = pageify(queryset=queryset, page=page, items_per_page=6)
-        serializer = UserSerializer(
+
+    def get(self, request, requested_user_pk, pk, page):
+        requested_user = User.objects.get(pk=requested_user_pk)
+        self.user = User.objects.get(pk=pk)
+        followers = requested_user.followers.all()
+        queryset = pageify(queryset=followers, page=page, items_per_page=6)
+        self.serializer = UserSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        self.following_check()
         response = {
-            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: self.serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
         }
         return Response(response)
+
+    def following_check(self):
+        for i in self.serializer.data:
+            self.is_following = self.user.following.filter(
+                pk=i['pk']).exists()
+            i['is_following'] = self.is_following
+            print(i)
 
 
 class GetFollowing(APIView):
-    def get(self, request, requested_user_pk, page):
-        user = User.objects.get(pk=requested_user_pk)
-        queryset = user.following.all()
-        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
-        serializer = UserSerializer(
+    def get(self, request, requested_user_pk, pk, page):
+        requested_user = User.objects.get(pk=requested_user_pk)
+        self.user = User.objects.get(pk=pk)
+        followers = requested_user.following.all()
+        queryset = pageify(queryset=followers, page=page, items_per_page=6)
+        self.serializer = UserSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        self.following_check()
         response = {
-            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: self.serializer.data},
             PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']],
         }
         return Response(response)
+
+    def following_check(self):
+        for i in self.serializer.data:
+            self.is_following = self.user.following.filter(
+                pk=i['pk']).exists()
+            i['is_following'] = self.is_following
+            print(i)
 
 
 class ManageFollowers(APIView):
