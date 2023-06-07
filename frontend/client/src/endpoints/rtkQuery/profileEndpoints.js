@@ -27,8 +27,8 @@ splitApi.injectEndpoints({
       keepUnusedDataFor: 0,
     }),
     getFollowing: builder.query({
-      query: ({ requested_user_pk, page }) => ({
-        url: `profiles/following/${requested_user_pk}/${page}`,
+      query: ({ requested_user_pk, pk, page }) => ({
+        url: `profiles/following/${requested_user_pk}/${pk}/${page}`,
         headers: {
           "Content-type": "application/json",
         },
@@ -36,8 +36,8 @@ splitApi.injectEndpoints({
     }),
 
     getFollowers: builder.query({
-      query: ({ requested_user_pk, page }) => ({
-        url: `profiles/followers/${requested_user_pk}/${page}`,
+      query: ({ requested_user_pk, pk, page }) => ({
+        url: `profiles/followers/${requested_user_pk}/${pk}/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
