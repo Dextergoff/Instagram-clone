@@ -10,6 +10,7 @@ import getQueryLength from "components/jobs/getQueryLength";
 import UserDetails from "containers/posts/UserDetails";
 import FollowBtn from "./FollowBtn";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 const FollowerModal = () => {
   const { userobj } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -19,13 +20,22 @@ const FollowerModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
     page: 1,
+    skip: true,
+    pk: null,
   });
-  const { show, page } = modalState;
+  const { show, page, skip, pk } = modalState;
   const handleClose = () => {
     setModalState({ ...modalState, show: false, skip: true });
     navigate(-1);
   };
-  const { data = [] } = useGetFollowersQuery({ requested_user_pk, page });
+  useEffect(() => {
+    if (userobj) setModalState({ ...modalState, pk: userobj.pk, skip: false });
+  }, [userobj]);
+
+  const { data = [] } = useGetFollowersQuery(
+    { requested_user_pk, pk, page },
+    { skip: skip }
+  );
   if (getQueryLength(data) > 0)
     return (
       <Layout>
@@ -66,7 +76,7 @@ const FollowerModal = () => {
 
                     <div className="p-2 ml-auto">
                       <FollowBtn
-                        is_following={data.is_following}
+                        is_following={follower.is_following}
                         requested_user={follower}
                         userobj={userobj}
                       />

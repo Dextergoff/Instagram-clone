@@ -4,15 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import "./css/Modal.css";
 import Layout from "Layout/Layout";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetFollowersQuery,
-  useGetFollowingQuery,
-} from "endpoints/rtkQuery/profileEndpoints";
+import { useGetFollowingQuery } from "endpoints/rtkQuery/profileEndpoints";
 import { useLocation } from "react-router-dom";
 import getQueryLength from "components/jobs/getQueryLength";
 import UserDetails from "containers/posts/UserDetails";
 import FollowBtn from "./FollowBtn";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 const FollowingModal = () => {
   const { userobj } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -22,13 +20,22 @@ const FollowingModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
     page: 1,
+    skip: true,
+    pk: null,
   });
-  const { show, page } = modalState;
+  const { show, page, skip, pk } = modalState;
   const handleClose = () => {
     setModalState({ ...modalState, show: false, skip: true });
     navigate(-1);
   };
-  const { data = [] } = useGetFollowingQuery({ requested_user_pk, page });
+  useEffect(() => {
+    if (userobj) setModalState({ ...modalState, pk: userobj.pk, skip: false });
+  }, [userobj]);
+
+  const { data = [] } = useGetFollowingQuery(
+    { requested_user_pk, pk, page },
+    { skip: skip }
+  );
   if (getQueryLength(data) > 0)
     return (
       <Layout>
@@ -67,7 +74,7 @@ const FollowingModal = () => {
 
                   <div className="p-2 ml-auto">
                     <FollowBtn
-                      is_following={data.is_following}
+                      is_following={following.is_following}
                       requested_user={following}
                       userobj={userobj}
                     />
