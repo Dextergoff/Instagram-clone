@@ -73,10 +73,13 @@ const ProfileHeader = ({ data, requested_user, userobj, location, page }) => {
           requested_user={requested_user}
         />
         <FollowBtn
+          queryName="getProfilePage"
           is_following={data.is_following}
           requested_user={requested_user}
-          userobj={userobj}
+          queryArg={requested_user.pk}
+          secondQueryArg={userobj.pk}
           page={page}
+          userobj={userobj}
         />
 
         {is_self ? (

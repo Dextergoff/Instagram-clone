@@ -4,7 +4,15 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { splitApi } from "endpoints/rtkQuery/splitApi";
 import UpdateFollowing from "./UpdateFollowing";
-const FollowBtn = ({ is_following, requested_user, userobj, page }) => {
+const FollowBtn = ({
+  is_following,
+  requested_user,
+  userobj,
+  page,
+  queryName,
+  queryArg,
+  secondQueryArg,
+}) => {
   const dispatch = useDispatch();
   const [manage_followers, result] = useManageFollowersMutation();
   const requested_user_pk = requested_user.pk;
@@ -13,12 +21,13 @@ const FollowBtn = ({ is_following, requested_user, userobj, page }) => {
   useEffect(() => {
     if (result.data)
       UpdateFollowing({
-        queryArg: requested_user_pk,
+        queryArg: queryArg,
         result: result,
         dispatch: dispatch,
-        secondQueryArg: pk,
-        queryName: "getProfilePage",
+        secondQueryArg: secondQueryArg,
+        queryName: queryName,
         page: page,
+        requested_user_pk: requested_user_pk,
       });
   }, [result]);
 

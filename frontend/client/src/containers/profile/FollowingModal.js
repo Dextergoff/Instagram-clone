@@ -74,8 +74,12 @@ const FollowingModal = () => {
 
                   <div className="p-2 ml-auto">
                     <FollowBtn
+                      queryName="getFollowing"
                       is_following={following.is_following}
                       requested_user={following}
+                      queryArg={requested_user.pk}
+                      secondQueryArg={userobj.pk}
+                      page={page}
                       userobj={userobj}
                     />
                   </div>
