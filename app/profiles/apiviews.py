@@ -48,7 +48,6 @@ class GetFollowers(APIView):
             self.is_following = self.user.following.filter(
                 pk=i['pk']).exists()
             i['is_following'] = self.is_following
-            print(i)
 
 
 class GetFollowing(APIView):
@@ -71,7 +70,6 @@ class GetFollowing(APIView):
             self.is_following = self.user.following.filter(
                 pk=i['pk']).exists()
             i['is_following'] = self.is_following
-            print(i)
 
 
 class ManageFollowers(APIView):
@@ -84,8 +82,16 @@ class ManageFollowers(APIView):
         self.add_or_remove()
         self.user.save()
         self.requested_user.save()
+        response = {
+            "follower_count": self.requested_user.followers_count,
+            "following_count": self.requested_user.following_count,
+            "is_following": self.updated_is_following
+
+        }
+        return Response(response)
 
     def add_follower(self):
+        self.updated_is_following = False
         self.requested_user.followers.remove(self.user)
         self.requested_user.followers_count -= 1
 
@@ -93,6 +99,7 @@ class ManageFollowers(APIView):
         self.user.following_count -= 1
 
     def remove_follower(self):
+        self.updated_is_following = True
         self.requested_user.followers.add(self.user)
         self.requested_user.followers_count += 1
 
