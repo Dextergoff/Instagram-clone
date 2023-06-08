@@ -101,7 +101,6 @@ const ProfileHeader = ({ data, requested_user, userobj, location, page }) => {
       </div>
 
       <InfoBar requested_user={requested_user} location={location} />
-      {/* TODO update follower count and is_following by returning that data in manage followers response  */}
 
       <Description
         states={{ state, setState, formData, setFormData, userState }}
