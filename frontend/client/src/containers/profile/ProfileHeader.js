@@ -11,7 +11,7 @@ import { useManageFollowersMutation } from "endpoints/rtkQuery/profileEndpoints"
 import MessageBtn from "components/buttons/MessageBtn";
 import FollowBtn from "./FollowBtn";
 
-const ProfileHeader = ({ data, requested_user, userobj, location }) => {
+const ProfileHeader = ({ data, requested_user, userobj, location, page }) => {
   const is_self = Boolean(userobj.pk == requested_user.pk);
   const [formData, setFormData] = useState({
     user: requested_user.pk,
@@ -76,6 +76,7 @@ const ProfileHeader = ({ data, requested_user, userobj, location }) => {
           is_following={data.is_following}
           requested_user={requested_user}
           userobj={userobj}
+          page={page}
         />
 
         {is_self ? (
