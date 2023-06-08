@@ -56,6 +56,7 @@ const Profile = () => {
             requested_user={data.nested_data.user}
             userobj={userobj}
             location={location}
+            page={page}
           />
         </div>
         <PostGallery data={data} states={{ state, setState }} />
