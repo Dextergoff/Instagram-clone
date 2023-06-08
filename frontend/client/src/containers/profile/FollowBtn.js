@@ -1,10 +1,26 @@
 import { useManageFollowersMutation } from "endpoints/rtkQuery/profileEndpoints";
 import MessageBtn from "components/buttons/MessageBtn";
-const FollowBtn = ({ is_following, requested_user, userobj }) => {
-  const [manage_followers] = useManageFollowersMutation();
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { splitApi } from "endpoints/rtkQuery/splitApi";
+import UpdateFollowing from "./UpdateFollowing";
+const FollowBtn = ({ is_following, requested_user, userobj, page }) => {
+  const dispatch = useDispatch();
+  const [manage_followers, result] = useManageFollowersMutation();
   const requested_user_pk = requested_user.pk;
   const pk = userobj.pk;
   const is_self = Boolean(userobj?.pk == requested_user.pk);
+  useEffect(() => {
+    if (result.data)
+      UpdateFollowing({
+        queryArg: requested_user_pk,
+        result: result,
+        dispatch: dispatch,
+        secondQueryArg: pk,
+        queryName: "getProfilePage",
+        page: page,
+      });
+  }, [result]);
 
   if (!is_self) {
     return (
@@ -30,7 +46,6 @@ const FollowBtn = ({ is_following, requested_user, userobj }) => {
             >
               Following
             </div>
-
             <div className="align-self-center">
               <MessageBtn target={requested_user} size="sm" />
             </div>
