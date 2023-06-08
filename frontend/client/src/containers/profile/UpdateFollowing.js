@@ -5,20 +5,22 @@ const UpdateFollowing = ({
   queryArg,
   secondQueryArg,
   queryName,
+  requested_user_pk,
   page,
 }) => {
-  console.log(queryArg);
+  console.log(queryName, queryArg, secondQueryArg, page);
 
-  if (result.data)
-    return dispatch(
-      splitApi.util.updateQueryData(
-        queryName,
-        { queryArg, secondQueryArg, page },
-        (i) => {
-          i.is_following = result.data.is_following;
+  return dispatch(
+    splitApi.util.updateQueryData(
+      queryName,
+      { queryArg, secondQueryArg, page },
+      (i) => {
+        if (queryName !== "getProfilePage") {
+          i = i.nested_data.data.find((item) => item.pk === requested_user_pk);
         }
-      )
-    );
+        i.is_following = result.data.is_following;
+      }
+    )
+  );
 };
-// TODO implement updates when user follows from follower list the queryname has to be passed as a prop to followBtn from other components and data will be retrived and updated properly based on that
 export default UpdateFollowing;
