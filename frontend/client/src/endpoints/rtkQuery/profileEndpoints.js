@@ -30,10 +30,18 @@ splitApi.injectEndpoints({
     getFollowing: builder.query({
       query: ({ requested_user_pk, pk, page }) => ({
         url: `profiles/following/${requested_user_pk}/${pk}/${page}`,
+        method: "get",
         headers: {
           "Content-type": "application/json",
         },
       }),
+      serializeQueryArgs: ({ getProfilePage }) => {
+        return getProfilePage;
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
 
     getFollowers: builder.query({
@@ -44,6 +52,14 @@ splitApi.injectEndpoints({
           "Content-type": "application/json",
         },
       }),
+      serializeQueryArgs: ({ getProfilePage }) => {
+        return getProfilePage;
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      keepUnusedDataFor: 0,
     }),
 
     editProfile: builder.mutation({
