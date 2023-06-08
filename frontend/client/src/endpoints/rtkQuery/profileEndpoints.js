@@ -26,6 +26,7 @@ splitApi.injectEndpoints({
       },
       keepUnusedDataFor: 0,
     }),
+
     getFollowing: builder.query({
       query: ({ requested_user_pk, pk, page }) => ({
         url: `profiles/following/${requested_user_pk}/${pk}/${page}`,
