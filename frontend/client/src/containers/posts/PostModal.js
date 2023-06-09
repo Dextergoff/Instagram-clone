@@ -11,11 +11,11 @@ import { useLocation } from "react-router-dom";
 import { useGetPostQuery } from "endpoints/rtkQuery/postEndpoints";
 import CommentSection from "containers/comment/Comments";
 import PostImage from "components/Image/PostImage";
-import QueryDecider from "../../components/queryfun/QueryDecider";
 import UserDetails from "./UserDetails";
 import TitleAndHashtags from "./TitleAndHashtags";
 import PostAge from "./PostAge";
 import Layout from "Layout/Layout";
+import getQueryLength from "components/jobs/getQueryLength";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -32,21 +32,12 @@ const PostModal = () => {
 
   const { pk } = params;
 
-  const skipPage = !Boolean(queryName === "getPage");
-  const skipPost = !Boolean(queryName === "getPost");
-
-  const useCachedData = splitApi.endpoints.getPage.useQueryState({
-    skip: skipPage,
-  });
-  const queryPost = useGetPostQuery(Number(pk), { skip: skipPost });
-  const post = QueryDecider({ queryPost, useCachedData, pk });
-
+  const { data = [] } = useGetPostQuery(Number(pk));
   const handleClose = () => {
     setModalState({ ...modalState, show: false, skip: true });
     navigate(-1);
   };
-
-  if (post)
+  if (getQueryLength(data) > 0)
     return (
       <Layout>
         <div className="">
@@ -60,7 +51,7 @@ const PostModal = () => {
               <div className="img-wrapper">
                 <PostImage
                   style={{ height: "100%", width: "100%" }}
-                  image={post.image}
+                  image={data.image}
                 />
               </div>
               <div className="sidebar d-flex flex-column bg-black ">
@@ -73,12 +64,12 @@ const PostModal = () => {
                   className="mt-2 mb-2"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <UserDetails user={post.user} />
-                    <PostAge date={post.date} />
+                    <UserDetails user={data.user} />
+                    <PostAge date={data.date} />
                   </div>
 
                   <div className="mb-2">
-                    <TitleAndHashtags post={post} />
+                    <TitleAndHashtags post={data} />
                   </div>
                 </div>
                 <div
@@ -87,7 +78,7 @@ const PostModal = () => {
                   }}
                   className="comment-section"
                 >
-                  <CommentSection parent={post.pk} />
+                  <CommentSection parent={data.pk} />
                 </div>
                 <div
                   style={{
@@ -103,7 +94,7 @@ const PostModal = () => {
                       queryName={queryName}
                       updateCacheArgument={updateCacheArgument}
                       addArgument={addArgument}
-                      post={post}
+                      post={data}
                     />
                   </div>
                 </div>
@@ -114,7 +105,7 @@ const PostModal = () => {
                     paddingTop: "10px",
                   }}
                 >
-                  <CreateComment parent={post} post={post.pk} />
+                  <CreateComment parent={data} post={data.pk} />
                 </div>
               </div>
             </Modal.Body>
