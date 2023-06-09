@@ -37,7 +37,7 @@ class CommentsView(viewsets.ViewSet):
         parent = kwargs['parent']
 
         queryset = Comment.objects.filter(parent=parent).order_by(
-            "-date").prefetch_related('likes').select_related('user')
+            "-likecount").prefetch_related('likes').select_related('user')
 
         queryset = pageify(queryset=queryset, page=page, items_per_page=50)
 
