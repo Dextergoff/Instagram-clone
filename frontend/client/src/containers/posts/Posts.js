@@ -2,7 +2,7 @@ import Layout from "Layout/Layout";
 import { useState } from "react";
 import CreateComment from "containers/comment/CreateComment";
 import InteractionBar from "components/interactionbar/InteractionBar";
-import { useGetPageQuery } from "endpoints/rtkQuery/postEndpoints";
+import { useGetDiscoverQuery } from "endpoints/rtkQuery/postEndpoints";
 import PostImage from "components/Image/PostImage";
 import UserDetails from "./UserDetails";
 import getQueryLength from "components/jobs/getQueryLength";
@@ -10,12 +10,23 @@ import TitleAndHashtags from "./TitleAndHashtags";
 import LoadContent from "containers/posts/LoadContent";
 import PostAge from "./PostAge";
 import Navbar from "Navbar/Navbar";
+import { useGetFollowingPostsQuery } from "endpoints/rtkQuery/postEndpoints";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 const Posts = () => {
+  const { userobj } = useSelector((state) => state.user);
   const [state, setState] = useState({
     page: 1,
+    pk: null,
+    skip: true,
   });
-  const { page } = state;
-  const { data = [] } = useGetPageQuery(page);
+  const { page, pk, skip } = state;
+  const { data = [] } = useGetFollowingPostsQuery({ page, pk }, { skip: skip });
+  useEffect(() => {
+    if (userobj) {
+      setState({ ...state, pk: userobj.pk, skip: false });
+    }
+  }, [userobj]);
 
   if (getQueryLength(data) > 0)
     return (
