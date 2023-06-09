@@ -19,6 +19,7 @@ import NotFoud from "containers/auth/NotFoud";
 import MessageWS from "containers/messages/MessageWS";
 import ChatRooms from "containers/messages/ChatRooms";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Discover from "containers/posts/Discover";
 import {
   faHeart,
   faComment,
@@ -66,6 +67,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Posts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/discover"
+          element={
+            <ProtectedRoute>
+              <Discover />
             </ProtectedRoute>
           }
         />
