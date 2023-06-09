@@ -73,24 +73,27 @@ class GetFollowing(APIView):
 
 
 class ManageFollowers(APIView):
+    def following_check(self):
+        self.is_following = self.requested_user.followers.filter(
+            pk=self.user.pk).exists()
+        return self.is_following
 
     def post(self, request,  pk, requested_user_pk):
         self.requested_user = User.objects.select_related().get(pk=requested_user_pk)
         self.user = User.objects.select_related().get(pk=pk)
-        self.is_following = self.requested_user.followers.filter(
-            pk=self.user.pk).exists()
+
         self.add_or_remove()
         self.user.save()
         self.requested_user.save()
         response = {
             "follower_count": self.requested_user.followers_count,
             "following_count": self.requested_user.following_count,
-            "is_following": self.updated_is_following
+            "is_following": self.following_check()
 
         }
         return Response(response)
 
-    def add_follower(self):
+    def remove_follower(self):
         self.updated_is_following = False
         self.requested_user.followers.remove(self.user)
         self.requested_user.followers_count -= 1
@@ -98,7 +101,7 @@ class ManageFollowers(APIView):
         self.user.following.remove(self.requested_user)
         self.user.following_count -= 1
 
-    def remove_follower(self):
+    def add_follower(self):
         self.updated_is_following = True
         self.requested_user.followers.add(self.user)
         self.requested_user.followers_count += 1
@@ -107,10 +110,10 @@ class ManageFollowers(APIView):
         self.user.following_count += 1
 
     def add_or_remove(self):
-        if (self.is_following):
-            self.add_follower()
-        else:
+        if (self.following_check()):
             self.remove_follower()
+        else:
+            self.add_follower()
 
 
 class ProfilePosts(viewsets.ViewSet):
