@@ -56,25 +56,54 @@ class PostsView(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class PageView(viewsets.ViewSet):
+class DiscoverView(viewsets.ViewSet):
     serializer = PostSerializer
 
-    def get_filter(self, data, **kwargs,):
-        try:
-            kwargs = data['filter']
-            if (kwargs.get('hashtags')):
-                hashtag = Hashtag.objects.get(title=kwargs.get('hashtags'))
-                kwargs = {"hashtags": hashtag}
-        except:
-            kwargs = {}
-        return kwargs
-
-    def main(self, request, page, **kwargs):
-        kwargs = self.get_filter(data=request.data)
-        queryset = Post.objects.filter(**kwargs).order_by("-date").prefetch_related(
+    def main(self, request, page):
+        queryset = Post.objects.all().order_by("-date").prefetch_related(
             Prefetch('likes'),
             Prefetch('hashtags'))
 
+        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+        serializer = PostSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        response = {
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
+        }
+        return Response(response)
+
+
+class FollowingView(viewsets.ViewSet):
+    serializer = PostSerializer
+
+    def main(self, request, pk, page):
+        user = User.objects.get(pk=pk)
+        following = user.following.all()
+        queryset = Post.objects.filter(user__in=following).order_by("-date").prefetch_related(
+            Prefetch('likes'),
+            Prefetch('hashtags'))
+
+        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+        serializer = PostSerializer(
+            queryset[PAGEIFY['QUERYSET_KEY']], many=True)
+        response = {
+            QUERYING['ND_KEY']: {QUERYING['PAGE_KEY']: [page], QUERYING['DATA_KEY']: serializer.data},
+            PAGEIFY['EOP_KEY']: queryset[PAGEIFY['EOP_KEY']]
+        }
+        return Response(response)
+
+
+class HashTagView(viewsets.ViewSet):
+    serializer = PostSerializer
+
+    def main(self, request, page, **kwargs):
+        kwargs = request.data['filter']
+        hashtag = Hashtag.objects.get(title=kwargs.get('hashtags'))
+        kwargs = {"hashtags": hashtag}
+        queryset = Post.objects.filter(**kwargs).order_by("-date").prefetch_related(
+            Prefetch('likes'),
+            Prefetch('hashtags'))
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = PostSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
