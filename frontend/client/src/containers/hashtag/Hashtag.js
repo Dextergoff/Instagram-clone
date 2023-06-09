@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetHashtagPostsQuery } from "endpoints/rtkQuery/hashtagEndpoints";
+import { useGetHashtagQuery } from "endpoints/rtkQuery/hashtagEndpoints";
 import { useState } from "react";
 import Layout from "Layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ const Hashtag = () => {
   });
   const { page, filter } = state;
 
-  const { data = [] } = useGetHashtagPostsQuery({ filter, page });
+  const { data = [] } = useGetHashtagQuery({ filter, page });
 
   const loadMorePosts = () => {
     setState({

@@ -15,9 +15,33 @@ splitApi.injectEndpoints({
       }),
     }),
 
-    getPage: builder.query({
+    getDiscover: builder.query({
       query: (page) => ({
-        url: `${callto}/page/${page}`,
+        url: `${callto}/discover/${page}`,
+        method: "get",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+      transformResponse: (response, arg) => {
+        setResponse({ response, arg });
+        return response;
+      },
+      serializeQueryArgs: ({ getPage }) => {
+        return getPage;
+      },
+      merge: (currentCache, newItems) => {
+        mergeNewItems({ currentCache, newItems });
+      },
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+    }),
+
+    getFollowingPosts: builder.query({
+      query: ({ page, pk }) => ({
+        url: `${callto}/following/${page}/${pk}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -61,5 +85,6 @@ export const {
   useGetPostQuery,
   useCreatePostMutation,
   useLikePostMutation,
-  useGetPageQuery,
+  useGetDiscoverQuery,
+  useGetFollowingPostsQuery,
 } = splitApi;

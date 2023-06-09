@@ -5,18 +5,17 @@ const callto = "hashtags";
 
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
-    getHashtagPosts: builder.query({
+    getHashtag: builder.query({
       query: ({ filter, page }) => ({
-        url: `/posts/page/${page}/`,
+        url: `/posts/hashtag/${page}/`,
         method: "post",
         body: filter,
-
         headers: {
           "Content-type": "application/json",
         },
       }),
-      serializeQueryArgs: ({ getHashtagPosts }) => {
-        return getHashtagPosts;
+      serializeQueryArgs: ({ getHashtag }) => {
+        return getHashtag;
       },
       transformResponse: (response, arg) => {
         setResponse({ response, arg });
@@ -33,4 +32,4 @@ splitApi.injectEndpoints({
   }),
 });
 
-export const { useGetHashtagPostsQuery } = splitApi;
+export const { useGetHashtagQuery } = splitApi;
