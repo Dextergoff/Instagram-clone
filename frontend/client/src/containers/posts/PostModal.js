@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import { Dropdown } from "react-bootstrap";
 import "./css/Modal.css";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ import TitleAndHashtags from "./TitleAndHashtags";
 import PostAge from "./PostAge";
 import Layout from "Layout/Layout";
 import getQueryLength from "components/jobs/getQueryLength";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const PostModal = () => {
   const [modalState, setModalState] = useState({
     show: true,
@@ -64,8 +66,31 @@ const PostModal = () => {
                   className="mt-2 mb-2"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <UserDetails user={data.user} />
-                    <PostAge date={data.date} />
+                    <div className="d-flex flex-row align-items-center">
+                      <UserDetails user={data.user} />
+                      <PostAge date={data.date} />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant=" primary"
+                          id="dropdown-basic"
+                          className="text-light"
+                        ></Dropdown.Toggle>
+
+                        <Dropdown.Menu className="bg-dark">
+                          <Dropdown.Item
+                            style={{
+                              pointerEvents: "auto",
+                            }}
+                            href="#/action-1"
+                            className=" bg-dark text-danger hover"
+                          >
+                            Delete Post
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                   </div>
 
                   <div className="mb-2">
