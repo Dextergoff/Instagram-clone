@@ -32,6 +32,7 @@ import {
   faCheckCircle,
   faCircleXmark,
   faMessage,
+  faListAlt,
 } from "@fortawesome/free-regular-svg-icons";
 import Messages from "containers/messages/MessageWS";
 import FollowerModal from "containers/profile/FollowerModal";
@@ -48,7 +49,8 @@ library.add(
   faEdit,
   faCheckCircle,
   faCircleXmark,
-  faMessage
+  faMessage,
+  faListAlt
 );
 const App = () => {
   const dispatch = useDispatch();
