@@ -38,7 +38,7 @@ const CreatePost = () => {
     addNewPost(form_data())
       .unwrap()
       .then(() => {
-        navigate("/u");
+        navigate(`/u/${userobj?.pk}`);
       })
       .then((error) => {});
   };
@@ -48,7 +48,6 @@ const CreatePost = () => {
       setFormData({ ...formData, user: userobj.pk });
     }
   }, [loading, userobj]);
-
   return (
     <Layout>
       <form encType="multipart/form-data" onSubmit={onSubmit}>
