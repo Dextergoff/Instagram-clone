@@ -11,4 +11,6 @@ urlpatterns = [
          HashTagView.as_view({'get': 'main', 'post': 'main'}), ),
     path('likepost/', LikePost.as_view({'post': 'like'}), ),
     path('createpost/', CreatePostView.as_view(), ),
+    path('delete_post/',
+         DeletePost.as_view({'post': 'main', }), ),
 ]

@@ -26,6 +26,14 @@ from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
 
 
+class DeletePost(viewsets.ViewSet):
+    def main(self, request):
+        post_pks = request.data['post_pks']
+        posts = Post.objects.filter(pk__in=post_pks)
+        posts.delete()
+        return Response(status.HTTP_200_OK)
+
+
 class LikePost(viewsets.ViewSet):
 
     def proccess_like(self, post, user):
