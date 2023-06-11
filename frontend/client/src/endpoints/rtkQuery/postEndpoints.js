@@ -1,13 +1,13 @@
 import { splitApi } from "./splitApi";
 import mergeNewItems from "./mergeNewItems";
 import setResponse from "./setResponse";
-const callto = "posts";
+const endpoint = "posts";
 
 splitApi.injectEndpoints({
   endpoints: (builder) => ({
     getPost: builder.query({
       query: (pk) => ({
-        url: `${callto}/post/${pk}`,
+        url: `${endpoint}/post/${pk}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -17,7 +17,7 @@ splitApi.injectEndpoints({
 
     getDiscover: builder.query({
       query: (page) => ({
-        url: `${callto}/discover/${page}`,
+        url: `${endpoint}/discover/${page}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -41,7 +41,7 @@ splitApi.injectEndpoints({
 
     getFollowingPosts: builder.query({
       query: ({ page, pk }) => ({
-        url: `${callto}/following/${page}/${pk}`,
+        url: `${endpoint}/following/${page}/${pk}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
@@ -65,7 +65,7 @@ splitApi.injectEndpoints({
 
     createPost: builder.mutation({
       query: (payload) => ({
-        url: `${callto}/createpost/`,
+        url: `${endpoint}/createpost/`,
         method: "post",
         body: payload,
       }),
@@ -73,9 +73,17 @@ splitApi.injectEndpoints({
 
     likePost: builder.mutation({
       query: ({ pk, requser }) => ({
-        url: `${callto}/likepost/`,
+        url: `${endpoint}/likepost/`,
         method: "post",
         body: { pk, requser },
+      }),
+    }),
+
+    deletePost: builder.mutation({
+      query: (post_pks) => ({
+        url: `${endpoint}/delete_post/`,
+        method: "post",
+        body: { post_pks },
       }),
     }),
   }),
@@ -85,6 +93,7 @@ export const {
   useGetPostQuery,
   useCreatePostMutation,
   useLikePostMutation,
+  useDeletePostMutation,
   useGetDiscoverQuery,
   useGetFollowingPostsQuery,
 } = splitApi;
