@@ -50,10 +50,18 @@ class LikePostSerializer(serializers.ModelSerializer):
 
 
 class CreatePostSerializer(serializers.Serializer):
+    def parse_title(self):
+        for word in self.post.title.split():
+            if word[0] == '#':
+                Hashtag.objects.get_or_create(title=word[1:])
+                hashtag = Hashtag.objects.get(title=word[1:])
+                self.post.hashtags.add(hashtag)
+                newtitle = self.post.title.replace(word, "")
+                self.post.title = newtitle
+                self.post.save()
 
     def create_post(self, data):
-        user = User.objects.get(pk=data['user'])
-        post = Post.objects.create(
-            user=user, image=data['image'],  title=data['title'])
-        post_created.send(sender=__class__, post=post)
-        # signal recived by create hashtags reciver
+        self.user = User.objects.get(pk=data['user'])
+        self.post = Post.objects.create(
+            user=self.user, image=data['image'],  title=data['title'])
+        self.parse_title()
