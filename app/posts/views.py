@@ -21,9 +21,9 @@ from django.shortcuts import get_object_or_404
 from .models import Post
 from .serializers import *
 from center.modules.actions.pageify import pageify
-
 from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
+from reccomendations.models import *
 
 
 class DeletePost(viewsets.ViewSet):
@@ -36,22 +36,34 @@ class DeletePost(viewsets.ViewSet):
 
 class LikePost(viewsets.ViewSet):
 
-    def proccess_like(self, post, user):
-        if user in post.likes.all():
-            post.likes.remove(user)
-            post.likecount -= 1
+    def proccess_like(self):
+        if self.user in self.post.likes.all():
+            self.post.likes.remove(self.user)
+            self.post.likecount -= 1
         else:
-            post.likes.add(user)
-            post.likecount += 1
-        post.save(update_fields=['likecount'])
+            self.post.likes.add(self.user)
+            self.post.likecount += 1
+            self.proccess_interests()
+        self.post.save(update_fields=['likecount'])
+
+    def proccess_interests(self):
+        for i in self.post.hashtags.all():
+            print(i)
+            hashtag = Hashtag.objects.get(title=i)
+            try:
+                item = Interest.objects.get(hashtag=hashtag, user=self.user)
+            except:
+                item = Interest.objects.create(hashtag=hashtag, user=self.user)
+            item.score += 1
+            item.save()
 
     def like(self, request):
-        data = request.data
-        user = User.objects.select_related().get(pk=data['requser'])
-        post = Post.objects.select_related().prefetch_related(
-            "likes").get(pk=data['pk'])
-        self.proccess_like(post, user)
-        serializer = LikePostSerializer(post)
+        self.data = request.data
+        self.user = User.objects.select_related().get(pk=self.data['requser'])
+        self.post = Post.objects.select_related().prefetch_related(
+            "likes").get(pk=self.data['pk'])
+        self.proccess_like()
+        serializer = LikePostSerializer(self.post)
         return Response(serializer.data)
 
 
