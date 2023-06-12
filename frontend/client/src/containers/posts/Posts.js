@@ -27,7 +27,7 @@ const Posts = () => {
       setState({ ...state, pk: userobj.pk, skip: false });
     }
   }, [userobj]);
-
+  // TODO likes not updating because endpoints are all diffrent names a there  needs to be seperate update like functions for each of them or querynamed need to be passed into the update like function
   if (getQueryLength(data) > 0)
     return (
       <Layout>
