@@ -48,7 +48,6 @@ class LikePost(viewsets.ViewSet):
 
     def proccess_interests(self):
         for i in self.post.hashtags.all():
-            print(i)
             hashtag = Hashtag.objects.get(title=i)
             try:
                 item = Interest.objects.get(hashtag=hashtag, user=self.user)
