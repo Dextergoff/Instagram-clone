@@ -5,6 +5,7 @@ import Layout from "Layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PostGallery from "containers/profile/PostGallery";
 import Navbar from "Navbar/Navbar";
+import HashTagGallery from "./HashTagGallery";
 const Hashtag = () => {
   const params = useParams();
   const hashtag = params.hashtag;
@@ -37,7 +38,7 @@ const Hashtag = () => {
             {data?.post_count} posts
           </div>
         </div>
-        <PostGallery data={data} states={{ state, setState }} />
+        <HashTagGallery data={data} states={{ state, setState }} />
         {!data.end_of_data ? (
           <div className="d-flex justify-content-center">
             <button className="btn" onClick={() => loadMorePosts()}>
