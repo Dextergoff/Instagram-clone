@@ -3,7 +3,7 @@ from .views import *
 app_name = "posts"
 urlpatterns = [
     path('post/<pk>', PostsView.as_view({'get': 'main'}), ),
-    path('discover/<int:page>/',
+    path('discover/<int:page>/<int:pk>',
          DiscoverView.as_view({'get': 'main', 'post': 'main'}), ),
     path('following/<int:page>/<int:pk>',
          FollowingView.as_view({'get': 'main', 'post': 'main'}), ),

@@ -16,8 +16,8 @@ splitApi.injectEndpoints({
     }),
 
     getDiscover: builder.query({
-      query: (page) => ({
-        url: `${endpoint}/discover/${page}`,
+      query: ({ page, pk }) => ({
+        url: `${endpoint}/discover/${page}/${pk}`,
         method: "get",
         headers: {
           "Content-type": "application/json",
