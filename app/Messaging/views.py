@@ -18,7 +18,6 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from center.modules.actions.pageify import pageify
 from .models import *
 from .serializers import *
-
 from center.settings import PAGEIFY, QUERYING
 
 
