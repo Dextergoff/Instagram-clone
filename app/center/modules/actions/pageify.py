@@ -3,9 +3,11 @@ from center.settings import PAGEIFY
 
 
 def count_posts(org_qs, paged_qs, items_per_page):
-    post_count = org_qs.count()
+    post_count = 0
+    for i in org_qs:
+        post_count += 1
     end_of_data = False
-    if paged_qs.count() < items_per_page:
+    if post_count <= items_per_page:
         end_of_data = True
     return {PAGEIFY['PC_KEY']: post_count, PAGEIFY['EOP_KEY']: end_of_data}
 
