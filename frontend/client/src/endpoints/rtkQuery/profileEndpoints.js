@@ -38,7 +38,6 @@ splitApi.injectEndpoints({
       serializeQueryArgs: ({ getProfilePage }) => {
         return getProfilePage;
       },
-
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
