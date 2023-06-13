@@ -13,12 +13,19 @@ import Navbar from "Navbar/Navbar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 const Discover = () => {
-  //   const { userobj } = useSelector((state) => state.user);
+  const { userobj } = useSelector((state) => state.user);
   const [state, setState] = useState({
     page: 1,
+    pk: null,
+    skip: true,
   });
-  const { page } = state;
-  const { data = [] } = useGetDiscoverQuery(page);
+  const { page, pk, skip } = state;
+  const { data = [] } = useGetDiscoverQuery({ page, pk }, { skip: skip });
+  useEffect(() => {
+    if (userobj?.pk) {
+      setState({ ...state, pk: userobj.pk, skip: false });
+    }
+  }, [userobj]);
 
   if (getQueryLength(data) > 0)
     return (
