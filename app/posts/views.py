@@ -23,7 +23,6 @@ from .serializers import *
 from center.modules.actions.pageify import pageify
 from center.settings import PAGEIFY, QUERYING
 from django.db.models import Prefetch
-from reccomendations.models import *
 
 
 class DeletePost(viewsets.ViewSet):
@@ -78,12 +77,47 @@ class PostsView(viewsets.ViewSet):
 class DiscoverView(viewsets.ViewSet):
     serializer = PostSerializer
 
-    def main(self, request, page):
-        queryset = Post.objects.all().order_by("-date").prefetch_related(
-            Prefetch('likes'),
-            Prefetch('hashtags'))
+    def recommendation_engine(self, pk):
+        user = User.objects.get(pk=pk)
+        all_users = User.objects.exclude(pk=pk)
+        user_liked_posts = Post.objects.filter(
+            likes=user)
+        recommendations = []
+        qs = []
+        if user_liked_posts:
+            for other_user in all_users:
+                similarity = self.calculate_similarity(user, other_user)
+                if similarity > 0:
+                    other_user_liked_posts = Post.objects.filter(
+                        likes=other_user)
+                    user_unseen_posts = Post.objects.exclude(
+                        pk__in=other_user_liked_posts).exclude(likes=user)
+                    for post in user_unseen_posts:
+                        if post.pk not in recommendations:
+                            recommendations.append((post, similarity))
+            recommendations.sort(key=lambda x: x[1], reverse=True)
+            for i in recommendations:
+                if i[0] not in qs:
+                    qs.append(i[0])
+        else:
+            qs = Post.objects.all().order_by("-date").prefetch_related(
+                Prefetch('likes'),
+                Prefetch('hashtags'))
+        return qs
 
-        queryset = pageify(queryset=queryset, page=page, items_per_page=5)
+    def calculate_similarity(self, user1, user2):
+        user1_liked_posts = Post.objects.filter(
+            likes=user1)
+        user2_liked_posts = Post.objects.filter(
+            likes=user2)
+        similarity = len(
+            set(user1_liked_posts).intersection(user2_liked_posts))
+        return similarity
+
+    def main(self, request, page, pk):
+        qs = self.recommendation_engine(pk)
+        queryset = pageify(queryset=qs,
+                           page=page, items_per_page=5)
         serializer = PostSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
         response = {
@@ -102,7 +136,6 @@ class FollowingView(viewsets.ViewSet):
         queryset = Post.objects.filter(user__in=following).order_by("-date").prefetch_related(
             Prefetch('likes'),
             Prefetch('hashtags'))
-
         queryset = pageify(queryset=queryset, page=page, items_per_page=5)
         serializer = PostSerializer(
             queryset[PAGEIFY['QUERYSET_KEY']], many=True)
